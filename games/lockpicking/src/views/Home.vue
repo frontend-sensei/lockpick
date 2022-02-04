@@ -15,13 +15,23 @@
       Just press space in the right moment. You have limited time for lock pick.
     </p>
     <p>Are you ready?</p>
-    <button>play</button>
+    <button @click="goToGamePage">play</button>
   </div>
 </template>
 
 <script>
+import useGoToRoute from "@/composables/useGoToRoute";
+
 export default {
   name: "Home",
+  setup() {
+    const { goToRoute } = useGoToRoute();
+    const goToGamePage = () => goToRoute("game");
+
+    return {
+      goToGamePage,
+    };
+  },
 };
 </script>
 
