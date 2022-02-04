@@ -1,18 +1,53 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="home-page">
+    <video
+      class="video-background"
+      :src="require('@/assets/video/bg.mp4')"
+      loop
+      muted
+      autoplay
+    ></video>
+    <h1>Game name</h1>
+    <h2>Hello player!</h2>
+    <p>In this game you can try yourself as lockpicker.</p>
+    <h4>How to play:</h4>
+    <p>
+      Just press space in the right moment. You have limited time for lock pick.
+    </p>
+    <p>Are you ready?</p>
+    <button @click="goToGamePage">play</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import useGoToRoute from "@/composables/useGoToRoute";
 
 export default {
   name: "Home",
-  components: {
-    HelloWorld,
+  setup() {
+    const { goToRoute } = useGoToRoute();
+    const goToGamePage = () => goToRoute("game");
+
+    return {
+      goToGamePage,
+    };
   },
 };
 </script>
+
+<style>
+.home-page {
+  color: #fff;
+}
+.video-background {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+</style>
