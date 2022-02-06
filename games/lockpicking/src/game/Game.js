@@ -11,4 +11,11 @@ class Game {
     this.launch = false;
     this.level = level;
   }
+
+  /**
+   * Sets up and run the game
+   */
+  start() {
+    this.launch = true;
+  }
 }
