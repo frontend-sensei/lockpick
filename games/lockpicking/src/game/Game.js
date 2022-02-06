@@ -18,4 +18,11 @@ class Game {
   start() {
     this.launch = true;
   }
+
+  /**
+   * Stop the game and reset values
+   */
+  stop() {
+    this.launch = false;
+  }
 }
