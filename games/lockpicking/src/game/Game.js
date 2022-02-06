@@ -2,14 +2,15 @@
  * Creates a new Game
  * @class Game
  */
-class Game {
+export class Game {
   /**
    * @param {Object} level
    */
-  constructor(level) {
+  constructor(level, sharedData) {
     this.attemts = 3;
     this.launched = false;
     this.level = level;
+    this.sharedData = sharedData;
   }
 
   /**
