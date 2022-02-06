@@ -17,6 +17,7 @@ class Game {
    */
   start() {
     this.launched = true;
+    this.addListeners();
   }
 
   /**
@@ -24,5 +25,20 @@ class Game {
    */
   stop() {
     this.launched = false;
+    this.removeListeners();
+  }
+
+  /**
+   * Add listeners on the game start
+   */
+  addListeners() {
+    window.addEventListener("keydown", () => {});
+  }
+
+  /**
+   * Remove listeners on the game stop
+   */
+  removeListeners() {
+    window.removeEventListener("keydown", () => {});
   }
 }
