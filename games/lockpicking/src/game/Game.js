@@ -8,7 +8,7 @@ class Game {
    */
   constructor(level) {
     this.attemts = 3;
-    this.launch = false;
+    this.launched = false;
     this.level = level;
   }
 
@@ -16,13 +16,13 @@ class Game {
    * Sets up and run the game
    */
   start() {
-    this.launch = true;
+    this.launched = true;
   }
 
   /**
    * Stop the game and reset values
    */
   stop() {
-    this.launch = false;
+    this.launched = false;
   }
 }
