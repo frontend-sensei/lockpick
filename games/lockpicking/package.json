@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "browser-sync start --server 'src' --files '**/*.html' '**/*.css' "
+    "watch": "browser-sync start --server 'src' --files '**/*.html' '**/*.css'",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.27.7"
+    "browser-sync": "^2.27.7",
+    "jest": "^27.5.0"
   },
   "engines": {
     "node": ">=v14.18.1"
