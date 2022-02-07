@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Game } from "../js/game/Game.js";
 
 test("Game add listeners on start", () => {

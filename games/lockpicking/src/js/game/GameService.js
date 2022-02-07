@@ -5,6 +5,7 @@
 export class GameService {
   /**
    * @param {Object} level
+   * @param {Object} vendors
    */
   constructor(level, vendors) {
     this.attemts = 3;
