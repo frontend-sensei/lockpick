@@ -52,6 +52,6 @@ export class GameTimer {
     this.timerId = clearInterval(this.timerId);
     this.launched = false;
     this.finished = true;
-    this.root.stopHandler();
+    this.root.onDefeat();
   }
 }
