@@ -16,7 +16,7 @@ export class GameService {
     this.keydownHandler = this.keydownHandler.bind(this);
 
     this._ui = new vendors._UIClass();
-    this._timer = new vendors._TimerClass(2000);
+    this._timer = new vendors._TimerClass(this, 2000);
     this.render();
   }
 
@@ -33,10 +33,13 @@ export class GameService {
   }
 
   stop() {
+    this.stopHandler();
+    this._timer.stop();
+  }
+
+  stopHandler() {
     this.launched = false;
     this.removeListeners();
-
-    this._timer.stop();
     this._ui._Bar._BarUI.stopPointer();
   }
 
@@ -49,10 +52,15 @@ export class GameService {
   }
 
   keydownHandler() {
+    if (this._timer.finished) {
+      return;
+    }
     if (event.keyCode === 32) {
       this._timer.pause();
+      this._ui._Bar._BarUI.stopPointer();
       setTimeout(() => {
         this._timer.start();
+        this._ui._Bar._BarUI.movePointer();
       }, 1500);
     }
   }
