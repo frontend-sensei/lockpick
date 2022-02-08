@@ -39,13 +39,16 @@ export class GameBarUI {
     this.inertvalId = setInterval(() => {
       if (movementDirection === "bottom") {
         if (translateY >= maxTranslateY) {
+          this.translateY = maxTranslateY;
           movementDirection = "top";
           return;
         }
         translateY += 15;
       } else if (movementDirection === "top") {
         if (translateY <= minTranslateY) {
+          this.translateY = minTranslateY;
           movementDirection = "bottom";
+          return;
         }
         translateY -= 15;
       }
