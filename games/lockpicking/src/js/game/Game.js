@@ -1,8 +1,10 @@
 import { GameUI } from "./GameUI.js";
 import { GameService } from "./GameService.js";
+import { GameTimer } from "./GameTimer.js";
 
 const vendors = {
   _uiClass: GameUI,
+  _TimerClass: GameTimer,
 };
 
 /**
