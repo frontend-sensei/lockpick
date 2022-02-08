@@ -1,6 +1,7 @@
 import { GameUI } from "./GameUI.js";
 import { GameTimer } from "./GameTimer.js";
 import { Progress } from "./Progress.js";
+import { LevelBuilder } from "./LevelBuilder.js";
 
 /**
  * Creates a new Game
@@ -18,6 +19,7 @@ export class Game {
     this.keydownHandler = this.keydownHandler.bind(this);
     this.pendingHandler = false;
 
+    this._levels = new LevelBuilder().build();
     this._progress = new Progress().restore();
     this._ui = new GameUI();
     this._timer = new GameTimer(this, 2000);
