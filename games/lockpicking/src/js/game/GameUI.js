@@ -2,7 +2,7 @@ import { GameBar } from "./GameBar/GameBar.js";
 
 export class GameUI {
   constructor() {
-    this._gameBar = new GameBar();
+    this._Bar = new GameBar();
   }
 
   render(selector) {
@@ -15,6 +15,6 @@ export class GameUI {
     }
     wrapper.appendChild(element);
 
-    this._gameBar.render(".game");
+    this._Bar.render(".game");
   }
 }
