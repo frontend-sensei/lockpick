@@ -1,5 +1,5 @@
-import { GameUI } from "./GameUI";
-import { GameService } from "./GameService";
+import { GameUI } from "./GameUI.js";
+import { GameService } from "./GameService.js";
 
 const vendors = {
   _uiClass: GameUI,

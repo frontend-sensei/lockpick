@@ -1,9 +1,20 @@
-export class GameUI {
-  constructor() {}
+import { GameBar } from "./GameBar/GameBar.js";
 
-  render() {
+export class GameUI {
+  constructor() {
+    this._gameBar = new GameBar();
+  }
+
+  render(selector) {
     const element = document.createElement("div");
-    element.innerHTML = `<div class="game"></div>`;
-    document.body.appendChild(element);
+    element.innerHTML = ``;
+    element.className = `game`;
+    const wrapper = document.querySelector(selector);
+    if (!wrapper) {
+      throw new Error(`GameBarUI: selector - "${this.selector}" not found`);
+    }
+    wrapper.appendChild(element);
+
+    this._gameBar.render(".game");
   }
 }
