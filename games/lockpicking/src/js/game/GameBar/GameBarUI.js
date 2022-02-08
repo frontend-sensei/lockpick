@@ -7,14 +7,15 @@ export class GameBarUI {
 
   getHTML() {
     return `
-
+      <div class="bar__area"></div>
+      <div class="bar__pointer"></div>
     `;
   }
 
   render(selector) {
     const element = document.createElement("div");
     element.innerHTML = this.getHTML();
-    element.className = "game-bar";
+    element.className = "bar";
     const wrapper = document.querySelector(selector);
     if (!wrapper) {
       throw new Error(`GameBarUI: selector - "${selector}" not found`);

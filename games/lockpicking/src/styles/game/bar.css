@@ -1,0 +1,19 @@
+.bar {
+  position: relative;
+  height: 100px;
+  width: 30px;
+  background-color: #fff;
+}
+
+.bar__area {
+  height: 20px;
+  background-color: #a0ebff;
+}
+
+.bar__pointer {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 10px;
+  background-color: #006c8a;
+}
