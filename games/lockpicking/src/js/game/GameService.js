@@ -15,27 +15,29 @@ export class GameService {
 
     this.keydownHandler = this.keydownHandler.bind(this);
 
-    this.timer = new vendors._TimerClass(5000);
+    this._ui = new vendors._UIClass();
+    this._timer = new vendors._TimerClass(2000);
     this.render();
   }
 
   render() {
-    const ui = new this.vendors._uiClass();
-    ui.render(".game-page");
+    this._ui.render(".game-page");
   }
 
   start() {
     this.launched = true;
     this.addListeners();
 
-    this.timer.start();
+    this._timer.start();
+    this._ui._Bar._BarUI.movePointer();
   }
 
   stop() {
     this.launched = false;
     this.removeListeners();
 
-    this.timer.stop();
+    this._timer.stop();
+    this._ui._Bar._BarUI.stopPointer();
   }
 
   addListeners() {
@@ -48,9 +50,9 @@ export class GameService {
 
   keydownHandler() {
     if (event.keyCode === 32) {
-      this.timer.pause();
+      this._timer.pause();
       setTimeout(() => {
-        this.timer.start();
+        this._timer.start();
       }, 1500);
     }
   }
