@@ -13,25 +13,29 @@ export class GameTimer {
     this.launched = false;
     this.paused = false;
     this.finished = false;
+    this.interval = 1000;
     this.intervalId = null;
+    this.timeLeft = 0;
   }
 
   /**
    * Starts timer and set up status properties
    */
   start() {
-    console.log("Timer started");
+    if (this.finished) return;
+
     this.launched = true;
+    this.paused = true;
 
-    let intervalId = setInterval(() => {
+    if (this.intervalId) clearInterval(this.intervalId);
+
+    this.intervalId = setInterval(() => {
       if (this.timer <= 0) {
-        this.stop();
+        return this.stop();
       }
-      console.log("Timer: ", this.timer);
-      this.timer -= 1000;
-    }, 1000);
-
-    this.intervalId = intervalId;
+      this.timer -= 50;
+      console.log(this.timer);
+    }, 50);
   }
 
   /**
@@ -41,14 +45,12 @@ export class GameTimer {
     this.intervalId = clearInterval(this.intervalId);
     this.launched = false;
     this.paused = true;
-    console.log("called");
   }
 
   /**
    * Stops timer and change status properties
    */
   stop() {
-    console.log("Timer stopped");
     this.intervalId = clearInterval(this.intervalId);
     this.launched = false;
     this.finished = true;
