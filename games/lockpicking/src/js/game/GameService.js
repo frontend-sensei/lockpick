@@ -18,7 +18,7 @@ export class GameService {
 
   render() {
     const ui = new this.vendors._uiClass();
-    ui.render();
+    ui.render(".game-page");
   }
 
   start() {
