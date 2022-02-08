@@ -43,14 +43,14 @@ export class GameBarUI {
           movementDirection = "top";
           return;
         }
-        translateY += 15;
+        translateY += 10;
       } else if (movementDirection === "top") {
         if (translateY <= minTranslateY) {
           this.translateY = minTranslateY;
           movementDirection = "bottom";
           return;
         }
-        translateY -= 15;
+        translateY -= 10;
       }
       barPointer.style.transform = `translateY(${translateY}px)`;
     }, 20);
