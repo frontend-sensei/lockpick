@@ -13,6 +13,9 @@ export class GameService {
     this.level = level;
     this.vendors = vendors;
 
+    this.keydownHandler = this.keydownHandler.bind(this);
+
+    this.timer = new vendors._TimerClass(5000);
     this.render();
   }
 
@@ -24,18 +27,31 @@ export class GameService {
   start() {
     this.launched = true;
     this.addListeners();
+
+    this.timer.start();
   }
 
   stop() {
     this.launched = false;
     this.removeListeners();
+
+    this.timer.stop();
   }
 
   addListeners() {
-    window.addEventListener("keydown", () => {});
+    window.addEventListener("keydown", this.keydownHandler);
   }
 
   removeListeners() {
-    window.removeEventListener("keydown", () => {});
+    window.removeEventListener("keydown", this.keydownHandler);
+  }
+
+  keydownHandler() {
+    if (event.keyCode === 32) {
+      this.timer.pause();
+      setTimeout(() => {
+        this.timer.start();
+      }, 1500);
+    }
   }
 }
