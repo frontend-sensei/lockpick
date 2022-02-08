@@ -35,13 +35,16 @@ export class GameService {
 
   stop() {
     this._timer.stop();
-    this.stopHandler();
-  }
-
-  stopHandler() {
     this.launched = false;
     this.removeListeners();
     this._ui._Bar._BarUI.stopPointer();
+  }
+
+  onDefeat() {
+    this.launched = false;
+    this.removeListeners();
+    this._ui._Bar._BarUI.stopPointer();
+    this.gameOver();
   }
 
   gameOver() {
