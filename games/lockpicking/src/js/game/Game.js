@@ -1,5 +1,6 @@
 import { GameUI } from "./GameUI.js";
 import { GameTimer } from "./GameTimer.js";
+import { Progress } from "./Progress.js";
 
 /**
  * Creates a new Game
@@ -17,6 +18,7 @@ export class Game {
     this.keydownHandler = this.keydownHandler.bind(this);
     this.pendingHandler = false;
 
+    this._progress = new Progress().restore();
     this._ui = new GameUI();
     this._timer = new GameTimer(this, 2000);
     this.render();
