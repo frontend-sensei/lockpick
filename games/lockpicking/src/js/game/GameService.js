@@ -14,6 +14,7 @@ export class GameService {
     this.vendors = vendors;
 
     this.keydownHandler = this.keydownHandler.bind(this);
+    this.pendingHandler = false;
 
     this._ui = new vendors._UIClass();
     this._timer = new vendors._TimerClass(this, 2000);
@@ -52,6 +53,14 @@ export class GameService {
   }
 
   keydownHandler() {
+    if (this.pendingHandler) {
+      return;
+    }
+
+    console.log("Call");
+
+    this.pendingHandler = true;
+
     if (this._timer.finished) {
       return;
     }
@@ -61,6 +70,7 @@ export class GameService {
       setTimeout(() => {
         this._timer.start();
         this._ui._Bar._BarUI.movePointer();
+        this.pendingHandler = false;
       }, 1500);
     }
   }
