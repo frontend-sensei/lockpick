@@ -4,10 +4,11 @@
  */
 export class GameTimer {
   /**
-   *
+   * @param {Object} root - The root object
    * @param {number} timer - The timer value, in milliseconds
    */
-  constructor(timer) {
+  constructor(root, timer) {
+    this.root = root;
     this.timer = timer;
     this.launched = false;
     this.paused = false;
@@ -51,5 +52,6 @@ export class GameTimer {
     this.timerId = clearInterval(this.timerId);
     this.launched = false;
     this.finished = true;
+    this.root.stopHandler();
   }
 }
