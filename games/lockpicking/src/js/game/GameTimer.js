@@ -13,7 +13,7 @@ export class GameTimer {
     this.launched = false;
     this.paused = false;
     this.finished = false;
-    this.timerId = null;
+    this.intervalId = null;
   }
 
   /**
@@ -23,7 +23,7 @@ export class GameTimer {
     console.log("Timer started");
     this.launched = true;
 
-    let timerId = setInterval(() => {
+    let intervalId = setInterval(() => {
       if (this.timer <= 0) {
         this.stop();
       }
@@ -31,14 +31,14 @@ export class GameTimer {
       this.timer -= 1000;
     }, 1000);
 
-    this.timerId = timerId;
+    this.intervalId = intervalId;
   }
 
   /**
    * Starts timer and set up status properties
    */
   pause() {
-    this.timerId = clearInterval(this.timerId);
+    this.intervalId = clearInterval(this.intervalId);
     this.launched = false;
     this.paused = true;
     console.log("called");
@@ -49,7 +49,7 @@ export class GameTimer {
    */
   stop() {
     console.log("Timer stopped");
-    this.timerId = clearInterval(this.timerId);
+    this.intervalId = clearInterval(this.intervalId);
     this.launched = false;
     this.finished = true;
     this.root.onDefeat();
