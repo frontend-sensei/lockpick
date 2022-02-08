@@ -5,7 +5,9 @@
 export class Progress {
   constructor() {
     this.progress = {
-      level: {},
+      level: {
+        id: 1,
+      },
     };
     this.storageKey = "progress";
   }
@@ -13,13 +15,22 @@ export class Progress {
   save(level) {
     this.progress.level = level;
     localStorage.setItem(this.storageKey, JSON.stringify(this.progress));
+
+    return this;
   }
 
   restore() {
-    this.progress = JSON.parse(localStorage.getItem(this.storageKey));
+    const result = JSON.parse(localStorage.getItem(this.storageKey));
+    if (result) {
+      this.progress = result;
+    }
+
+    return this;
   }
 
   clearProgress() {
     localStorage.setItem(this.storageKey, JSON.stringify({}));
+
+    return this;
   }
 }

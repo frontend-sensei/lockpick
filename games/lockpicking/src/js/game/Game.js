@@ -21,8 +21,12 @@ export class Game {
 
     this._levels = new LevelBuilder().build();
     this._progress = new Progress().restore();
-    this._ui = new GameUI();
+    this.level = this._levels.levels.get(this._progress.progress.level.id);
     this._timer = new GameTimer(this, 2000);
+    this._ui = new GameUI();
+
+    console.log(this.level);
+
     this.render();
   }
 

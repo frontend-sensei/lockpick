@@ -14,27 +14,32 @@ export class LevelBuilder {
       [
         1,
         new Level({
+          id: 1,
           steps: 1,
-          ariaSize: 30,
+          areaSize: 30,
         }),
       ],
       [
         2,
         new Level({
+          id: 2,
           steps: 2,
-          ariaSize: 15,
+          areaSize: 15,
         }),
       ],
       [
         3,
         new Level({
+          id: 3,
           steps: 3,
-          ariaSize: 5,
+          areaSize: 5,
         }),
       ],
     ];
 
     this.levels = new Map(levels);
     console.log(this.levels);
+
+    return this;
   }
 }
