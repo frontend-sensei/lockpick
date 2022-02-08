@@ -34,14 +34,19 @@ export class GameService {
   }
 
   stop() {
-    this.stopHandler();
     this._timer.stop();
+    this.stopHandler();
   }
 
   stopHandler() {
     this.launched = false;
     this.removeListeners();
     this._ui._Bar._BarUI.stopPointer();
+  }
+
+  gameOver() {
+    // Show popup
+    // redirect to home page
   }
 
   addListeners() {
