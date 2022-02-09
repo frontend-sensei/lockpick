@@ -12,8 +12,31 @@ export class GameBarUI {
   getHTML() {
     const areaHeight = this.areaHeight;
     return `
-      <div class="bar__area" style="--height:${areaHeight}%"></div>
-      <div class="bar__pointer"></div>
+        <div class="bar__body">
+          <div class="bar-body__side bar-body__side-bottom"></div>
+          <div class="bar-body__side bar-body__side-top"></div>
+          <div class="bar-body__side bar-body__side-front"></div>
+          <div class="bar-body__side bar-body__side-back"></div>
+          <div class="bar-body__side bar-body__side-left"></div>
+          <div class="bar-body__side bar-body__side-right"></div>
+        </div>
+        <div class="bar__area">
+          <div class="bar-area__side bar-area__side-bottom"></div>
+          <div class="bar-area__side bar-area__side-top"></div>
+          <div class="bar-area__side bar-area__side-front"></div>
+          <div class="bar-area__side bar-area__side-back"></div>
+          <div class="bar-area__side bar-area__side-left"></div>
+          <div class="bar-area__side bar-area__side-right"></div>
+        </div>
+        <div class="bar__pointer">
+          <div class="bar-pointer__side bar-pointer__side-bottom"></div>
+          <div class="bar-pointer__side bar-pointer__side-top"></div>
+          
+          <div class="bar-pointer__side bar-pointer__side-left"></div>
+          <div class="bar-pointer__side bar-pointer__side-right"></div>
+        </div>
+
+      
     `;
   }
 
