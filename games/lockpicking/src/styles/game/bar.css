@@ -6,7 +6,7 @@
 }
 
 .bar__area {
-  height: 20px;
+  height: var(--height, 20px);
   background-color: #a0ebff;
 }
 

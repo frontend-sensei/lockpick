@@ -1,8 +1,9 @@
 import { GameBarUI } from "./GameBarUI.js";
 
 export class GameBar {
-  constructor() {
-    this._BarUI = new GameBarUI();
+  constructor(root) {
+    this.root = root;
+    this._BarUI = new GameBarUI(root);
   }
 
   render(selector) {

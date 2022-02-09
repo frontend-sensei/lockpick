@@ -3,13 +3,16 @@
  * @class GameBarUI
  */
 export class GameBarUI {
-  constructor() {
+  constructor(root) {
+    this.root = root;
     this.inertvalId = null;
+    this.areaHeight = this.root.level.areaSize;
   }
 
   getHTML() {
+    const areaHeight = this.areaHeight;
     return `
-      <div class="bar__area"></div>
+      <div class="bar__area" style="--height:${areaHeight}%"></div>
       <div class="bar__pointer"></div>
     `;
   }
