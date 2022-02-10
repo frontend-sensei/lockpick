@@ -5,14 +5,14 @@
 export class Level {
   /**
    * @param {number} steps - The steps value.
-   * @param {number} areaSize - The areaSize value, in pixels.
+   * @param {number} areaHeight - The areaHeight value, in pixels.
    * @param {number} areaMovingSpeed - The areaMovingSpeed value, in milliseconds.
    * @param {number} timer - The timer value, in milliseconds.
    */
-  constructor({ id, steps, areaSize, pointerMovingSpeed, timer }) {
+  constructor({ id, steps, areaHeight, pointerMovingSpeed, timer }) {
     this.id = id;
     this.steps = steps;
-    this.areaSize = areaSize;
+    this.areaHeight = areaHeight;
     this.pointerMovingSpeed = pointerMovingSpeed;
     this.timer = timer;
   }
