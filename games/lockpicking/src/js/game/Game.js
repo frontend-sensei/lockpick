@@ -1,5 +1,5 @@
 import { GameUI } from "./GameUI.js";
-import { GameTimer } from "./GameTimer.js";
+import { Timer } from "./Timer.js";
 import { Progress } from "./Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 
@@ -17,7 +17,7 @@ export class Game {
     this._progress = new Progress().restore();
     this._levels = new LevelBuilder().build();
     this.level = this._levels.levels.get(this._progress.progress.level.id);
-    this._timer = new GameTimer(this, 2000);
+    this._timer = new Timer(this, 2000);
     this._ui = new GameUI(this);
 
     console.log(this.level);
