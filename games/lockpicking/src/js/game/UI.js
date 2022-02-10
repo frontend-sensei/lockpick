@@ -1,6 +1,6 @@
 import { Bar } from "./bar/Bar.js";
 
-export class GameUI {
+export class UI {
   constructor(root) {
     this.root = root;
     this._Bar = new Bar(root);
