@@ -6,7 +6,7 @@ export class GameBarUI {
   constructor(root) {
     this.root = root;
     this.inertvalId = null;
-    this.areaHeight = this.root.level.areaSize;
+    this.areaHeight = this.root.level.areaHeight;
   }
 
   getHTML() {
