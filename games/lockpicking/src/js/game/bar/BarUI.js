@@ -1,10 +1,11 @@
 /**
- * Creates a new GameBarUI
- * @class GameBarUI
+ * Creates a new BarUI
+ * @class BarUI
  */
-export class GameBarUI {
+export class BarUI {
   constructor(root) {
     this.root = root;
+    console.log(this.root);
     this.inertvalId = null;
     this.areaHeight = this.root.level.areaHeight;
   }

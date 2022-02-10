@@ -1,9 +1,9 @@
-import { GameBar } from "./GameBar/GameBar.js";
+import { Bar } from "./bar/Bar.js";
 
 export class GameUI {
   constructor(root) {
     this.root = root;
-    this._Bar = new GameBar(root);
+    this._Bar = new Bar(root);
   }
 
   render(selector) {
@@ -12,7 +12,7 @@ export class GameUI {
     element.className = `game`;
     const wrapper = document.querySelector(selector);
     if (!wrapper) {
-      throw new Error(`GameBarUI: selector - "${this.selector}" not found`);
+      throw new Error(`Selector - "${this.selector}" not found`);
     }
     wrapper.appendChild(element);
 

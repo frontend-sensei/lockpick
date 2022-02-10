@@ -9,18 +9,16 @@ import { LevelBuilder } from "./level/LevelBuilder.js";
  */
 export class Game {
   constructor() {
-    this._levels = new LevelBuilder().build();
-    this._progress = new Progress().restore();
-    this._timer = new GameTimer(this, 2000);
-    this._ui = new GameUI(this);
-
     this.attemts = 3;
     this.launched = false;
-    this.level = level;
     this.pendingHandler = false;
     this.keydownHandler = this.keydownHandler.bind(this);
 
+    this._progress = new Progress().restore();
+    this._levels = new LevelBuilder().build();
     this.level = this._levels.levels.get(this._progress.progress.level.id);
+    this._timer = new GameTimer(this, 2000);
+    this._ui = new GameUI(this);
 
     console.log(this.level);
 
