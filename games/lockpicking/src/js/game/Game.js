@@ -1,6 +1,6 @@
 import { UI } from "./UI.js";
-import { Timer } from "./Timer.js";
-import { Progress } from "./Progress.js";
+import { Timer } from "./timer/Timer.js";
+import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 
 /**
