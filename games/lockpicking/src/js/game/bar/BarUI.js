@@ -5,9 +5,9 @@
 export class BarUI {
   constructor(root) {
     this.root = root;
-    this.bar = null;
-    this.barArea = null;
-    this.barPointer = null;
+    this.barNode = null;
+    this.barAreaNode = null;
+    this.barPointerNode = null;
     this.inertvalId = null;
     this.areaHeight = this.root.level.areaHeight;
   }
@@ -31,9 +31,9 @@ export class BarUI {
 
     wrapper.appendChild(element);
 
-    this.bar = document.querySelector(".bar");
-    this.barArea = document.querySelector(".bar__area");
-    this.barPointer = document.querySelector(".bar__pointer");
+    this.barNode = document.querySelector(".bar");
+    this.barAreaNode = document.querySelector(".bar__area");
+    this.barPointerNode = document.querySelector(".bar__pointer");
   }
 
   movePointer() {
@@ -63,7 +63,7 @@ export class BarUI {
         }
         translateY -= movementSpeed;
       }
-      this.barPointer.style.transform = `translateY(${translateY}px)`;
+      this.barPointerNode.style.transform = `translateY(${translateY}px)`;
     }, 16);
   }
 
