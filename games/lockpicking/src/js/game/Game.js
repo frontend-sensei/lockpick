@@ -37,16 +37,34 @@ export class Game {
   }
 
   startCountdown() {
+    const gameSelector = ".game";
+    const gameNode = document.querySelector(gameSelector);
+    if (!gameNode) {
+      throw new Error("Game selector not found!");
+    }
+
+    const countdownEl = document.createElement("div");
+    countdownEl.className = "countdown";
+    countdownEl.innerHTML = `<div class="countdown-value"></div>`;
+    gameNode.appendChild(countdownEl);
+
+    const countdownNode = gameNode.querySelector(".countdown");
+    const countdownValueNode = gameNode.querySelector(".countdown-value");
+
     const countdown = 3;
+
     return new Promise((resolve) => {
       let secondsPassed = 0;
       let interval = setInterval(() => {
         if (secondsPassed >= countdown) {
           interval = clearInterval(interval);
+          countdownValueNode.innerHTML = "Go!";
+          countdownNode.classList.add("hidden");
           resolve();
           return;
         }
-        console.log("For start:", countdown - secondsPassed);
+
+        countdownValueNode.innerHTML = countdown - secondsPassed;
         secondsPassed++;
       }, 1000);
     });
