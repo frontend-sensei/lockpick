@@ -5,6 +5,9 @@
 export class BarUI {
   constructor(root) {
     this.root = root;
+    this.bar = null;
+    this.barArea = null;
+    this.barPointer = null;
     this.inertvalId = null;
     this.areaHeight = this.root.level.areaHeight;
   }
@@ -25,12 +28,16 @@ export class BarUI {
     if (!wrapper) {
       throw new Error(`GameBarUI: selector - "${selector}" not found`);
     }
+
     wrapper.appendChild(element);
+
+    this.bar = document.querySelector(".bar");
+    this.barArea = document.querySelector(".bar__area");
+    this.barPointer = document.querySelector(".bar__pointer");
   }
 
   movePointer() {
     const movementSpeed = 6;
-    const barPointer = document.querySelector(".bar__pointer");
     const barHeight = 100;
     const barPointerHeight = 10;
     const maxTranslateY = barHeight - barPointerHeight;
@@ -56,7 +63,7 @@ export class BarUI {
         }
         translateY -= movementSpeed;
       }
-      barPointer.style.transform = `translateY(${translateY}px)`;
+      this.barPointer.style.transform = `translateY(${translateY}px)`;
     }, 16);
   }
 
