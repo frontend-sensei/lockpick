@@ -46,7 +46,7 @@ export class Game {
           resolve();
           return;
         }
-        console.log("For starting:", countdown - secondsPassed);
+        console.log("For start:", countdown - secondsPassed);
         secondsPassed++;
       }, 1000);
     });
