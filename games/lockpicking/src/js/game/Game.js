@@ -20,8 +20,6 @@ export class Game {
     this._timer = new Timer(this, 2000);
     this._ui = new UI(this);
 
-    console.log(this.level);
-
     this.render();
   }
 
@@ -29,12 +27,29 @@ export class Game {
     this._ui.render(".game-page");
   }
 
-  start() {
+  async start() {
+    await this.startCountdown();
     this.launched = true;
     this.addListeners();
 
     this._timer.start();
     this._ui._Bar._BarUI.movePointer();
+  }
+
+  startCountdown() {
+    const countdown = 3;
+    return new Promise((resolve) => {
+      let secondsPassed = 0;
+      let interval = setInterval(() => {
+        if (secondsPassed >= countdown) {
+          interval = clearInterval(interval);
+          resolve();
+          return;
+        }
+        console.log("For starting:", countdown - secondsPassed);
+        secondsPassed++;
+      }, 1000);
+    });
   }
 
   stop() {
