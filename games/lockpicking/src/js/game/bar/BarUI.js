@@ -5,7 +5,6 @@
 export class BarUI {
   constructor(root) {
     this.root = root;
-    console.log(this.root);
     this.inertvalId = null;
     this.areaHeight = this.root.level.areaHeight;
   }
@@ -30,6 +29,7 @@ export class BarUI {
   }
 
   movePointer() {
+    const movementSpeed = 6;
     const barPointer = document.querySelector(".bar__pointer");
     const barHeight = 100;
     const barPointerHeight = 10;
@@ -47,17 +47,17 @@ export class BarUI {
           movementDirection = "top";
           return;
         }
-        translateY += 10;
+        translateY += movementSpeed;
       } else if (movementDirection === "top") {
         if (translateY <= minTranslateY) {
           this.translateY = minTranslateY;
           movementDirection = "bottom";
           return;
         }
-        translateY -= 10;
+        translateY -= movementSpeed;
       }
       barPointer.style.transform = `translateY(${translateY}px)`;
-    }, 20);
+    }, 16);
   }
 
   stopPointer() {
