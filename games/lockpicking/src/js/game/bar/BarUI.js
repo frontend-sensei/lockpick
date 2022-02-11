@@ -10,6 +10,7 @@ export class BarUI {
     this.barPointerNode = null;
     this.inertvalId = null;
     this.areaHeight = this.root.level.areaHeight;
+    this.translateY = 0;
   }
 
   getHTML() {
@@ -43,7 +44,7 @@ export class BarUI {
     const maxTranslateY = barHeight - barPointerHeight;
     const minTranslateY = 0;
 
-    let translateY = 0;
+    let translateY = this.translateY;
 
     let movementDirection = "bottom";
 
@@ -63,6 +64,7 @@ export class BarUI {
         }
         translateY -= movementSpeed;
       }
+      this.translateY = translateY;
       this.barPointerNode.style.transform = `translateY(${translateY}px)`;
     }, 16);
   }
