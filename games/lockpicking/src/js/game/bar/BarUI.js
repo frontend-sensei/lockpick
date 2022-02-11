@@ -11,6 +11,7 @@ export class BarUI {
     this.inertvalId = null;
     this.areaHeight = this.root.level.areaHeight;
     this.translateY = 0;
+    this.movementDirection = "bottom";
   }
 
   getHTML() {
@@ -44,28 +45,23 @@ export class BarUI {
     const maxTranslateY = barHeight - barPointerHeight;
     const minTranslateY = 0;
 
-    let translateY = this.translateY;
-
-    let movementDirection = "bottom";
-
     this.inertvalId = setInterval(() => {
-      if (movementDirection === "bottom") {
-        if (translateY >= maxTranslateY) {
+      if (this.movementDirection === "bottom") {
+        if (this.translateY >= maxTranslateY) {
           this.translateY = maxTranslateY;
-          movementDirection = "top";
+          this.movementDirection = "top";
           return;
         }
-        translateY += movementSpeed;
-      } else if (movementDirection === "top") {
-        if (translateY <= minTranslateY) {
+        this.translateY += movementSpeed;
+      } else if (this.movementDirection === "top") {
+        if (this.translateY <= minTranslateY) {
           this.translateY = minTranslateY;
-          movementDirection = "bottom";
+          this.movementDirection = "bottom";
           return;
         }
-        translateY -= movementSpeed;
+        this.translateY -= movementSpeed;
       }
-      this.translateY = translateY;
-      this.barPointerNode.style.transform = `translateY(${translateY}px)`;
+      this.barPointerNode.style.transform = `translateY(${this.translateY}px)`;
     }, 16);
   }
 
