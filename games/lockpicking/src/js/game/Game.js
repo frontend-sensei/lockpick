@@ -3,7 +3,7 @@ import { Timer } from "./timer/Timer.js";
 import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
-import { Popup } from "./popups/Popup.js";
+import { Popup } from "./popup/Popup.js";
 
 /**
  * Creates a new Game
