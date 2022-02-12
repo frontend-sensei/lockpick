@@ -30,6 +30,7 @@ export class Game {
   }
 
   async start() {
+    console.log("Steps: ", this.level.steps);
     await this.startCountdown();
     this.launched = true;
     this.addListeners();
@@ -86,6 +87,12 @@ export class Game {
     this.gameOver();
   }
 
+  onWon() {
+    this.launched = false;
+    this.removeListeners();
+    console.log("You Won!");
+  }
+
   gameOver() {
     console.log("Game over :(");
     // Show popup
@@ -114,11 +121,21 @@ export class Game {
       this._timer.pause();
       this._ui._Bar._BarUI.stopPointer();
 
-      const isPositionCorrect = this._coordinates.checkPosition();
-      console.log("Is correct position: ", isPositionCorrect);
-      if (!isPositionCorrect) {
+      const positionCorrect = this._coordinates.checkPosition();
+      console.log("Position correct: ", positionCorrect);
+      if (!positionCorrect) {
         this.attemts--;
-        console.log("attemts: ", this.attemts);
+        console.log("Attemts: ", this.attemts);
+      }
+
+      if (positionCorrect) {
+        this.level.steps--;
+      }
+
+      if (!this.level.steps) {
+        this.pendingHandler = false;
+        this.onWon();
+        return;
       }
 
       if (!this.attemts) {
@@ -126,6 +143,8 @@ export class Game {
         this.onDefeat();
         return;
       }
+
+      console.log("Steps: ", this.level.steps);
 
       setTimeout(() => {
         this._timer.start();
