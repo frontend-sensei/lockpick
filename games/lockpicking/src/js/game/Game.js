@@ -3,6 +3,7 @@ import { Timer } from "./timer/Timer.js";
 import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
+import { Popup } from "./popups/Popup.js";
 
 /**
  * Creates a new Game
@@ -101,27 +102,10 @@ export class Game {
     }
     this._progress.save(levelToSave);
 
-    // render popup
-    const popupEl = document.createElement("div");
-    popupEl.classList = "popup-wrapper";
-    popupEl.innerHTML = `
-    <div class="popup">
-      <div class="popup-content">
-        <h2 class="popup-headline">You Won!</h2>
-        <button class="popup-button" id="backToHome">back to home</button>
-        <button class="popup-button" id="continue">continue</button>
-      </div>
-    </div>
-    `;
-
-    this._ui.gameNode.appendChild(popupEl);
-    this.popup = document.querySelector(".popup-wrapper");
-    document.getElementById("backToHome").addEventListener("click", () => {
-      location.href = "/";
-    });
-    document.getElementById("continue").addEventListener("click", () => {
-      location.reload();
-    });
+    const winPopup = new Popup(this, {
+      headline: "You Won!",
+      reloadBtnText: "Continue",
+    }).render();
   }
 
   gameOver() {
