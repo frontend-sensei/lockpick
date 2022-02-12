@@ -3,6 +3,7 @@ import { Bar } from "./bar/Bar.js";
 export class UI {
   constructor(root) {
     this.root = root;
+    this.gameNode = null;
     this._Bar = new Bar(root);
   }
 
@@ -15,6 +16,8 @@ export class UI {
       throw new Error(`Selector - "${this.selector}" not found`);
     }
     wrapper.appendChild(element);
+
+    this.gameNode = document.querySelector(".game");
 
     this._Bar.render(".game");
   }

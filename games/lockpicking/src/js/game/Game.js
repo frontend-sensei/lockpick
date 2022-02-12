@@ -14,6 +14,7 @@ export class Game {
     this.launched = false;
     this.pendingHandler = false;
     this.keydownHandler = this.keydownHandler.bind(this);
+    this.popup = null;
 
     this._progress = new Progress().restore();
     this._levels = new LevelBuilder().build();
@@ -100,7 +101,27 @@ export class Game {
     }
     this._progress.save(levelToSave);
 
-    console.log("You Won!");
+    // render popup
+    const popupEl = document.createElement("div");
+    popupEl.classList = "popup-wrapper";
+    popupEl.innerHTML = `
+    <div class="popup">
+      <div class="popup-content">
+        <h2 class="popup-headline">You Won!</h2>
+        <button class="popup-button" id="backToHome">back to home</button>
+        <button class="popup-button" id="continue">continue</button>
+      </div>
+    </div>
+    `;
+
+    this._ui.gameNode.appendChild(popupEl);
+    this.popup = document.querySelector(".popup-wrapper");
+    document.getElementById("backToHome").addEventListener("click", () => {
+      location.href = "/";
+    });
+    document.getElementById("continue").addEventListener("click", () => {
+      location.reload();
+    });
   }
 
   gameOver() {
