@@ -17,7 +17,7 @@ export class Game {
 
     this._progress = new Progress().restore();
     this._levels = new LevelBuilder().build();
-    this.level = this._levels.levels.get(this._progress.progress.level.id);
+    this.level = this._levels.levels.get(this._progress.progress.nextLevel.id);
     this._timer = new Timer(this, 12000);
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
@@ -90,6 +90,16 @@ export class Game {
   onWon() {
     this.launched = false;
     this.removeListeners();
+
+    const isLastLevel = this._levels.isLastLevel(this.level.id);
+    const levelToSave = {
+      data: this.level,
+    };
+    if (isLastLevel) {
+      levelToSave.isLastLevel = true;
+    }
+    this._progress.save(levelToSave);
+
     console.log("You Won!");
   }
 
