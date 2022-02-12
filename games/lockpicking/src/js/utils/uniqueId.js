@@ -1,4 +1,4 @@
-export function uniqueId(length) {
+export function uniqueId(length = 10) {
   var result = "";
   var characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
