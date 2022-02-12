@@ -18,7 +18,7 @@ export class Game {
     this._progress = new Progress().restore();
     this._levels = new LevelBuilder().build();
     this.level = this._levels.levels.get(this._progress.progress.level.id);
-    this._timer = new Timer(this, 2000);
+    this._timer = new Timer(this, 12000);
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
 
@@ -87,6 +87,7 @@ export class Game {
   }
 
   gameOver() {
+    console.log("Game over :(");
     // Show popup
     // redirect to home page
   }
@@ -112,7 +113,20 @@ export class Game {
     if (event.keyCode === 32) {
       this._timer.pause();
       this._ui._Bar._BarUI.stopPointer();
-      console.log("Is correct position: ", this._coordinates.checkPosition());
+
+      const isPositionCorrect = this._coordinates.checkPosition();
+      console.log("Is correct position: ", isPositionCorrect);
+      if (!isPositionCorrect) {
+        this.attemts--;
+        console.log("attemts: ", this.attemts);
+      }
+
+      if (!this.attemts) {
+        this.pendingHandler = false;
+        this.onDefeat();
+        return;
+      }
+
       setTimeout(() => {
         this._timer.start();
         this._ui._Bar._BarUI.movePointer();
