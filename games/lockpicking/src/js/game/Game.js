@@ -109,9 +109,10 @@ export class Game {
   }
 
   gameOver() {
-    console.log("Game over :(");
-    // Show popup
-    // redirect to home page
+    const gameOverPopup = new Popup(this, {
+      headline: "Game over :(",
+      reloadBtnText: "Retry",
+    }).render();
   }
 
   addListeners() {
