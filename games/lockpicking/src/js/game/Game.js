@@ -2,6 +2,7 @@ import { UI } from "./UI.js";
 import { Timer } from "./timer/Timer.js";
 import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
+import { Coordinates } from "./coordinates/Coordinates.js";
 
 /**
  * Creates a new Game
@@ -19,6 +20,7 @@ export class Game {
     this.level = this._levels.levels.get(this._progress.progress.level.id);
     this._timer = new Timer(this, 2000);
     this._ui = new UI(this);
+    this._coordinates = new Coordinates(this);
 
     this.render();
   }
@@ -110,6 +112,7 @@ export class Game {
     if (event.keyCode === 32) {
       this._timer.pause();
       this._ui._Bar._BarUI.stopPointer();
+      console.log("Is correct position: ", this._coordinates.checkPosition());
       setTimeout(() => {
         this._timer.start();
         this._ui._Bar._BarUI.movePointer();
