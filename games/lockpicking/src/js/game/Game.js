@@ -11,7 +11,7 @@ import { Popup } from "./popup/Popup.js";
  */
 export class Game {
   constructor() {
-    this.attemts = 3;
+    this.attempts = 3;
     this.launched = false;
     this.pendingHandler = false;
     this.keydownHandler = this.keydownHandler.bind(this);
@@ -23,6 +23,8 @@ export class Game {
     this._timer = new Timer(this, 12000);
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
+
+    this.pinsUnlocked = 0;
 
     this.render();
   }
@@ -140,21 +142,22 @@ export class Game {
       const positionCorrect = this._coordinates.checkPosition();
       console.log("Position correct: ", positionCorrect);
       if (!positionCorrect) {
-        this.attemts--;
-        console.log("Attemts: ", this.attemts);
+        this.attempts--;
+        console.log("attempts: ", this.attempts);
       }
 
       if (positionCorrect) {
-        this.level.steps--;
+        this.pinsUnlocked++;
+        this._ui._PinsUI.updateUnlocked(this.pinsUnlocked);
       }
 
-      if (!this.level.steps) {
+      if (this.pinsUnlocked === this.level.steps) {
         this.pendingHandler = false;
         this.onWon();
         return;
       }
 
-      if (!this.attemts) {
+      if (!this.attempts) {
         this.pendingHandler = false;
         this.onDefeat();
         return;
