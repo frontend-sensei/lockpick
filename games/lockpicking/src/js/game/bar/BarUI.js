@@ -1,12 +1,17 @@
 /**
- * Creates a new GameBarUI
- * @class GameBarUI
+ * Creates a new BarUI
+ * @class BarUI
  */
-export class GameBarUI {
+export class BarUI {
   constructor(root) {
     this.root = root;
+    this.barNode = null;
+    this.barAreaNode = null;
+    this.barPointerNode = null;
     this.inertvalId = null;
-    this.areaHeight = this.root.level.areaSize;
+    this.areaHeight = this.root.level.areaHeight;
+    this.translateY = 0;
+    this.movementDirection = "bottom";
   }
 
   getHTML() {
@@ -48,38 +53,39 @@ export class GameBarUI {
     if (!wrapper) {
       throw new Error(`GameBarUI: selector - "${selector}" not found`);
     }
+
     wrapper.appendChild(element);
+
+    this.barNode = document.querySelector(".bar");
+    this.barAreaNode = document.querySelector(".bar__area");
+    this.barPointerNode = document.querySelector(".bar__pointer");
   }
 
   movePointer() {
-    const barPointer = document.querySelector(".bar__pointer");
+    const movementSpeed = 6;
     const barHeight = 100;
     const barPointerHeight = 10;
     const maxTranslateY = barHeight - barPointerHeight;
     const minTranslateY = 0;
 
-    let translateY = 0;
-
-    let movementDirection = "bottom";
-
     this.inertvalId = setInterval(() => {
-      if (movementDirection === "bottom") {
-        if (translateY >= maxTranslateY) {
+      if (this.movementDirection === "bottom") {
+        if (this.translateY >= maxTranslateY) {
           this.translateY = maxTranslateY;
-          movementDirection = "top";
+          this.movementDirection = "top";
           return;
         }
-        translateY += 10;
-      } else if (movementDirection === "top") {
-        if (translateY <= minTranslateY) {
+        this.translateY += movementSpeed;
+      } else if (this.movementDirection === "top") {
+        if (this.translateY <= minTranslateY) {
           this.translateY = minTranslateY;
-          movementDirection = "bottom";
+          this.movementDirection = "bottom";
           return;
         }
-        translateY -= 10;
+        this.translateY -= movementSpeed;
       }
-      barPointer.style.transform = `translateY(${translateY}px)`;
-    }, 20);
+      this.barPointerNode.style.transform = `translateY(${this.translateY}px)`;
+    }, 16);
   }
 
   stopPointer() {

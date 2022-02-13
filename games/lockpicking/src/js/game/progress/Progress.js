@@ -5,15 +5,22 @@
 export class Progress {
   constructor() {
     this.progress = {
-      level: {
+      completedLevels: {},
+      nextLevel: {
         id: 1,
       },
+      gameCompleted: false,
     };
     this.storageKey = "progress";
   }
 
   save(level) {
-    this.progress.level = level;
+    const levelId = level.data.id;
+    this.progress.completedLevels[levelId] = level.data;
+
+    const nextLevelId = level.isLastLevel ? levelId : levelId + 1;
+    this.progress.nextLevel.id = nextLevelId;
+
     localStorage.setItem(this.storageKey, JSON.stringify(this.progress));
 
     return this;

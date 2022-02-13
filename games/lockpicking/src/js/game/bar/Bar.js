@@ -1,9 +1,9 @@
-import { GameBarUI } from "./GameBarUI.js";
+import { BarUI } from "./BarUI.js";
 
-export class GameBar {
+export class Bar {
   constructor(root) {
     this.root = root;
-    this._BarUI = new GameBarUI(root);
+    this._BarUI = new BarUI(root);
   }
 
   render(selector) {

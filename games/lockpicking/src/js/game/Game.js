@@ -1,31 +1,30 @@
-import { GameUI } from "./GameUI.js";
-import { GameTimer } from "./GameTimer.js";
-import { Progress } from "./Progress.js";
-import { LevelBuilder } from "./LevelBuilder.js";
+import { UI } from "./UI.js";
+import { Timer } from "./timer/Timer.js";
+import { Progress } from "./progress/Progress.js";
+import { LevelBuilder } from "./level/LevelBuilder.js";
+import { Coordinates } from "./coordinates/Coordinates.js";
+import { Popup } from "./popup/Popup.js";
 
 /**
  * Creates a new Game
  * @class Game
  */
 export class Game {
-  /**
-   * @param {Object} level
-   */
-  constructor(level) {
-    this.attemts = 3;
+  constructor() {
+    this.attempts = 3;
     this.launched = false;
-    this.level = level;
-
-    this.keydownHandler = this.keydownHandler.bind(this);
     this.pendingHandler = false;
+    this.keydownHandler = this.keydownHandler.bind(this);
+    this.popup = null;
 
-    this._levels = new LevelBuilder().build();
     this._progress = new Progress().restore();
-    this.level = this._levels.levels.get(this._progress.progress.level.id);
-    this._timer = new GameTimer(this, 2000);
-    this._ui = new GameUI(this);
+    this._levels = new LevelBuilder().build();
+    this.level = this._levels.levels.get(this._progress.progress.nextLevel.id);
+    this._timer = new Timer(this, 12000);
+    this._ui = new UI(this);
+    this._coordinates = new Coordinates(this);
 
-    console.log(this.level);
+    this.pinsUnlocked = 0;
 
     this.render();
   }
@@ -34,12 +33,48 @@ export class Game {
     this._ui.render(".game-page");
   }
 
-  start() {
+  async start() {
+    console.log("Steps: ", this.level.steps);
+    await this.startCountdown();
     this.launched = true;
     this.addListeners();
 
     this._timer.start();
     this._ui._Bar._BarUI.movePointer();
+  }
+
+  startCountdown() {
+    const gameSelector = ".game";
+    const gameNode = document.querySelector(gameSelector);
+    if (!gameNode) {
+      throw new Error("Game selector not found!");
+    }
+
+    const countdownEl = document.createElement("div");
+    countdownEl.className = "countdown";
+    countdownEl.innerHTML = `<div class="countdown-value"></div>`;
+    gameNode.appendChild(countdownEl);
+
+    const countdownNode = gameNode.querySelector(".countdown");
+    const countdownValueNode = gameNode.querySelector(".countdown-value");
+
+    const countdown = 3;
+
+    return new Promise((resolve) => {
+      let secondsPassed = 0;
+      let interval = setInterval(() => {
+        if (secondsPassed >= countdown) {
+          interval = clearInterval(interval);
+          countdownValueNode.innerHTML = "Go!";
+          countdownNode.classList.add("hidden");
+          resolve();
+          return;
+        }
+
+        countdownValueNode.innerHTML = countdown - secondsPassed;
+        secondsPassed++;
+      }, 1000);
+    });
   }
 
   stop() {
@@ -56,9 +91,30 @@ export class Game {
     this.gameOver();
   }
 
+  onWon() {
+    this.launched = false;
+    this.removeListeners();
+
+    const isLastLevel = this._levels.isLastLevel(this.level.id);
+    const levelToSave = {
+      data: this.level,
+    };
+    if (isLastLevel) {
+      levelToSave.isLastLevel = true;
+    }
+    this._progress.save(levelToSave);
+
+    const winPopup = new Popup(this, {
+      headline: "You Won!",
+      reloadBtnText: "Continue",
+    }).render();
+  }
+
   gameOver() {
-    // Show popup
-    // redirect to home page
+    const gameOverPopup = new Popup(this, {
+      headline: "Game over :(",
+      reloadBtnText: "Retry",
+    }).render();
   }
 
   addListeners() {
@@ -82,6 +138,33 @@ export class Game {
     if (event.keyCode === 32) {
       this._timer.pause();
       this._ui._Bar._BarUI.stopPointer();
+
+      const positionCorrect = this._coordinates.checkPosition();
+      console.log("Position correct: ", positionCorrect);
+      if (!positionCorrect) {
+        this.attempts--;
+        console.log("attempts: ", this.attempts);
+      }
+
+      if (positionCorrect) {
+        this.pinsUnlocked++;
+        this._ui._PinsUI.updateUnlocked(this.pinsUnlocked);
+      }
+
+      if (this.pinsUnlocked === this.level.steps) {
+        this.pendingHandler = false;
+        this.onWon();
+        return;
+      }
+
+      if (!this.attempts) {
+        this.pendingHandler = false;
+        this.onDefeat();
+        return;
+      }
+
+      console.log("Steps: ", this.level.steps);
+
       setTimeout(() => {
         this._timer.start();
         this._ui._Bar._BarUI.movePointer();

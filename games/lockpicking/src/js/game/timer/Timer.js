@@ -1,8 +1,8 @@
 /**
- * Creates a GameTimer
- * @class GameTimer
+ * Creates a Timer
+ * @class Timer
  */
-export class GameTimer {
+export class Timer {
   /**
    * @param {Object} root - The root object
    * @param {number} timer - The timer value, in milliseconds

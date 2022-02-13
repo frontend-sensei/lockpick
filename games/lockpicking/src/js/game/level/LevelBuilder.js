@@ -16,7 +16,7 @@ export class LevelBuilder {
         new Level({
           id: 1,
           steps: 1,
-          areaSize: 30,
+          areaHeight: 30,
         }),
       ],
       [
@@ -24,7 +24,7 @@ export class LevelBuilder {
         new Level({
           id: 2,
           steps: 2,
-          areaSize: 15,
+          areaHeight: 15,
         }),
       ],
       [
@@ -32,14 +32,20 @@ export class LevelBuilder {
         new Level({
           id: 3,
           steps: 3,
-          areaSize: 5,
+          areaHeight: 5,
         }),
       ],
     ];
 
     this.levels = new Map(levels);
-    console.log(this.levels);
 
     return this;
+  }
+
+  isLastLevel(levelId) {
+    const possibleNextLevelId = levelId + 1;
+    const hasNextLevel = this.levels.has(possibleNextLevelId);
+    const isLastLevel = !hasNextLevel;
+    return isLastLevel;
   }
 }
