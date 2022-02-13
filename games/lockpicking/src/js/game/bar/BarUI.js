@@ -24,22 +24,29 @@ export class BarUI {
           <div class="bar-body__side bar-body__side-back"></div>
           <div class="bar-body__side bar-body__side-left"></div>
           <div class="bar-body__side bar-body__side-right"></div>
-        </div>
-        <div class="bar__area">
-          <div class="bar-area__side bar-area__side-bottom"></div>
-          <div class="bar-area__side bar-area__side-top"></div>
-          <div class="bar-area__side bar-area__side-front"></div>
-          <div class="bar-area__side bar-area__side-back"></div>
-          <div class="bar-area__side bar-area__side-left"></div>
-          <div class="bar-area__side bar-area__side-right"></div>
-        </div>
-        <div class="bar__pointer">
-          <div class="bar-pointer__side bar-pointer__side-bottom"></div>
-          <div class="bar-pointer__side bar-pointer__side-top"></div>
+            <div class="bar__area">
+              <div class="bar-area__side bar-area__side-bottom">
+                <div class="bar-area-extra__side bar-area-extra__side-bottom"></div>
+              </div>
+              <div class="bar-area__side bar-area__side-top">
+                <div class="bar-area-extra__side bar-area-extra__side-top"></div>
+              </div>
+              <div class="bar-area__side bar-area__side-left">
+                <div class="bar-area-extra__side bar-area-extra__side-left"></div>
+              </div>
+              <div class="bar-area__side bar-area__side-right">
+                <div class="bar-area-extra__side bar-area-extra__side-right"></div>
+              </div>
+            </div>
+            <div class="bar__pointer">
+              <div class="bar-pointer__side bar-pointer__side-bottom"></div>
+              <div class="bar-pointer__side bar-pointer__side-top"></div>
           
-          <div class="bar-pointer__side bar-pointer__side-left"></div>
-          <div class="bar-pointer__side bar-pointer__side-right"></div>
+              <div class="bar-pointer__side bar-pointer__side-left"></div>
+              <div class="bar-pointer__side bar-pointer__side-right"></div>
+            </div>
         </div>
+      
 
       
     `;
