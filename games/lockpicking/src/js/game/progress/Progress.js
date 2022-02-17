@@ -28,14 +28,14 @@ export class Progress {
 
   restore() {
     const result = JSON.parse(localStorage.getItem(this.storageKey));
-    if (result) {
+    if (Object.keys(result).length !== 0) {
       this.progress = result;
     }
 
     return this;
   }
 
-  clearProgress() {
+  clear() {
     localStorage.setItem(this.storageKey, JSON.stringify({}));
 
     return this;
