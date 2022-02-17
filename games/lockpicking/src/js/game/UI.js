@@ -1,5 +1,6 @@
 import { Bar } from "./bar/Bar.js";
 import { PinsUI } from "./pins/PinsUI.js";
+import { Attempts } from "./attempts/Attempts.js";
 
 export class UI {
   constructor(root) {
@@ -7,6 +8,7 @@ export class UI {
     this.gameNode = null;
     this._Bar = new Bar(root);
     this._PinsUI = new PinsUI(root);
+    this._Attempts = new Attempts(root);
   }
 
   render(selector) {
@@ -23,5 +25,6 @@ export class UI {
 
     this._Bar.render(".game");
     this._PinsUI.render(".game");
+    this._Attempts.render(".game");
   }
 }

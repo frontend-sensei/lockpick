@@ -4,6 +4,7 @@ import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
 import { Popup } from "./popup/Popup.js";
+import { Observable } from "../utils/observable.js";
 
 /**
  * Creates a new Game
@@ -11,7 +12,7 @@ import { Popup } from "./popup/Popup.js";
  */
 export class Game {
   constructor() {
-    this.attempts = 3;
+    this.attempts = new Observable(3);
     this.launched = false;
     this.pendingHandler = false;
     this.keydownHandler = this.keydownHandler.bind(this);
@@ -142,8 +143,8 @@ export class Game {
       const positionCorrect = this._coordinates.checkPosition();
       console.log("Position correct: ", positionCorrect);
       if (!positionCorrect) {
-        this.attempts--;
-        console.log("attempts: ", this.attempts);
+        this.attempts.set(this.attempts.value - 1);
+        console.log("attempts: ", this.attempts.value);
       }
 
       if (positionCorrect) {
@@ -157,7 +158,7 @@ export class Game {
         return;
       }
 
-      if (!this.attempts) {
+      if (!this.attempts.value) {
         this.pendingHandler = false;
         this.onDefeat();
         return;
