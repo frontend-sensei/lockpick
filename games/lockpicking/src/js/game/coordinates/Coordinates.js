@@ -15,7 +15,6 @@ export class Coordinates {
   }
 
   checkPosition() {
-    const barHeight = this.root._ui._Bar._BarUI.barNode.clientHeight;
     const areaStyles = this.getCoordinates(
       this.root._ui._Bar._BarUI.barAreaNode
     );
@@ -79,7 +78,7 @@ export class Coordinates {
       return {};
     }
 
-    const objectValues = rawValues.forEach((value) => {
+    rawValues.forEach((value) => {
       const splittedValue = value.split("(");
       const propertyName = splittedValue[0];
       const propertyValue = +splittedValue[1].slice(0, -1).split("p")[0];
