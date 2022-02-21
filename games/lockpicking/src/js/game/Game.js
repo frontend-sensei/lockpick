@@ -41,7 +41,7 @@ export class Game {
     this.addListeners();
 
     this._timer.start();
-    this._ui._Bar._BarUI.movePointer();
+    this._ui._Bar._ui.movePointer();
   }
 
   startCountdown() {
@@ -82,13 +82,13 @@ export class Game {
     this._timer.stop();
     this.launched = false;
     this.removeListeners();
-    this._ui._Bar._BarUI.stopPointer();
+    this._ui._Bar._ui.stopPointer();
   }
 
   onDefeat() {
     this.launched = false;
     this.removeListeners();
-    this._ui._Bar._BarUI.stopPointer();
+    this._ui._Bar._ui.stopPointer();
     this.gameOver();
   }
 
@@ -138,7 +138,7 @@ export class Game {
     }
     if (event.keyCode === 32) {
       this._timer.pause();
-      this._ui._Bar._BarUI.stopPointer();
+      this._ui._Bar._ui.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
       console.log("Position correct: ", positionCorrect);
@@ -168,7 +168,7 @@ export class Game {
 
       setTimeout(() => {
         this._timer.start();
-        this._ui._Bar._BarUI.movePointer();
+        this._ui._Bar._ui.movePointer();
         this.pendingHandler = false;
       }, 1500);
     }

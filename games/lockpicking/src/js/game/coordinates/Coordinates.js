@@ -15,11 +15,9 @@ export class Coordinates {
   }
 
   checkPosition() {
-    const areaStyles = this.getCoordinates(
-      this.root._ui._Bar._BarUI.barAreaNode
-    );
+    const areaStyles = this.getCoordinates(this.root._ui._Bar._ui.barAreaNode);
     const pointerStyles = this.getCoordinates(
-      this.root._ui._Bar._BarUI.barPointerNode
+      this.root._ui._Bar._ui.barPointerNode
     );
 
     const areaRange = {};
