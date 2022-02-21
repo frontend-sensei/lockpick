@@ -6,9 +6,7 @@ export class Attempts {
   }
 
   getHTML() {
-    return `
-    <div class="attempts-count"></div>
-    `;
+    return `<div class="attempts-count"></div>`;
   }
 
   render() {
@@ -19,7 +17,6 @@ export class Attempts {
     this.root._ui.gameNode.appendChild(attemptsEl);
     this.node = document.getElementById(attemptsEl.id);
     this.nodeAttemptsCount = this.node.querySelector(".attempts-count");
-
     this.root.attempts.subscribe(this.updateAttemptsCount.bind(this));
   }
 
