@@ -35,7 +35,6 @@ export class Game {
   }
 
   async start() {
-    console.log("Steps: ", this.level.steps);
     await this.startCountdown();
     this.launched = true;
     this.addListeners();

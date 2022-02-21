@@ -45,7 +45,6 @@ export class LevelBuilder {
   isLastLevel(levelId) {
     const possibleNextLevelId = levelId + 1;
     const hasNextLevel = this.levels.has(possibleNextLevelId);
-    const isLastLevel = !hasNextLevel;
-    return isLastLevel;
+    return !hasNextLevel;
   }
 }
