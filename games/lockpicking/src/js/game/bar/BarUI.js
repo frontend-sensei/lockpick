@@ -17,8 +17,36 @@ export class BarUI {
   getHTML() {
     const areaHeight = this.areaHeight;
     return `
-      <div class="bar__area" style="--height:${areaHeight}%"></div>
-      <div class="bar__pointer"></div>
+          <div class="bar-body__side bar-body__side-back"></div>
+          <div class="bar-body__side bar-body__side-front"></div>
+          <div class="bar-body__side bar-body__side-top"></div>
+          <div class="bar-body__side bar-body__side-bottom"></div>
+          <div class="bar-body__side bar-body__side-left"></div>
+          <div class="bar-body__side bar-body__side-right"></div>
+            <div class="bar__area">
+              <div class="bar-area__side bar-area__side-back">
+                <div class="bar-area-extra__side bar-area-extra__side-back"></div>
+              </div>
+              <div class="bar-area__side bar-area__side-front">
+                <div class="bar-area-extra__side bar-area-extra__side-front"></div>
+              </div>
+              <div class="bar-area__side bar-area__side-left">
+                <div class="bar-area-extra__side bar-area-extra__side-left"></div>
+              </div>
+              <div class="bar-area__side bar-area__side-right">
+                <div class="bar-area-extra__side bar-area-extra__side-right"></div>
+              </div>
+            </div>
+            <div class="bar__pointer">
+              <div class="bar-pointer__side bar-pointer__side-back"></div>
+              <div class="bar-pointer__side bar-pointer__side-front"></div>
+          
+              <div class="bar-pointer__side bar-pointer__side-left"></div>
+              <div class="bar-pointer__side bar-pointer__side-right"></div>
+            </div>
+      
+
+      
     `;
   }
 
