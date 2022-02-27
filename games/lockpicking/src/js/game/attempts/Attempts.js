@@ -14,7 +14,7 @@ export class Attempts {
     attemptsEl.classList = "attempts";
     attemptsEl.id = uniqueId();
     attemptsEl.innerHTML = this.getHTML();
-    this.root._ui.gameNode.appendChild(attemptsEl);
+    this.root._ui.node.appendChild(attemptsEl);
     this.node = document.getElementById(attemptsEl.id);
     this.nodeAttemptsCount = this.node.querySelector(".attempts-count");
     this.root.attempts.subscribe(this.updateAttemptsCount.bind(this));

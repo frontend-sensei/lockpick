@@ -5,6 +5,7 @@ import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
 import { Popup } from "./popup/Popup.js";
 import { Observable } from "../utils/observable.js";
+import { isMobile } from "../utils/isMobile.js";
 
 /**
  * Creates a new Game
@@ -17,6 +18,7 @@ export class Game {
     this.pendingHandler = false;
     this.keydownHandler = this.keydownHandler.bind(this);
     this.popup = null;
+    this.isMobile = isMobile();
 
     this._progress = new Progress().restore();
     this._levels = new LevelBuilder().build();
@@ -119,10 +121,66 @@ export class Game {
 
   addListeners() {
     window.addEventListener("keydown", this.keydownHandler);
+    if (this.isMobile) {
+      this._ui._MobileUnlockBtn.node.addEventListener(
+        "click",
+        this.mobileUnlockHandler.bind(this)
+      );
+    }
   }
 
   removeListeners() {
     window.removeEventListener("keydown", this.keydownHandler);
+    if (this.isMobile) {
+      this._ui._MobileUnlockBtn.node.removeEventListener(
+        "click",
+        this.mobileUnlockHandler.bind(this)
+      );
+    }
+  }
+
+  mobileUnlockHandler() {
+    if (this.pendingHandler) {
+      return;
+    }
+
+    this.pendingHandler = true;
+
+    if (this._timer.finished) {
+      return;
+    }
+
+    this._timer.pause();
+    this._ui._Bar._ui.stopPointer();
+
+    const positionCorrect = this._coordinates.checkPosition();
+    if (!positionCorrect) {
+      this.attempts.set(this.attempts.value - 1);
+      console.log("attempts: ", this.attempts.value);
+    }
+
+    if (positionCorrect) {
+      this.pinsUnlocked++;
+      this._ui._PinsUI.updateUnlocked(this.pinsUnlocked);
+    }
+
+    if (this.pinsUnlocked === this.level.steps) {
+      this.pendingHandler = false;
+      this.onWon();
+      return;
+    }
+
+    if (!this.attempts.value) {
+      this.pendingHandler = false;
+      this.onDefeat();
+      return;
+    }
+
+    setTimeout(() => {
+      this._timer.start();
+      this._ui._Bar._ui.movePointer();
+      this.pendingHandler = false;
+    }, 1500);
   }
 
   keydownHandler() {
@@ -140,7 +198,6 @@ export class Game {
       this._ui._Bar._ui.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
-      console.log("Position correct: ", positionCorrect);
       if (!positionCorrect) {
         this.attempts.set(this.attempts.value - 1);
         console.log("attempts: ", this.attempts.value);
@@ -162,8 +219,6 @@ export class Game {
         this.onDefeat();
         return;
       }
-
-      console.log("Steps: ", this.level.steps);
 
       setTimeout(() => {
         this._timer.start();

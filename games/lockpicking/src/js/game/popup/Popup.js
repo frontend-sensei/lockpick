@@ -29,7 +29,7 @@ export class Popup {
     popupEl.classList = "popup-wrapper";
     popupEl.id = uniqueId();
     popupEl.innerHTML = this.getHTML();
-    this.root._ui.gameNode.appendChild(popupEl);
+    this.root._ui.node.appendChild(popupEl);
     this.node = document.getElementById(popupEl.id);
 
     document

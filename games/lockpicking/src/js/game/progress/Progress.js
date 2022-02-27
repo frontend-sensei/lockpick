@@ -27,7 +27,7 @@ export class Progress {
   }
 
   restore() {
-    const result = JSON.parse(localStorage.getItem(this.storageKey));
+    const result = JSON.parse(localStorage.getItem(this.storageKey)) || {};
     if (Object.keys(result).length !== 0) {
       this.progress = result;
     }
