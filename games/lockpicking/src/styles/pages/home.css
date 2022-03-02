@@ -1,0 +1,133 @@
+html,
+body,
+.home-page {
+  height: 100%;
+}
+
+.home-page {
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+
+  --link-padding: 1rem;
+  --line-color: #00545b;
+  --play-button-size: 132px;
+}
+
+.home-page__color-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #00232e9e;
+  z-index: -1;
+}
+
+.home-page__video-background {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.home-page__bar-link {
+  color: #fff;
+  display: block;
+  padding: var(--link-padding);
+  white-space: nowrap;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.home-page__top-bar {
+  display: flex;
+  align-items: center;
+}
+
+.home-page__line {
+  border-radius: 5px;
+  background-color: var(--line-color);
+}
+
+.home-page-top-bar__line {
+  margin-left: 2rem;
+  width: 100%;
+  height: 2px;
+}
+
+.home-page-nav__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.home-page__left-bar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+}
+
+.home-page-left-bar__line {
+  margin: 3rem 0 0 var(--link-padding);
+  height: 100%;
+  width: 2px;
+}
+
+.home-page__developers {
+  color: #fff;
+  padding: var(--link-padding);
+  writing-mode: tb;
+  white-space: nowrap;
+}
+
+.home-page-keys-img {
+  pointer-events: none;
+  transform: rotate(-2deg);
+  transform-origin: top center;
+  animation: wiggle 2.5s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.home-page__play-wrapper {
+  position: relative;
+  max-width: 146px;
+  margin: 0 auto;
+  /* transform: scale(8); */
+  transform-origin: 50% 13%;
+  transition: 1s ease-in-out;
+}
+
+.home-page__play-button {
+  cursor: pointer;
+  width: var(--play-button-size);
+  height: var(--play-button-size);
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  color: #fff;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  background-color: #041b28cc;
+  transition: 0.15s ease-in-out;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-page__play-button:hover {
+  background-color: #052d3a;
+  box-shadow: 0px 0px 90px 10px #00524d, inset 10px 10px 20px #005f65;
+}

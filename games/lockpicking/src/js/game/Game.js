@@ -3,6 +3,7 @@ import { Timer } from "./timer/Timer.js";
 import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
+import { Countdown } from "./countdown/Countdown.js";
 import { Popup } from "./popup/Popup.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
@@ -16,7 +17,8 @@ export class Game {
     this.attempts = new Observable(3);
     this.launched = false;
     this.pendingHandler = false;
-    this.keydownHandler = this.keydownHandler.bind(this);
+    this.desktopUnlockHandler = this.desktopUnlockHandler.bind(this);
+    this.mobileUnlockHandler = this.mobileUnlockHandler.bind(this);
     this.popup = null;
     this.isMobile = isMobile();
 
@@ -37,46 +39,11 @@ export class Game {
   }
 
   async start() {
-    await this.startCountdown();
+    await new Countdown(this).start();
     this.launched = true;
     this.addListeners();
-
     this._timer.start();
     this._ui._Bar._ui.movePointer();
-  }
-
-  startCountdown() {
-    const gameSelector = ".game";
-    const gameNode = document.querySelector(gameSelector);
-    if (!gameNode) {
-      throw new Error("Game selector not found!");
-    }
-
-    const countdownEl = document.createElement("div");
-    countdownEl.className = "countdown";
-    countdownEl.innerHTML = `<div class="countdown-value"></div>`;
-    gameNode.appendChild(countdownEl);
-
-    const countdownNode = gameNode.querySelector(".countdown");
-    const countdownValueNode = gameNode.querySelector(".countdown-value");
-
-    const countdown = 3;
-
-    return new Promise((resolve) => {
-      let secondsPassed = 0;
-      let interval = setInterval(() => {
-        if (secondsPassed >= countdown) {
-          interval = clearInterval(interval);
-          countdownValueNode.innerHTML = "Go!";
-          countdownNode.classList.add("hidden");
-          resolve();
-          return;
-        }
-
-        countdownValueNode.innerHTML = countdown - secondsPassed;
-        secondsPassed++;
-      }, 1000);
-    });
   }
 
   stop() {
@@ -106,101 +73,56 @@ export class Game {
     }
     this._progress.save(levelToSave);
 
-    const winPopup = new Popup(this, {
+    new Popup(this, {
       headline: "You Won!",
       reloadBtnText: "Continue",
     }).render();
   }
 
   gameOver() {
-    const gameOverPopup = new Popup(this, {
+    new Popup(this, {
       headline: "Game over :(",
       reloadBtnText: "Retry",
     }).render();
   }
 
   addListeners() {
-    window.addEventListener("keydown", this.keydownHandler);
     if (this.isMobile) {
       this._ui._MobileUnlockBtn.node.addEventListener(
         "click",
-        this.mobileUnlockHandler.bind(this)
+        this.mobileUnlockHandler
       );
+    } else {
+      window.addEventListener("keydown", this.desktopUnlockHandler);
     }
   }
 
   removeListeners() {
-    window.removeEventListener("keydown", this.keydownHandler);
     if (this.isMobile) {
       this._ui._MobileUnlockBtn.node.removeEventListener(
         "click",
-        this.mobileUnlockHandler.bind(this)
+        this.mobileUnlockHandler
       );
+    } else {
+      window.removeEventListener("keydown", this.desktopUnlockHandler);
     }
   }
 
-  mobileUnlockHandler() {
-    if (this.pendingHandler) {
-      return;
-    }
+  unlockHandler(event, conditionFn = () => {}) {
+    try {
+      if (this.pendingHandler || this._timer.finished) {
+        return;
+      }
+      this.pendingHandler = true;
 
-    this.pendingHandler = true;
+      conditionFn(event);
 
-    if (this._timer.finished) {
-      return;
-    }
-
-    this._timer.pause();
-    this._ui._Bar._ui.stopPointer();
-
-    const positionCorrect = this._coordinates.checkPosition();
-    if (!positionCorrect) {
-      this.attempts.set(this.attempts.value - 1);
-      console.log("attempts: ", this.attempts.value);
-    }
-
-    if (positionCorrect) {
-      this.pinsUnlocked++;
-      this._ui._PinsUI.updateUnlocked(this.pinsUnlocked);
-    }
-
-    if (this.pinsUnlocked === this.level.steps) {
-      this.pendingHandler = false;
-      this.onWon();
-      return;
-    }
-
-    if (!this.attempts.value) {
-      this.pendingHandler = false;
-      this.onDefeat();
-      return;
-    }
-
-    setTimeout(() => {
-      this._timer.start();
-      this._ui._Bar._ui.movePointer();
-      this.pendingHandler = false;
-    }, 1500);
-  }
-
-  keydownHandler() {
-    if (this.pendingHandler) {
-      return;
-    }
-
-    this.pendingHandler = true;
-
-    if (this._timer.finished) {
-      return;
-    }
-    if (event.keyCode === 32) {
       this._timer.pause();
       this._ui._Bar._ui.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
       if (!positionCorrect) {
         this.attempts.set(this.attempts.value - 1);
-        console.log("attempts: ", this.attempts.value);
       }
 
       if (positionCorrect) {
@@ -209,15 +131,13 @@ export class Game {
       }
 
       if (this.pinsUnlocked === this.level.steps) {
-        this.pendingHandler = false;
         this.onWon();
-        return;
+        throw new Error();
       }
 
       if (!this.attempts.value) {
-        this.pendingHandler = false;
         this.onDefeat();
-        return;
+        throw new Error();
       }
 
       setTimeout(() => {
@@ -225,6 +145,22 @@ export class Game {
         this._ui._Bar._ui.movePointer();
         this.pendingHandler = false;
       }, 1500);
+    } catch (e) {
+      this.pendingHandler = false;
     }
+  }
+
+  isSpaceTriggered(event) {
+    if (event.keyCode !== 32) {
+      throw new Error();
+    }
+  }
+
+  mobileUnlockHandler(event) {
+    this.unlockHandler(event);
+  }
+
+  desktopUnlockHandler(event) {
+    this.unlockHandler(event, this.isSpaceTriggered);
   }
 }
