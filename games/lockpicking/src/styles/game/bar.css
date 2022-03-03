@@ -1,10 +1,3 @@
-.game {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .bar-wrapper {
   --body-height: 100px;
   --body-width: 100px;
@@ -14,6 +7,11 @@
   --pointer-height: var(--body-height);
   --pointer-width: var(--area-width);
   perspective: 800px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: flex-end;
 }
 
 .bar {
