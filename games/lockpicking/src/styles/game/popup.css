@@ -42,6 +42,7 @@
 }
 
 .popup-headline {
+  margin-top: 0;
   text-align: center;
 }
 
@@ -51,4 +52,13 @@
 
 .popup-buttons {
   text-align: center;
+}
+
+.popup-button {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border: none;
+  color: #fff;
+  border-radius: 0.25rem;
+  background-color: #07a0af;
 }
