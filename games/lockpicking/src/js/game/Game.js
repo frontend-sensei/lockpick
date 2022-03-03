@@ -73,17 +73,35 @@ export class Game {
     }
     this._progress.save(levelToSave);
 
-    new Popup(this, {
-      headline: "You Won!",
-      reloadBtnText: "Continue",
+    new Popup({
+      html: `<h2 class="popup-headline">You Won!</h2>
+      <button class="popup-button" id="backToHome">back to home</button>
+      <button class="popup-button" id="reloadPage">Continue</button>`,
+      listeners: {
+        backToHome: this.backToHomeHandler,
+        reloadPage: this.reloadPage,
+      },
     }).render();
   }
 
   gameOver() {
-    new Popup(this, {
-      headline: "Game over :(",
-      reloadBtnText: "Retry",
+    new Popup({
+      html: `<h2 class="popup-headline">Game over :(</h2>
+      <button class="popup-button" id="backToHome">back to home</button>
+      <button class="popup-button" id="reloadPage">Retry</button>`,
+      listeners: {
+        backToHome: this.backToHomeHandler,
+        reloadPage: this.reloadPage,
+      },
     }).render();
+  }
+
+  backToHomeHandler() {
+    location.href = "/";
+  }
+
+  reloadPage() {
+    location.reload();
   }
 
   addListeners() {

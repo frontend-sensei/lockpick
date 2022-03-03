@@ -1,0 +1,16 @@
+.navigation-layer {
+  pointer-events: none;
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--app-navigation-layer-bg-color);
+  transition: opacity var(--app-navigation-layer-transition-duration)
+    ease-in-out;
+}
+
+.navigation-layer.hidden {
+  opacity: 0;
+}

@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="stylesheet" href="./styles/app.css">
   <link rel="stylesheet" href="./styles/pages/home.css">
+  <link rel="stylesheet" href="./styles/game/popup.css">
   <title>Document</title>
 </head>
 <body>
@@ -24,7 +25,7 @@
       <nav class="home-page__nav">
         <ul class="home-page-nav__list">
           <li>
-            <a class="home-page__bar-link" href="#">
+            <a class="home-page__bar-link" href="#" id="howToPlay">
               How to play
             </a>
           </li>
@@ -42,7 +43,7 @@
     </div>
     <h1>LOCKPICKER</h1>
 
-    <div class="home-page__play-wrapper">
+    <div class="home-page__play-wrapper" id="playWrapper">
       <button class="home-page__play-button" id="play">play</button>
       <img class="home-page-keys-img" src="./assets/images/keys.png" alt="">
     </div>
