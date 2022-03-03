@@ -20,7 +20,9 @@ export class UI {
     const element = document.createElement("div");
     element.innerHTML = ` 
     <div class="unlock-label">
-      <div class="label-space"></div>
+      <div class="label-space">
+        <img class="label-space-icon" src="./assets/icons/space.svg" alt="">
+      </div>
       <span class="label-text">Unlock pin</div>
     </div>
     `;
