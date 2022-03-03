@@ -18,7 +18,13 @@ export class UI {
 
   render(selector) {
     const element = document.createElement("div");
-    element.innerHTML = ``;
+    element.innerHTML = ` 
+    <div class="unlock-label">
+      <div class="unlock-label__img">
+      </div>
+      <span class="unlock-label__text">Unlock pin</div>
+    </div>
+    `;
     element.className = `game`;
     const wrapper = document.querySelector(selector);
     if (!wrapper) {

@@ -11,10 +11,14 @@ export class PinsUI {
   getHTML() {
     const pins = this.root.level.steps;
     return `
-    <div class="pins-label">Pins:</div>
-    <div class="pins-unlocked">0</div>
-    <div class="pins-delimiter">/</div>
-    <div class="pins-count">${pins}</div>
+    <div class="pins-wrapper">
+        <span class="pins-label">Pins:</span>
+      <div class="pins-counter">
+        <span class="pins-unlocked">0</span>
+        <span class="pins-delimiter">/</span>
+        <span class="pins-count">${pins}</span>
+      </div>
+    </div>
     `;
   }
 

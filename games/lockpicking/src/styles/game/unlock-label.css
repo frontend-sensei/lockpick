@@ -1,0 +1,34 @@
+.unlock-label {
+  position: fixed;
+  bottom: 50px;
+  right: 100px;
+}
+
+.unlock-label__img {
+  display: inline-block;
+  width: 40px;
+  height: 30px;
+  background: url(../../assets/icons/space.svg),
+    linear-gradient(180deg, #3994af, #00465b);
+  background-position: 50% 70%;
+  background-repeat: no-repeat;
+  background-size: calc(100% - 5px), 100%;
+  border: 3px solid #ccc;
+  border-radius: 6px;
+  padding: 5px;
+  margin: 0 5px 0 0;
+  transition: 0.05s ease-in-out;
+}
+
+.unlock-label__img:hover {
+  transform: scale(0.9) translateY(1px);
+}
+
+.unlock-label-img__icon {
+  width: 100%;
+}
+
+.unlock-label__text {
+  color: white;
+  font-size: 20px;
+}
