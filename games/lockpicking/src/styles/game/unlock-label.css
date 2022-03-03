@@ -4,7 +4,7 @@
   right: 100px;
 }
 
-.label-space {
+.unlock-label__img {
   display: inline-block;
   width: 40px;
   height: 30px;
@@ -16,15 +16,15 @@
   transition: 0.05s ease-in-out;
 }
 
-.label-space:hover {
+.unlock-label__img:hover {
   transform: scale(0.9) translateY(1px);
 }
 
-.label-space-icon {
+.unlock-label-img__icon {
   width: 100%;
 }
 
-.label-text {
+.unlock-label__text {
   color: white;
   font-size: 20px;
 }
