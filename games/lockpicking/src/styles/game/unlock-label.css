@@ -1,0 +1,14 @@
+.unlock-label {
+  position: fixed;
+  bottom: 50px;
+  background-color: rgba(0, 0, 0, 0.301);
+  width: 100%;
+}
+
+.label-space {
+  width: 50px;
+  height: 40px;
+}
+
+.label-text {
+}
