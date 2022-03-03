@@ -21,7 +21,6 @@ export class UI {
     element.innerHTML = ` 
     <div class="unlock-label">
       <div class="unlock-label__img">
-        <img class="unlock-label-img__icon" src="./assets/icons/space.svg" alt="">
       </div>
       <span class="unlock-label__text">Unlock pin</div>
     </div>
