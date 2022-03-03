@@ -1,6 +1,5 @@
 .pins {
   color: #fff;
-  /* margin-left: 30px; */
   perspective: 800px;
 }
 
@@ -22,9 +21,6 @@
 .pins-label {
   font-size: 30px;
   color: #59c6e7;
-}
-
-.pins-counter {
 }
 
 .pins-unlocked {

@@ -20,10 +20,10 @@ export class UI {
     const element = document.createElement("div");
     element.innerHTML = ` 
     <div class="unlock-label">
-      <div class="label-space">
-        <img class="label-space-icon" src="./assets/icons/space.svg" alt="">
+      <div class="unlock-label__img">
+        <img class="unlock-label-img__icon" src="./assets/icons/space.svg" alt="">
       </div>
-      <span class="label-text">Unlock pin</div>
+      <span class="unlock-label__text">Unlock pin</div>
     </div>
     `;
     element.className = `game`;
