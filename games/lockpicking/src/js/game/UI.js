@@ -2,6 +2,7 @@ import { Bar } from "./bar/Bar.js";
 import { PinsUI } from "./pins/PinsUI.js";
 import { Attempts } from "./attempts/Attempts.js";
 import { MobileUnlockBtn } from "./mobile-unlock-btn/MobileUnlockBtn.js";
+import { UnlockLabel } from "./unlock-label/UnlockLabel.js";
 
 export class UI {
   constructor(root) {
@@ -18,13 +19,6 @@ export class UI {
 
   render(selector) {
     const element = document.createElement("div");
-    element.innerHTML = ` 
-    <div class="unlock-label">
-      <div class="unlock-label__img">
-      </div>
-      <span class="unlock-label__text">Unlock pin</div>
-    </div>
-    `;
     element.className = `game`;
     const wrapper = document.querySelector(selector);
     if (!wrapper) {
@@ -39,6 +33,8 @@ export class UI {
     this._Attempts.render(".game");
     if (this.root.isMobile) {
       this._MobileUnlockBtn.render();
+    } else {
+      new UnlockLabel().render(".pins");
     }
   }
 }
