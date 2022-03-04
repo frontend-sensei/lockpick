@@ -1,5 +1,5 @@
 .attempts {
-  --size: 50px;
+  --size: 60px;
   width: var(--size);
   height: var(--size);
   position: fixed;
