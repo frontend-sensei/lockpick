@@ -17,9 +17,17 @@ export class UI {
     }
   }
 
+  getHTML() {
+    return `
+      <div class="bar-row"></div>
+    `;
+  }
+
   render(selector) {
     const element = document.createElement("div");
+    element.innerHTML = this.getHTML();
     element.className = `game`;
+
     const wrapper = document.querySelector(selector);
     if (!wrapper) {
       throw new Error(`Selector - "${this.selector}" not found`);
@@ -28,13 +36,13 @@ export class UI {
 
     this.node = document.querySelector(".game");
 
-    this._Bar.render(".game");
-    this._PinsUI.render(".game");
+    this._Bar.render(".bar-row");
+    this._PinsUI.render(".bar-row");
     this._Attempts.render(".game");
     if (this.root.isMobile) {
       this._MobileUnlockBtn.render();
     } else {
-      new UnlockLabel().render(".pins");
+      new UnlockLabel().render(".bar-row");
     }
   }
 }
