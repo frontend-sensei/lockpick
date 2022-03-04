@@ -22,12 +22,6 @@
   height: var(--body-length);
 }
 
-.bar-body__side {
-  position: absolute;
-  background-color: #353535a8;
-  box-shadow: inset 0 0 0px 1px #000;
-}
-
 .bar-body__side-back {
   height: var(--body-length);
   width: var(--body-width);
@@ -78,8 +72,35 @@
   top: 50%;
   right: 0;
   transform: translateZ(calc(var(--area-width) * -0.5)) translateY(-50%)
-    translateX(50%) rotateY(90deg) translateX(-50%);
+    translateX(50%) rotateY(270deg) translateX(50%);
   background-color: #0b0b0b40;
+}
+
+.bar-body__side {
+  position: absolute;
+  box-shadow: inset 0 0 0px 1px #000;
+  transition: 0.2s ease-in-out;
+}
+
+.bar-body__side::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: 0.1s ease-in-out;
+  background-image: linear-gradient(
+      115deg,
+      rgba(0, 0, 0, 0.45) 5%,
+      rgb(70 0 0 / 40%) 28%,
+      rgba(0, 0, 0, 0.45) 54%
+    ),
+    linear-gradient(
+      79deg,
+      rgba(0, 0, 0, 0.45) 5%,
+      rgb(70 0 0 / 40%) 28%,
+      rgba(0, 0, 0, 0.45) 54%
+    );
 }
 
 .bar__area {
