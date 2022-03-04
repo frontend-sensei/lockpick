@@ -6,7 +6,7 @@ export class Attempts {
   }
 
   getHTML() {
-    return `<div class="attempts-count"></div>`;
+    return `<div class="attempts__count"></div>`;
   }
 
   render() {
@@ -16,7 +16,7 @@ export class Attempts {
     attemptsEl.innerHTML = this.getHTML();
     this.root._ui.node.appendChild(attemptsEl);
     this.node = document.getElementById(attemptsEl.id);
-    this.nodeAttemptsCount = this.node.querySelector(".attempts-count");
+    this.nodeAttemptsCount = this.node.querySelector(".attempts__count");
     this.root.attempts.subscribe(this.updateAttemptsCount.bind(this));
   }
 

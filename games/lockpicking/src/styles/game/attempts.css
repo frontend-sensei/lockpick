@@ -1,3 +1,21 @@
 .attempts {
+  --size: 50px;
+  width: var(--size);
+  height: var(--size);
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
   color: #fff;
+  font-size: 18px;
+  border-radius: 50%;
+  background-color: #003656;
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: 80% 20%;
+  background-image: url("../../assets/icons/picklock_icon.png");
+}
+
+.attempts__count {
+  line-height: 0.7em;
+  margin: calc(var(--size) / 1.75) 0 0 calc(var(--size) / 5);
 }
