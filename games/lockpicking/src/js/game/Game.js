@@ -171,6 +171,15 @@ export class Game {
   isSpaceTriggered(event) {
     if (event.keyCode !== 32) {
       throw new Error();
+    } else if (event.keyCode === 32) {
+      document
+        .querySelector(".unlock-label__img")
+        .classList.add("unlock-label__img--active");
+      setTimeout(() => {
+        document
+          .querySelector(".unlock-label__img")
+          .classList.remove("unlock-label__img--active");
+      }, 100);
     }
   }
 
