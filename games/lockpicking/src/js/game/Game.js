@@ -140,6 +140,11 @@ export class Game {
 
       const positionCorrect = this._coordinates.checkPosition();
       if (!positionCorrect) {
+        document.querySelector(".bar").classList.add("bar--failure");
+        setTimeout(() => {
+          document.querySelector(".bar").classList.remove("bar--failure");
+        }, 1500);
+
         this.attempts.set(this.attempts.value - 1);
       }
 
