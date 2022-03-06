@@ -32,7 +32,6 @@ export class Lockpick {
     el.className = "lockpick";
     el.id = uniqueId();
     el.innerHTML = this.getHTML();
-    // el.style.setProperty("--pins-count", 3);
 
     const previousNode = document.querySelector(selector);
     if (!previousNode) {
