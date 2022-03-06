@@ -140,9 +140,10 @@ export class Game {
 
       const positionCorrect = this._coordinates.checkPosition();
       if (!positionCorrect) {
-        document.querySelector(".bar").classList.add("bar--failure");
+        const bar = document.querySelector(".bar");
+        bar.classList.add("bar--failure");
         setTimeout(() => {
-          document.querySelector(".bar").classList.remove("bar--failure");
+          bar.classList.remove("bar--failure");
         }, 1500);
 
         this.attempts.set(this.attempts.value - 1);
@@ -163,6 +164,15 @@ export class Game {
         throw new Error();
       }
 
+      document
+        .querySelector(".unlock-label__img")
+        .classList.add("unlock-label__img--active");
+      setTimeout(() => {
+        document
+          .querySelector(".unlock-label__img")
+          .classList.remove("unlock-label__img--active");
+      }, 100);
+
       setTimeout(() => {
         this._timer.start();
         this._ui._Bar._ui.movePointer();
@@ -176,15 +186,6 @@ export class Game {
   isSpaceTriggered(event) {
     if (event.keyCode !== 32) {
       throw new Error();
-    } else if (event.keyCode === 32) {
-      document
-        .querySelector(".unlock-label__img")
-        .classList.add("unlock-label__img--active");
-      setTimeout(() => {
-        document
-          .querySelector(".unlock-label__img")
-          .classList.remove("unlock-label__img--active");
-      }, 100);
     }
   }
 

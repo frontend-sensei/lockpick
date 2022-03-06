@@ -91,15 +91,15 @@
   transition: 0.2s ease-in-out;
   background-image: linear-gradient(
       115deg,
-      rgba(0, 0, 0, 0.45) 5%,
-      rgb(70 0 0 / 40%) 28%,
-      rgba(0, 0, 0, 0.45) 54%
+      rgba(0, 0, 0, 0) 5%,
+      rgb(70 0 0 / 35%) 28%,
+      rgba(0, 0, 0, 0) 54%
     ),
     linear-gradient(
       79deg,
-      rgba(0, 0, 0, 0.45) 5%,
-      rgb(70 0 0 / 40%) 28%,
-      rgba(0, 0, 0, 0.45) 54%
+      rgba(0, 0, 0, 0) 5%,
+      rgb(70 0 0 / 35%) 28%,
+      rgba(0, 0, 0, 0) 54%
     );
 }
 
