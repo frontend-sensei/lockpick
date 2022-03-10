@@ -90,14 +90,27 @@ export class Lockpick {
   setPicklockAngle() {
     setTimeout(() => {
       const picklockNode = document.querySelector(".lockpick__picklock");
-      const pinsOffset = this.pinHeight - this.currentTranslateY;
       const heightSlideOut =
         getComputedStyle(picklockNode).getPropertyValue("top").split("px")[0] -
-        pinsOffset;
+        (this.pinHeight -
+          this.currentTranslateY -
+          this.currentTranslateY -
+          this.currentTranslateY -
+          picklockNode.clientHeight);
       const angleSlideOut = (picklockNode.clientWidth / heightSlideOut) * -1;
       this.keyHoleNode.style.setProperty(
         "--angle-slide-out",
         `${angleSlideOut}deg`
+      );
+
+      const heightSlideIn =
+        getComputedStyle(picklockNode).getPropertyValue("top").split("px")[0] -
+        this.pinHeight +
+        20;
+      const angleSlideIn = (picklockNode.clientWidth / heightSlideIn) * -1;
+      this.keyHoleNode.style.setProperty(
+        "--angle-slide-in",
+        `${angleSlideIn}deg`
       );
     }, 100);
   }

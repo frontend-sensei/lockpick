@@ -97,17 +97,17 @@
   --cols-count: calc(var(--current-pin) * 2);
   --img-offset: 2px;
   --half-height: 13px;
-  --top: calc(var(--height) / 2 / 3 + var(--current-translateY) - 2px);
+  --top: calc(var(--height) / 2 / 3 + var(--pin-height) - 2px);
   position: absolute;
   right: calc(var(--pin-col-width) * var(--cols-count) - var(--img-offset));
   top: var(--top);
-  transform-origin: left center;
-  transform: rotate(0deg);
+  transform-origin: left top;
+  transform: rotate(var(--angle-slide-out));
   animation: picklockSliding var(--animation-duration) infinite ease-in-out;
 }
 
 @keyframes picklockSliding {
   50% {
-    transform: rotate(var(--angle-slide-out));
+    transform: rotate(var(--angle-slide-in));
   }
 }
