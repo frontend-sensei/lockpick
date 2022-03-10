@@ -9,7 +9,7 @@ export class BarUI {
     this.areaNode = null;
     this.pointerNode = null;
     this.inertvalId = null;
-    this.barLength = 700;
+    this.barLength = 200;
     this.areaHeight = this.root.level.areaHeight;
     this.pointerLength = 25;
     this.translateY = 0;

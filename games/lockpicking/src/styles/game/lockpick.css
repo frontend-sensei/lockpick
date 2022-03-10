@@ -2,7 +2,11 @@
   --height: 200px;
   --pin-col-width: 20px;
   --current-pin: 1;
+  --animation-duration: 3s;
   height: var(--height);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   padding-top: 0.5rem;
   border-radius: 2px;
   border: 1px solid #004f57;
@@ -27,6 +31,7 @@
 
 .lockpick__pin-col {
   --translateY: 1px;
+  --min-translateY: 5px;
   border: 2px solid #d1b17f;
   border-bottom: none;
   border-radius: 1px 1px 0px 0px;
@@ -40,8 +45,29 @@
 .lockpick__pins {
   --radius-top: 5px;
   --radius-bottom: 3px;
-  height: 66%;
+  height: 66.666%;
   transform: translateY(100%) translateY(var(--translateY));
+}
+
+.lockpick__pin-col.animate {
+  animation: columnBackgroundSliding var(--animation-duration) infinite
+    ease-in-out;
+}
+
+@keyframes columnBackgroundSliding {
+  50% {
+    background-size: 100% calc(66% + var(--min-translateY));
+  }
+}
+
+.animate .lockpick__pins {
+  animation: pinSliding var(--animation-duration) infinite ease-in-out;
+}
+
+@keyframes pinSliding {
+  50% {
+    transform: translateY(100%) translateY(var(--min-translateY));
+  }
 }
 
 .lockpick__pin {
@@ -70,9 +96,18 @@
 .lockpick__picklock {
   --cols-count: calc(var(--current-pin) * 2);
   --img-offset: 2px;
+  --half-height: 13px;
+  --top: calc(var(--height) / 2 / 3 + var(--current-translateY) - 2px);
   position: absolute;
   right: calc(var(--pin-col-width) * var(--cols-count) - var(--img-offset));
-  top: 31px;
+  top: var(--top);
   transform-origin: left center;
   transform: rotate(0deg);
+  animation: picklockSliding var(--animation-duration) infinite ease-in-out;
+}
+
+@keyframes picklockSliding {
+  50% {
+    transform: rotate(var(--angle-slide-out));
+  }
 }
