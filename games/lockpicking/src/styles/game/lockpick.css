@@ -1,7 +1,6 @@
 .lockpick {
   --height: 200px;
   --pin-col-width: 20px;
-  --current-pin: 1;
   --animation-duration: 3s;
   height: var(--height);
   width: -webkit-fit-content;
@@ -103,6 +102,9 @@
   top: var(--top);
   transform-origin: left top;
   transform: rotate(var(--angle-slide-out));
+}
+
+.lockpick__picklock.animate {
   animation: picklockSliding var(--animation-duration) infinite ease-in-out;
 }
 

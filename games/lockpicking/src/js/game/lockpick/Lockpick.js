@@ -6,8 +6,8 @@ export class Lockpick {
     this.node = null;
     this.pinHeight = 0;
     this.currentPin = 1;
-    this.currentPinNode = null;
     this.keyHoleNode = null;
+    this.currentPinNode = null;
     this.currentTranslateY = null;
     this.MIN_TRANSLATE_Y = 5;
   }
@@ -27,17 +27,13 @@ export class Lockpick {
     this.node = document.getElementById(el.id);
 
     this.pinHeight = this.getPinHeight();
+    this.node.style.setProperty("--pin-height", `${this.pinHeight}px`);
 
     this.keyHoleNode = document.querySelector(".lockpick__keyhole");
 
     this.setRandomTranslateY();
     this.setPicklockAngle();
-
-    const pinNode = document.querySelector(".lockpick__pin");
-    const lockpickNode = document.querySelector(".lockpick");
-    lockpickNode.style.setProperty("--pin-height", `${pinNode.clientHeight}px`);
-
-    this.animate();
+    this.setCurrentPin();
 
     return this;
   }
@@ -89,25 +85,30 @@ export class Lockpick {
 
   setPicklockAngle() {
     setTimeout(() => {
-      const picklockNode = document.querySelector(".lockpick__picklock");
+      this.picklockNode = document.querySelector(".lockpick__picklock");
       const heightSlideOut =
-        getComputedStyle(picklockNode).getPropertyValue("top").split("px")[0] -
+        getComputedStyle(this.picklockNode)
+          .getPropertyValue("top")
+          .split("px")[0] -
         (this.pinHeight -
           this.currentTranslateY -
           this.currentTranslateY -
           this.currentTranslateY -
-          picklockNode.clientHeight);
-      const angleSlideOut = (picklockNode.clientWidth / heightSlideOut) * -1;
+          this.picklockNode.clientHeight);
+      const angleSlideOut =
+        (this.picklockNode.clientWidth / heightSlideOut) * -1;
       this.keyHoleNode.style.setProperty(
         "--angle-slide-out",
         `${angleSlideOut}deg`
       );
 
       const heightSlideIn =
-        getComputedStyle(picklockNode).getPropertyValue("top").split("px")[0] -
+        getComputedStyle(this.picklockNode)
+          .getPropertyValue("top")
+          .split("px")[0] -
         this.pinHeight +
         20;
-      const angleSlideIn = (picklockNode.clientWidth / heightSlideIn) * -1;
+      const angleSlideIn = (this.picklockNode.clientWidth / heightSlideIn) * -1;
       this.keyHoleNode.style.setProperty(
         "--angle-slide-in",
         `${angleSlideIn}deg`
@@ -120,21 +121,37 @@ export class Lockpick {
   }
 
   getPinHeight() {
-    const BORDER_RADIUS_HEIGHT = 3;
-    const pinNode = document.querySelector(".lockpick__pin");
-    if (!pinNode) {
+    this.pinNode = document.querySelector(".lockpick__pin");
+    if (!this.pinNode) {
       throw new Error("Pin node not found");
     }
-    return pinNode.clientHeight;
+    return this.pinNode.clientHeight;
+  }
+
+  increaseCurrentPin() {
+    this.currentPin++;
+    this.setCurrentPin();
+  }
+
+  setCurrentPin() {
+    this.node.style.setProperty("--current-pin", this.currentPin);
   }
 
   animate() {
     const pinNodes = document.querySelectorAll(".lockpick__pin-col");
     this.currentPinNode = pinNodes[pinNodes.length - this.currentPin];
     this.currentPinNode.classList.add("animate");
+    this.picklockNode.classList.add("animate");
+  }
+
+  setUnlocked() {
+    this.currentPinNode.classList.add("unlocked");
   }
 
   stopAnimate() {
+    this.increaseCurrentPin();
+    this.setUnlocked();
     this.currentPinNode.classList.remove("animate");
+    this.picklockNode.classList.remove("animate");
   }
 }
