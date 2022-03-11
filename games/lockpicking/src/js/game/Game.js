@@ -127,8 +127,6 @@ export class Game {
   }
 
   unlockHandler(event, conditionFn = () => {}) {
-    const spaceButtonLabel = document.querySelector(".unlock-label__img");
-    const timeout = 1500;
     try {
       if (this.pendingHandler || this._timer.finished) {
         return;
@@ -141,12 +139,13 @@ export class Game {
       this._ui._Bar._ui.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
+      const TIMEOUT = 1500;
       if (!positionCorrect) {
         const bar = document.querySelector(".bar");
         bar.classList.add("bar--failure");
         setTimeout(() => {
           bar.classList.remove("bar--failure");
-        }, timeout - 150);
+        }, TIMEOUT - 150);
 
         this.attempts.set(this.attempts.value - 1);
       }
@@ -166,6 +165,7 @@ export class Game {
         throw new Error();
       }
 
+      const spaceButtonLabel = document.querySelector(".unlock-label__img");
       spaceButtonLabel.classList.add("unlock-label__img--active");
       setTimeout(() => {
         spaceButtonLabel.classList.remove("unlock-label__img--active");
@@ -175,7 +175,7 @@ export class Game {
         this._timer.start();
         this._ui._Bar._ui.movePointer();
         this.pendingHandler = false;
-      }, timeout);
+      }, TIMEOUT);
     } catch (e) {
       this.pendingHandler = false;
     }
