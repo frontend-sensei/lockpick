@@ -12,7 +12,7 @@ export class UI {
     this._Bar = new Bar(root);
     this._PinsUI = new PinsUI(root);
     this._Attempts = new Attempts(root);
-    this._Lockpick = new Lockpick(root);
+    this._Lockpick = new Lockpick(this.root.level.steps);
 
     if (this.root.isMobile) {
       this._MobileUnlockBtn = new MobileUnlockBtn(root);

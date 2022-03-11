@@ -7,7 +7,7 @@
   width: -moz-fit-content;
   width: fit-content;
   padding-top: 0.5rem;
-  border-radius: 2px;
+  border-radius: 5px;
   border: 1px solid #004f57;
   background-size: cover;
   background-repeat: no-repeat;
@@ -28,6 +28,14 @@
   position: relative;
 }
 
+.lockpick__rivet-col {
+  padding: 5% 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
 .lockpick__pin-col {
   --translateY: 1px;
   --min-translateY: 5px;
@@ -41,6 +49,23 @@
   background-image: url("../../assets/images/spring-coil.png");
 }
 
+.lockpick__rivet {
+  width: var(--size);
+  height: var(--size);
+  background-color: #c09c65;
+  box-shadow: 0px 0px 1px #001818, inset 0px -3px 1px -2px #594839,
+    inset -1px 3px 1px -2px #ffdba3;
+  border-radius: 50%;
+}
+
+.lockpick__rivet--big {
+  --size: 6px;
+}
+
+.lockpick__rivet--small {
+  --size: 4px;
+}
+
 .lockpick__pins {
   --radius-top: 5px;
   --radius-bottom: 3px;
@@ -51,6 +76,16 @@
 .lockpick__pin-col.animate {
   animation: columnBackgroundSliding var(--animation-duration) infinite
     ease-in-out;
+}
+
+.lockpick__pin-col.unlocked {
+  background-size: 100% calc(66% + var(--min-translateY));
+}
+.lockpick__pin-col.unlocked .lockpick__pins {
+  transform: translateY(100%) translateY(0px);
+}
+.lockpick__pin-col.unlocked .lockpick__code-pin {
+  transform: translateY(2px);
 }
 
 @keyframes columnBackgroundSliding {
@@ -89,6 +124,7 @@
   position: relative;
   z-index: 1;
   height: 45%;
+  border-top: 2px solid #d1b17f;
   background: linear-gradient(180deg, #002d2c 0%, #004948 55.76%, #002d2c 100%);
 }
 

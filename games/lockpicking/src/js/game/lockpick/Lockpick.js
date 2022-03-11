@@ -2,14 +2,15 @@ import { uniqueId } from "../../utils/uniqueId.js";
 import { getRandomInt } from "../../utils/randomInt.js";
 
 export class Lockpick {
-  constructor() {
+  constructor(steps) {
     this.node = null;
+    this.steps = steps;
     this.pinHeight = 0;
     this.currentPin = 1;
     this.keyHoleNode = null;
     this.currentPinNode = null;
     this.currentTranslateY = null;
-    this.MIN_TRANSLATE_Y = 5;
+    this.MIN_TRANSLATE_Y = 18;
   }
 
   render(selector = ".bar-row") {
@@ -38,11 +39,20 @@ export class Lockpick {
     return this;
   }
 
+  getColHTML() {
+    return `
+    <div class="lockpick__col lockpick__rivet-col">
+      <div class="lockpick__rivet lockpick__rivet--big"></div>
+      <div class="lockpick__rivet lockpick__rivet--small"></div>
+    </div>
+    `;
+  }
+
   getHTML() {
     return `
     <div class="lockpick__row">
-      <div class="lockpick__col"></div>
-      ${this.renderPinColumns(3)}
+      ${this.getColHTML()}
+      ${this.renderPinColumns(this.steps)}
     </div>
     <div class="lockpick__keyhole" style="--current-translateY:25px">
       <img class="lockpick__picklock" src="./assets/images/Picklock.png">
@@ -64,7 +74,7 @@ export class Lockpick {
         <div class="lockpick__pin lockpick__code-pin"></div>
       </div>
     </div>
-    <div class="lockpick__col"></div>
+    ${this.getColHTML()}
     `;
   }
 
@@ -117,7 +127,7 @@ export class Lockpick {
   }
 
   getRandomTranslateY() {
-    return getRandomInt(this.MIN_TRANSLATE_Y + 5, this.pinHeight);
+    return getRandomInt(this.MIN_TRANSLATE_Y, this.pinHeight - 5);
   }
 
   getPinHeight() {
@@ -149,7 +159,9 @@ export class Lockpick {
   }
 
   stopAnimate() {
-    this.increaseCurrentPin();
+    if (this.currentPin !== this.steps) {
+      this.increaseCurrentPin();
+    }
     this.setUnlocked();
     this.currentPinNode.classList.remove("animate");
     this.picklockNode.classList.remove("animate");
