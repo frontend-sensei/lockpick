@@ -127,6 +127,8 @@ export class Game {
   }
 
   unlockHandler(event, conditionFn = () => {}) {
+    const spaceButtonLabel = document.querySelector(".unlock-label__img");
+    const timeout = 1500;
     try {
       if (this.pendingHandler || this._timer.finished) {
         return;
@@ -144,7 +146,7 @@ export class Game {
         bar.classList.add("bar--failure");
         setTimeout(() => {
           bar.classList.remove("bar--failure");
-        }, 1500);
+        }, timeout - 150);
 
         this.attempts.set(this.attempts.value - 1);
       }
@@ -164,20 +166,16 @@ export class Game {
         throw new Error();
       }
 
-      document
-        .querySelector(".unlock-label__img")
-        .classList.add("unlock-label__img--active");
+      spaceButtonLabel.classList.add("unlock-label__img--active");
       setTimeout(() => {
-        document
-          .querySelector(".unlock-label__img")
-          .classList.remove("unlock-label__img--active");
+        spaceButtonLabel.classList.remove("unlock-label__img--active");
       }, 100);
 
       setTimeout(() => {
         this._timer.start();
         this._ui._Bar._ui.movePointer();
         this.pendingHandler = false;
-      }, 1500);
+      }, timeout);
     } catch (e) {
       this.pendingHandler = false;
     }
