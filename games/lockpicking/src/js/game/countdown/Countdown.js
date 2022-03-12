@@ -18,7 +18,7 @@ export class Countdown {
 
   start() {
     this.render();
-    const countdown = 3;
+    const countdown = 1;
 
     return new Promise((resolve) => {
       let secondsPassed = 0;

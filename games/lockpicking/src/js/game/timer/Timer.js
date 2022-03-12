@@ -34,7 +34,6 @@ export class Timer {
         return this.stop();
       }
       this.timer -= 50;
-      console.log(this.timer);
     }, 50);
   }
 

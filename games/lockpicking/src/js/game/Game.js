@@ -169,10 +169,12 @@ export class Game {
       }
 
       const spaceButtonLabel = document.querySelector(".unlock-label__img");
-      spaceButtonLabel.classList.add("unlock-label__img--active");
-      setTimeout(() => {
-        spaceButtonLabel.classList.remove("unlock-label__img--active");
-      }, 100);
+      if (spaceButtonLabel) {
+        spaceButtonLabel.classList.add("unlock-label__img--active");
+        setTimeout(() => {
+          spaceButtonLabel.classList.remove("unlock-label__img--active");
+        }, 100);
+      }
 
       setTimeout(() => {
         this._timer.start();
