@@ -107,20 +107,18 @@ body,
   position: relative;
   max-width: 146px;
   margin: 0px auto;
-  /* transform: scale(8); */
   transform-origin: 50% 13%;
   transition: 1.2s cubic-bezier(1, 0, 1, 0.1) 0.1s;
 }
 
 .home-page__play-button {
-  cursor: pointer;
   width: var(--play-button-size);
   height: var(--play-button-size);
   position: absolute;
   top: 8px;
   left: 8px;
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 25px;
   border-radius: 50%;
   background-color: #041b28cc;
   transition: background-color, box-shadow, color, 0.15s ease-in-out;
