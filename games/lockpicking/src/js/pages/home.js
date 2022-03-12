@@ -1,16 +1,12 @@
 import { Progress } from "../game/progress/Progress.js";
 import { Popup } from "../game/popup/Popup.js";
 
+const progress = new Progress().restore();
+
 document.getElementById("play").addEventListener("click", () => {
   document.getElementById("playWrapper").classList.add("active");
   setTimeout(() => (location.href = "game.html"), 2000);
 });
-
-const progress = new Progress().restore();
-
-document
-  .getElementById("resetProgress")
-  .addEventListener("click", () => progress.clear());
 
 let howToPlayPopup = null;
 document.getElementById("howToPlay").addEventListener("click", (event) => {
@@ -30,4 +26,36 @@ document.getElementById("howToPlay").addEventListener("click", (event) => {
     hideButtonId: "okBtn",
   });
   howToPlayPopup.render();
+});
+
+let scoresPopup = null;
+document.getElementById("scores").addEventListener("click", (event) => {
+  event.preventDefault();
+
+  if (scoresPopup) {
+    scoresPopup.show();
+    return;
+  }
+  scoresPopup = new Popup({
+    html: `<h2 class="popup-headline">Scores</h2>
+    <div class="popup-scores-content">
+      <div class="tabs">
+        <div class="tab">Standart</div>
+      </div>
+      <div class="tabel-wrapper">
+
+      </div>
+      <button class="popup-button" id="resetProgress">Reset progress</button>
+    </div>
+    <div class="popup-buttons">
+      <button class="popup-button" id="okBtn">Ok</button>
+    </div>`,
+    listeners: {
+      resetProgress: () => {
+        progress.clear();
+      },
+    },
+    hideButtonId: "okBtn",
+  });
+  scoresPopup.render();
 });
