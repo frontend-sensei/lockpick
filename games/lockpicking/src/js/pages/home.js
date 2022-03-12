@@ -31,3 +31,56 @@ document.getElementById("howToPlay").addEventListener("click", (event) => {
   });
   howToPlayPopup.render();
 });
+
+let scoresPopup = null;
+document.getElementById("scores").addEventListener("click", (event) => {
+  event.preventDefault();
+
+  if (scoresPopup) {
+    scoresPopup.show();
+    return;
+  }
+  scoresPopup = new Popup({
+    html: `<h2 class="popup-headline">Scores</h2>
+    <div class="popup-scores-content">
+      <div class="tabs">
+        <input type="radio" id="standart" name="tabs-radio" class="tabs__radio" checked/>
+        <label class="tabs__label" for="standart">Standart</label>
+        <input type="radio" id="time" name="tabs-radio" class="tabs__radio" />
+        <label class="tabs__label" for="time">Time</label>
+        <div class="tabs__content">
+          <div class="tabs-content__element tabs-content__element--standart">
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+          </div> 
+          <div class="tabs-content__element tabs-content__element--time">
+            <div class="vlock"></div>
+            <div class="vlock"></div>
+            <div class="vlock"></div>
+            <div class="vlock"></div>
+            <div class="vlock"></div>
+            <div class="vlock"></div>
+          </div>
+        </div>
+      </div>
+      <div class="tabel-wrapper">
+
+      </div>
+      <button class="popup-button" id="resetProgress">Reset progress</button>
+    </div>
+    <div class="popup-buttons">
+      <button class="popup-button" id="okBtn">Ok</button>
+    </div>`,
+    listeners: {
+      resetProgress: () => {
+        progress.clear();
+      },
+    },
+    hideButtonId: "okBtn",
+  });
+  scoresPopup.render();
+});

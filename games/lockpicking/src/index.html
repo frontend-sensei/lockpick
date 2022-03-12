@@ -1,65 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;800&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/app.css" />
+    <link rel="stylesheet" href="./styles/pages/home.css" />
+    <link rel="stylesheet" href="./styles/game/popup.css" />
+    <link rel="stylesheet" href="./styles/pages/score-tabs.css" />
 
-  <link rel="stylesheet" href="./styles/app.css">
-  <link rel="stylesheet" href="./styles/pages/home.css">
-  <link rel="stylesheet" href="./styles/game/popup.css">
-  <title>Document</title>
-</head>
-<body>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="home-page">
+      <video
+        class="home-page__video-background"
+        src="./assets/video/bg.mp4"
+        loop
+        muted
+        autoplay
+      ></video>
+      <div class="home-page__color-layer"></div>
+      <div class="home-page__top-bar">
+        <div class="home-page__line home-page-top-bar__line"></div>
+        <nav class="home-page__nav">
+          <ul class="home-page-nav__list">
+            <li>
+              <a class="home-page__bar-link" href="#" id="howToPlay">
+                How to play
+              </a>
+            </li>
+            <li>
+              <a class="home-page__bar-link" href="#" id="scores"> Scores </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="home-page__left-bar">
+        <div class="home-page__line home-page-left-bar__line"></div>
+        <div class="home-page__developers">devs: @frontend_sensei</div>
+      </div>
+      <h1>LOCKPICKER</h1>
 
-  <div class="home-page">
-    <video
-      class="home-page__video-background"
-      src="./assets/video/bg.mp4"
-      loop
-      muted
-      autoplay
-    ></video>
-    <div class="home-page__color-layer"></div>
-    <div class="home-page__top-bar">
-      <div class="home-page__line home-page-top-bar__line"></div>
-      <nav class="home-page__nav">
-        <ul class="home-page-nav__list">
-          <li>
-            <a class="home-page__bar-link" href="#" id="howToPlay">
-              How to play
-            </a>
-          </li>
-          <li>
-            <a class="home-page__bar-link" href="#">
-              Score
-            </a>
-          </li>
-        </ul>
-      </nav>
+        <div class="home-page__play-wrapper" id="playWrapper">
+          <button class="home-page__play-button" id="play">play</button>
+          <img
+            class="home-page-keys-img"
+            src="./assets/images/keys.png"
+            alt=""
+          />
+        </div>
+
+        <button id="resetProgress">Reset progress</button>
+      </div>
     </div>
-    <div class="home-page__left-bar">
-      <div class="home-page__line home-page-left-bar__line"></div>
-      <div class="home-page__developers">devs: @frontend_sensei</div>
-    </div>
-    <h1>LOCKPICKER</h1>
 
-    <div class="home-page__play-wrapper" id="playWrapper">
-      <button class="home-page__play-button" id="play">play</button>
-      <img class="home-page-keys-img" src="./assets/images/keys.png" alt="">
-    </div>
-
-    <!-- <h4>How to play:</h4>
-    <p>
-      Just press space in the right moment. You have limited time for lock pick.
-    </p>
-    <p>Are you ready?</p> -->
-    <button id="resetProgress">Reset progress</button>
-  </div>
-
-  <script type="module" src="./js/pages/home.js"></script>
-</body>
+    <script type="module" src="./js/pages/home.js"></script>
+  </body>
 </html>

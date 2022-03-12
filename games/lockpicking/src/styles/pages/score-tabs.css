@@ -1,0 +1,25 @@
+.block {
+  width: 100px;
+  height: 100px;
+  background-color: black;
+}
+
+.vlock {
+  width: 150px;
+  height: 150px;
+  background-color: rgb(255, 255, 255);
+}
+
+.tabs__content {
+  width: 300px;
+  height: 400px;
+  overflow: hidden auto;
+}
+
+.tabs-content__element {
+  display: none;
+}
+#standart:checked ~ .tabs__content .tabs-content__element--standart,
+#time:checked ~ .tabs__content .tabs-content__element--time {
+  display: block;
+}
