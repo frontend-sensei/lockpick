@@ -73,12 +73,12 @@ body,
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 0;
-  bottom: 0;
+  top: 0px;
+  bottom: 0px;
 }
 
 .home-page-left-bar__line {
-  margin: 3rem 0 0 var(--link-padding);
+  margin: 3rem 0px 0px var(--link-padding);
   height: 100%;
   width: 2px;
 }
@@ -106,7 +106,7 @@ body,
 .home-page__play-wrapper {
   position: relative;
   max-width: 146px;
-  margin: 0 auto;
+  margin: 0px auto;
   /* transform: scale(8); */
   transform-origin: 50% 13%;
   transition: 1.2s cubic-bezier(1, 0, 1, 0.1) 0.1s;
