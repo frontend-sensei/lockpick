@@ -1,12 +1,15 @@
 .mobile-unlock-btn-wrapper {
+  --offset: 0px;
   position: fixed;
-  right: 15px;
-  bottom: 15px;
-  left: 15px;
+  right: var(--offset);
+  bottom: var(--offset);
+  left: var(--offset);
+  z-index: 100;
 }
 
 .mobile-unlock-btn {
   display: block;
   width: 100%;
   padding: 1rem;
+  background-color: transparent;
 }

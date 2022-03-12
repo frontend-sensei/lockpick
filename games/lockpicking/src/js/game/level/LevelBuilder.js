@@ -31,7 +31,7 @@ export class LevelBuilder {
         3,
         new Level({
           id: 3,
-          steps: 3,
+          steps: 7,
           areaHeight: 5,
         }),
       ],

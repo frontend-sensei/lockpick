@@ -3,8 +3,10 @@
   width: var(--size);
   height: var(--size);
   position: fixed;
+  z-index: 1000;
   right: 20px;
-  bottom: 20px;
+  top: 20px;
+  bottom: unset;
   color: #fff;
   font-size: 18px;
   border-radius: 50%;
@@ -17,5 +19,12 @@
 
 .attempts__count {
   line-height: 0.7em;
-  margin: calc(var(--size) / 1.75) 0 0 calc(var(--size) / 5);
+  margin: calc(var(--size) / 1.75) 0px 0px calc(var(--size) / 5);
+}
+
+@media (min-width: 768px) {
+  .attempts {
+    top: unset;
+    bottom: 20px;
+  }
 }

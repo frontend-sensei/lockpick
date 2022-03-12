@@ -2,6 +2,7 @@
   opacity: 0;
   pointer-events: none;
   position: fixed;
+  z-index: 100000;
   top: 0;
   right: 0;
   bottom: 0;

@@ -1,6 +1,7 @@
 .countdown {
   pointer-events: none;
   position: fixed;
+  z-index: 10000;
   top: 0;
   right: 0;
   bottom: 0;
@@ -9,6 +10,7 @@
   align-items: center;
   justify-content: center;
   transition: 0.25s ease-in-out;
+  background-color: #00000066;
 }
 
 .countdown.hidden {

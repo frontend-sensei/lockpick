@@ -13,15 +13,23 @@
     <link rel="stylesheet" href="./styles/game/pins.css">
     <link rel="stylesheet" href="./styles/game/attempts.css">
     <link rel="stylesheet" href="./styles/game/unlock-label.css" />
+    <link rel="stylesheet" href="./styles/game/lockpick.css" />
     <link rel="stylesheet" href="./styles/components/navigation-layer.css">
     <title>Document</title>
     <style>
       .game-page {
+        overflow: hidden;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
-        min-height: 100vh;
+        height: var(--app-height);
         background-color: #121d2b;
+      }
+
+      @media (min-width: 768px) {
+        .game-page {
+          align-items: center;
+        }
       }
     </style>
   </head>

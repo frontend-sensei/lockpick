@@ -44,6 +44,7 @@ export class Game {
     this.addListeners();
     this._timer.start();
     this._ui._Bar._ui.movePointer();
+    this._ui._Lockpick.animate();
   }
 
   stop() {
@@ -51,6 +52,7 @@ export class Game {
     this.launched = false;
     this.removeListeners();
     this._ui._Bar._ui.stopPointer();
+    this._ui._Lockpick.stopAnimate();
   }
 
   onDefeat() {
@@ -151,6 +153,7 @@ export class Game {
       }
 
       if (positionCorrect) {
+        this._ui._Lockpick.stopAnimate();
         this.pinsUnlocked++;
         this._ui._PinsUI.updateUnlocked(this.pinsUnlocked);
       }
@@ -174,6 +177,7 @@ export class Game {
       setTimeout(() => {
         this._timer.start();
         this._ui._Bar._ui.movePointer();
+        this._ui._Lockpick.animate();
         this.pendingHandler = false;
       }, TIMEOUT);
     } catch (e) {

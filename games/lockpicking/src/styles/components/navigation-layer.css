@@ -9,6 +9,7 @@
   background-color: var(--app-navigation-layer-bg-color);
   transition: opacity var(--app-navigation-layer-transition-duration)
     ease-in-out;
+  z-index: 100000;
 }
 
 .navigation-layer.hidden {

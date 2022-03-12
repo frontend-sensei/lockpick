@@ -67,6 +67,35 @@ export class BarUI {
     this.node.style.setProperty("--body-length", `${this.barLength}px`);
     this.node.style.setProperty("--area-length-percents", this.areaHeight);
     this.node.style.setProperty("--pointer-length", `${this.pointerLength}px`);
+
+    this.calculateHeight();
+  }
+
+  calculateHeight() {
+    if (window.innerWidth >= 768) {
+      return;
+    }
+    setTimeout(() => {
+      const barStyles = getComputedStyle(this.node.parentNode);
+      const marginsY =
+        +barStyles.marginTop.split("px")[0] +
+        +barStyles.marginBottom.split("px")[0];
+      const lockpickHeight = document.querySelector(".lockpick").clientHeight;
+      const mobileUnlockHeight =
+        document.querySelector(".mobile-unlock-btn").clientHeight || 0;
+      const viewportHeight = window.innerHeight;
+      const additionalOffset = 20;
+      const height =
+        viewportHeight -
+        lockpickHeight -
+        mobileUnlockHeight -
+        marginsY -
+        additionalOffset;
+      // - 60;
+
+      this.barLength = height;
+      this.node.style.setProperty("--body-length", `${this.barLength}px`);
+    });
   }
 
   movePointer() {

@@ -1,0 +1,162 @@
+.lockpick {
+  --height: 200px;
+  --pin-col-width: 20px;
+  --animation-duration: 3s;
+  position: relative;
+  z-index: 3;
+  height: var(--height);
+  min-height: var(--height);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-top: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #004f57;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/images/LockPick_texture.jpg");
+}
+
+@media (min-width: 768px) {
+  .lockpick {
+    position: fixed;
+    right: 10%;
+    z-index: 1;
+  }
+}
+
+.lockpick__row {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  height: 50%;
+  padding: 0px calc(var(--pin-col-width) / 2);
+}
+
+.lockpick__col {
+  height: 100%;
+  width: var(--pin-col-width);
+  position: relative;
+}
+
+.lockpick__rivet-col {
+  padding: 5% 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.lockpick__pin-col {
+  --translateY: 1px;
+  --min-translateY: 5px;
+  border: 2px solid #d1b17f;
+  border-bottom: none;
+  border-radius: 1px 1px 0px 0px;
+  box-shadow: inset 0px 4px 4px 1px #262626;
+  background-color: #4b6362;
+  background-size: 100% calc(66% + var(--translateY));
+  background-repeat: no-repeat;
+  background-image: url("../../assets/images/spring-coil.png");
+}
+
+.lockpick__rivet {
+  width: var(--size);
+  height: var(--size);
+  background-color: #c09c65;
+  box-shadow: 0px 0px 1px #001818, inset 0px -3px 1px -2px #594839,
+    inset -1px 3px 1px -2px #ffdba3;
+  border-radius: 50%;
+}
+
+.lockpick__rivet--big {
+  --size: 6px;
+}
+
+.lockpick__rivet--small {
+  --size: 4px;
+}
+
+.lockpick__pins {
+  --radius-top: 5px;
+  --radius-bottom: 3px;
+  height: 66.666%;
+  transform: translateY(100%) translateY(var(--translateY));
+}
+
+.lockpick__pin-col.animate {
+  animation: columnBackgroundSliding var(--animation-duration) infinite
+    ease-in-out;
+}
+
+.lockpick__pin-col.unlocked {
+  background-size: 100% calc(66% + var(--min-translateY));
+}
+.lockpick__pin-col.unlocked .lockpick__pins {
+  transform: translateY(100%) translateY(0px);
+}
+.lockpick__pin-col.unlocked .lockpick__code-pin {
+  transform: translateY(2px);
+}
+
+@keyframes columnBackgroundSliding {
+  50% {
+    background-size: 100% calc(66% + var(--min-translateY));
+  }
+}
+
+.animate .lockpick__pins {
+  animation: pinSliding var(--animation-duration) infinite ease-in-out;
+}
+
+@keyframes pinSliding {
+  50% {
+    transform: translateY(100%) translateY(var(--min-translateY));
+  }
+}
+
+.lockpick__pin {
+  height: 50%;
+  background-color: #f3be65;
+  box-shadow: inset 0px 0px 2px #212121;
+}
+
+.lockpick__locking-pin {
+  border-radius: var(--radius-top) var(--radius-top) var(--radius-bottom)
+    var(--radius-bottom);
+}
+
+.lockpick__code-pin {
+  border-radius: var(--radius-bottom) var(--radius-bottom) var(--radius-top)
+    var(--radius-top);
+}
+
+.lockpick__keyhole {
+  position: relative;
+  z-index: 1;
+  height: 45%;
+  border-top: 2px solid #d1b17f;
+  background: linear-gradient(180deg, #002d2c 0%, #004948 55.76%, #002d2c 100%);
+}
+
+.lockpick__picklock {
+  --cols-count: calc(var(--current-pin) * 2);
+  --img-offset: 2px;
+  --half-height: 13px;
+  --top: calc(var(--height) / 2 / 3 + var(--pin-height) - 2px);
+  position: absolute;
+  right: calc(var(--pin-col-width) * var(--cols-count) - var(--img-offset));
+  top: var(--top);
+  transform-origin: left top;
+  transform: rotate(var(--angle-slide-out));
+}
+
+.lockpick__picklock.animate {
+  animation: picklockSliding var(--animation-duration) infinite ease-in-out;
+}
+
+@keyframes picklockSliding {
+  50% {
+    transform: rotate(var(--angle-slide-in));
+  }
+}
