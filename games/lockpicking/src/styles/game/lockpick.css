@@ -2,7 +2,10 @@
   --height: 200px;
   --pin-col-width: 20px;
   --animation-duration: 3s;
+  position: relative;
+  z-index: 3;
   height: var(--height);
+  min-height: var(--height);
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -12,6 +15,14 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url("../../assets/images/LockPick_texture.jpg");
+}
+
+@media (min-width: 768px) {
+  .lockpick {
+    position: fixed;
+    right: 10%;
+    z-index: 1;
+  }
 }
 
 .lockpick__row {

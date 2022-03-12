@@ -18,11 +18,18 @@
     <title>Document</title>
     <style>
       .game-page {
+        overflow: hidden;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
-        min-height: 100vh;
+        height: var(--app-height);
         background-color: #121d2b;
+      }
+
+      @media (min-width: 768px) {
+        .game-page {
+          align-items: center;
+        }
       }
     </style>
   </head>

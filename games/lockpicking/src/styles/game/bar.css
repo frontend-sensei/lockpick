@@ -10,8 +10,17 @@
 }
 
 .bar-row {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: flex-end;
+  margin: 30px 0 40px 0;
+}
+
+@media (min-width: 768px) {
+  .bar-row {
+    margin: 30px 0 30px 0;
+  }
 }
 
 .bar {
