@@ -21,10 +21,10 @@ export class BarUI {
     <div class="bar">
       <div class="bar-body__side bar-body__side-back"></div>
       <div class="bar-body__side bar-body__side-front"></div>
-      <div class="bar-body__side bar-body__side-top"></div>
-      <div class="bar-body__side bar-body__side-bottom"></div>
       <div class="bar-body__side bar-body__side-left"></div>
       <div class="bar-body__side bar-body__side-right"></div>
+      <div class="bar-body__side bar-body__side-top"></div>
+      <div class="bar-body__side bar-body__side-bottom"></div>
       <div class="bar__area">
         <div class="bar-area__side bar-area__side-back">
           <div class="bar-area-extra__side bar-area-extra__side-back"></div>

@@ -41,7 +41,8 @@
   height: var(--body-length);
   width: var(--body-width);
   top: 50%;
-  transform: translateZ(calc(var(--area-width) * -0.5)) translateY(-50%);
+  transform: translateZ(calc(var(--area-width) * -0.5)) translateY(-50%)
+    rotateY(180deg);
   background-color: #000000bd;
 }
 
@@ -87,8 +88,44 @@
   top: 50%;
   right: 0;
   transform: translateZ(calc(var(--area-width) * -0.5)) translateY(-50%)
-    translateX(50%) rotateY(90deg) translateX(-50%);
+    translateX(50%) rotateY(270deg) translateX(50%);
   background-color: #0b0b0b40;
+}
+
+.bar-body__side {
+  position: absolute;
+  box-shadow: inset 0 0 0px 1px #000;
+  transition: 0.2s ease-in-out;
+}
+
+.bar-body__side::before {
+  content: "";
+  opacity: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: 0.15s cubic-bezier(0.81, 0.4, 0.81, 0.4);
+  background-image: linear-gradient(
+      263deg,
+      rgba(0, 0, 0, 0) 5%,
+      rgb(70 0 0 / 35%) 28%,
+      rgba(0, 0, 0, 0) 54%
+    ),
+    linear-gradient(
+      -80deg,
+      rgba(0, 0, 0, 0) 52%,
+      rgb(70 0 0 / 35%) 100%,
+      rgba(0, 0, 0, 0) 54%
+    );
+}
+
+.bar--failure .bar-body__side::before {
+  opacity: 0.9;
+}
+
+.bar-body__side-bottom::before,
+.bar-body__side-top::before {
+  background-image: linear-gradient(black, black);
 }
 
 .bar__area {
