@@ -19,7 +19,7 @@
 
 .attempts__count {
   line-height: 0.7em;
-  margin: calc(var(--size) / 1.75) 0 0 calc(var(--size) / 5);
+  margin: calc(var(--size) / 1.75) 0px 0px calc(var(--size) / 5);
 }
 
 @media (min-width: 768px) {
