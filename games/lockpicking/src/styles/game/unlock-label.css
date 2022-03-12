@@ -19,12 +19,8 @@
   transition: 0.05s ease-in-out;
 }
 
-.unlock-label__img:hover {
+.unlock-label__img--active {
   transform: scale(0.9) translateY(1px);
-}
-
-.unlock-label-img__icon {
-  width: 100%;
 }
 
 .unlock-label__text {
