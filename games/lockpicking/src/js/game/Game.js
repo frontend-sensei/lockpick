@@ -145,8 +145,10 @@ export class Game {
       if (!positionCorrect) {
         const bar = document.querySelector(".bar");
         bar.classList.add("bar--failure");
+        this._ui._Lockpick.node.classList.add("failure");
         setTimeout(() => {
           bar.classList.remove("bar--failure");
+          this._ui._Lockpick.node.classList.remove("failure");
         }, TIMEOUT - 150);
 
         this.attempts.set(this.attempts.value - 1);
