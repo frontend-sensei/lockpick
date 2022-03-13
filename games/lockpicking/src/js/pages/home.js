@@ -4,7 +4,12 @@ import "../components/clickSound.js";
 
 const progress = new Progress().restore();
 
+const playAudio = new Audio("../../assets/sounds/reverse_sound.wav");
+playAudio.volume = 0.01;
+
 document.getElementById("play").addEventListener("click", () => {
+  playAudio.play();
+
   document.getElementById("playWrapper").classList.add("active");
   setTimeout(() => (location.href = "game.html"), 2000);
 });
