@@ -30,8 +30,10 @@ export class Game {
     this._coordinates = new Coordinates(this);
     this.sounds = {
       unlocked: new Audio("../../assets/sounds/unlock_sound.wav"),
+      failed: new Audio("../../assets/sounds/fail_sound.wav"),
     };
     this.sounds.unlocked.volume = 0.05;
+    this.sounds.failed.volume = 0.05;
 
     this.pinsUnlocked = 0;
 
@@ -147,6 +149,7 @@ export class Game {
       const positionCorrect = this._coordinates.checkPosition();
       const TIMEOUT = 1500;
       if (!positionCorrect) {
+        this.sounds.failed.play();
         const bar = document.querySelector(".bar");
         bar.classList.add("bar--failure");
         this._ui._Lockpick.node.classList.add("failure");
