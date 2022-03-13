@@ -24,23 +24,12 @@
 .tabs-wrapper {
   --switch-transition: 0.4s ease-in-out;
   --width: 300px;
+  max-width: 100%;
   width: var(--width);
-}
-
-.tabs__radio {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  clip: rect(0 0 0 0);
 }
 
 .tabs {
   display: flex;
-  width: 100%;
   margin: 0 0 10px;
   overflow: auto hidden;
   scroll-snap-type: x mandatory;
@@ -50,12 +39,15 @@
   scroll-snap-align: center;
   position: relative;
   text-align: center;
-  min-width: var(--width);
   font-size: 20px;
-  padding: 10px 65px;
+  padding: 10px 15px;
   margin-right: 5px;
   border-bottom: 2px solid #07a1af00;
   transition: var(--switch-transition);
+}
+
+.tabs__label:last-child {
+  margin: 0;
 }
 
 .tabs__label:before {
@@ -84,7 +76,6 @@
 }
 
 .tabs__content {
-  position: relative;
   height: 400px;
   overflow: hidden auto;
 }
@@ -94,9 +85,9 @@
   transition: opacity var(--switch-transition);
 }
 
-#standart:checked ~ .tabs-size-wrapper .tabs__label[for="standart"],
-#hard:checked ~ .tabs-size-wrapper .tabs__label[for="hard"],
-#time:checked ~ .tabs-size-wrapper .tabs__label[for="time"] {
+#standart:checked ~ .tabs .tabs__label[for="standart"],
+#hard:checked ~ .tabs .tabs__label[for="hard"],
+#time:checked ~ .tabs .tabs__label[for="time"] {
   color: #07a0af;
   border-bottom: 2px solid #07a0af;
 }
