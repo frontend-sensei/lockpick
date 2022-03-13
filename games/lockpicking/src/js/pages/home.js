@@ -1,6 +1,7 @@
 import { Progress } from "../game/progress/Progress.js";
 import { Popup } from "../game/popup/Popup.js";
 import "../components/clickSound.js";
+import "../components/mainThemeSound.js";
 
 const progress = new Progress().restore();
 
