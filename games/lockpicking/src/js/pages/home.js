@@ -1,16 +1,12 @@
 import { Progress } from "../game/progress/Progress.js";
 import { Popup } from "../game/popup/Popup.js";
 
+const progress = new Progress().restore();
+
 document.getElementById("play").addEventListener("click", () => {
   document.getElementById("playWrapper").classList.add("active");
   setTimeout(() => (location.href = "game.html"), 2000);
 });
-
-const progress = new Progress().restore();
-
-document
-  .getElementById("resetProgress")
-  .addEventListener("click", () => progress.clear());
 
 let howToPlayPopup = null;
 document.getElementById("howToPlay").addEventListener("click", (event) => {
