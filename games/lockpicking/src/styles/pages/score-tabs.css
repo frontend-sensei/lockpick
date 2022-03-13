@@ -1,25 +1,128 @@
 .block {
   width: 100px;
   height: 100px;
+  margin: 5px;
   background-color: black;
+}
+
+.alock {
+  width: 500px;
+  height: 200px;
+  margin: 10px;
+
+  border: 1px solid black;
+  background-color: rgb(255, 0, 0);
 }
 
 .vlock {
   width: 150px;
   height: 150px;
+  border: 1px solid black;
   background-color: rgb(255, 255, 255);
 }
 
+.tabs-wrapper {
+  --switch-transition: 0.4s ease-in-out;
+  --width: 300px;
+  width: var(--width);
+}
+
+.tabs__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+.tabs {
+  display: flex;
+  width: 100%;
+  margin: 0 0 10px;
+  overflow: auto hidden;
+  scroll-snap-type: x mandatory;
+}
+
+.tabs__label {
+  scroll-snap-align: center;
+  position: relative;
+  text-align: center;
+  min-width: var(--width);
+  font-size: 20px;
+  padding: 10px 65px;
+  margin-right: 5px;
+  border-bottom: 2px solid #07a1af00;
+  transition: var(--switch-transition);
+}
+
+.tabs__label:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 0px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: var(--switch-transition);
+}
+
+.tabs-radio:focus .tabs__label {
+  color: #009dac;
+  border-bottom: 2px solid #07a1afa9;
+}
+
+.tabs__label:hover {
+  color: #009dac;
+  border-bottom: 2px solid #07a1afa9;
+}
+
+.tabs__label:hover:before {
+  box-shadow: 0 0 30px 15px #08636b69;
+}
+
 .tabs__content {
-  width: 300px;
+  position: relative;
   height: 400px;
   overflow: hidden auto;
 }
 
 .tabs-content__element {
   display: none;
+  transition: opacity var(--switch-transition);
 }
+
+#standart:checked ~ .tabs-size-wrapper .tabs__label[for="standart"],
+#hard:checked ~ .tabs-size-wrapper .tabs__label[for="hard"],
+#time:checked ~ .tabs-size-wrapper .tabs__label[for="time"] {
+  color: #07a0af;
+  border-bottom: 2px solid #07a0af;
+}
+
 #standart:checked ~ .tabs__content .tabs-content__element--standart,
+#hard:checked ~ .tabs__content .tabs-content__element--hard,
 #time:checked ~ .tabs__content .tabs-content__element--time {
   display: block;
+  opacity: 1;
+}
+
+.tabs::-webkit-scrollbar,
+.tabs__content::-webkit-scrollbar {
+  width: 10px;
+  height: 0px;
+}
+
+.tabs::-webkit-scrollbar,
+.tabs__content::-webkit-scrollbar-thumb {
+  width: 10px;
+  height: 0px;
+  background-color: aliceblue;
+}
+
+@media (max-width: 420px) {
+  .tabs-wrapper {
+    --width: 250px;
+  }
 }

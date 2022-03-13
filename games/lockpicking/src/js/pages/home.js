@@ -29,6 +29,7 @@ document.getElementById("howToPlay").addEventListener("click", (event) => {
 });
 
 let scoresPopup = null;
+
 document.getElementById("scores").addEventListener("click", (event) => {
   event.preventDefault();
 
@@ -39,12 +40,17 @@ document.getElementById("scores").addEventListener("click", (event) => {
   scoresPopup = new Popup({
     html: `<h2 class="popup-headline">Scores</h2>
     <div class="popup-scores-content">
-      <div class="tabs">
-      
+      <div class="tabs-wrapper">
         <input type="radio" id="standart" name="tabs-radio" class="tabs__radio" checked/>
-        <label class="tabs__label" for="standart">Standart</label>
+        <input type="radio" id="hard" name="tabs-radio" class="tabs__radio" />
         <input type="radio" id="time" name="tabs-radio" class="tabs__radio" />
-        <label class="tabs__label" for="time">Time</label>
+        <div class="tabs-size-wrapper">
+          <div class="tabs">
+            <label class="tabs__label" for="standart">Standart</label>
+            <label class="tabs__label" for="hard">Hardcore</label>
+            <label class="tabs__label" for="time">Time</label>
+          </div>
+        </div>
         <div class="tabs__content">
           <div class="tabs-content__element tabs-content__element--standart">
             <div class="block"></div>
@@ -53,6 +59,14 @@ document.getElementById("scores").addEventListener("click", (event) => {
             <div class="block"></div>
             <div class="block"></div>
             <div class="block"></div>
+          </div> 
+          <div class="tabs-content__element tabs-content__element--hard">
+            <div class="alock"></div>
+            <div class="alock"></div>
+            <div class="alock"></div>
+            <div class="alock"></div>
+            <div class="alock"></div>
+            <div class="alock"></div>
           </div> 
           <div class="tabs-content__element tabs-content__element--time">
             <div class="vlock"></div>
@@ -79,5 +93,6 @@ document.getElementById("scores").addEventListener("click", (event) => {
     },
     hideButtonId: "okBtn",
   });
+
   scoresPopup.render();
 });
