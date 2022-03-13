@@ -44,6 +44,7 @@ document.getElementById("scores").addEventListener("click", (event) => {
     html: `<h2 class="popup-headline">Scores</h2>
     <div class="popup-scores-content">
       <div class="tabs">
+      
         <input type="radio" id="standart" name="tabs-radio" class="tabs__radio" checked/>
         <label class="tabs__label" for="standart">Standart</label>
         <input type="radio" id="time" name="tabs-radio" class="tabs__radio" />
