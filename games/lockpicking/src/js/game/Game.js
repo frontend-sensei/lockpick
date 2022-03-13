@@ -28,6 +28,10 @@ export class Game {
     this._timer = new Timer(this, 12000);
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
+    this.sounds = {
+      unlocked: new Audio("../../assets/sounds/unlock_sound.wav"),
+    };
+    this.sounds.unlocked.volume = 0.05;
 
     this.pinsUnlocked = 0;
 
@@ -155,6 +159,7 @@ export class Game {
       }
 
       if (positionCorrect) {
+        this.sounds.unlocked.play();
         this._ui._Lockpick.stopAnimate();
         this.pinsUnlocked++;
         this._ui._PinsUI.updateUnlocked(this.pinsUnlocked);
