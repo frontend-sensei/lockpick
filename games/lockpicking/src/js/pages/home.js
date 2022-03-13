@@ -1,5 +1,6 @@
 import { Progress } from "../game/progress/Progress.js";
 import { Popup } from "../game/popup/Popup.js";
+import "../components/clickSound.js";
 
 document.getElementById("play").addEventListener("click", () => {
   document.getElementById("playWrapper").classList.add("active");
