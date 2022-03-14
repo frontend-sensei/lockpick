@@ -1,10 +1,16 @@
 import { Progress } from "../game/progress/Progress.js";
 import { Popup } from "../game/popup/Popup.js";
 import "../components/clickSound.js";
+import "../components/mainThemeSound.js";
 
 const progress = new Progress().restore();
 
+const playAudio = new Audio("../../assets/sounds/reverse_sound.wav");
+playAudio.volume = 0.01;
+
 document.getElementById("play").addEventListener("click", () => {
+  playAudio.play();
+
   document.getElementById("playWrapper").classList.add("active");
   setTimeout(() => (location.href = "game.html"), 2000);
 });

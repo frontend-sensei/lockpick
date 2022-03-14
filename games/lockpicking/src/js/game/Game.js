@@ -28,6 +28,12 @@ export class Game {
     this._timer = new Timer(this, 12000);
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
+    this.sounds = {
+      unlocked: new Audio("../../assets/sounds/unlock_sound.wav"),
+      failed: new Audio("../../assets/sounds/fail_sound.wav"),
+    };
+    this.sounds.unlocked.volume = 0.05;
+    this.sounds.failed.volume = 0.05;
 
     this.pinsUnlocked = 0;
 
@@ -143,6 +149,7 @@ export class Game {
       const positionCorrect = this._coordinates.checkPosition();
       const TIMEOUT = 1500;
       if (!positionCorrect) {
+        this.sounds.failed.play();
         const bar = document.querySelector(".bar");
         bar.classList.add("bar--failure");
         this._ui._Lockpick.node.classList.add("failure");
@@ -155,6 +162,7 @@ export class Game {
       }
 
       if (positionCorrect) {
+        this.sounds.unlocked.play();
         this._ui._Lockpick.stopAnimate();
         this.pinsUnlocked++;
         this._ui._PinsUI.updateUnlocked(this.pinsUnlocked);
