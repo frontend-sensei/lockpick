@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="./styles/app.css" />
     <link rel="stylesheet" href="./styles/pages/home.css" />
     <link rel="stylesheet" href="./styles/game/popup.css" />
+    <link rel="stylesheet" href="./styles/components/sound-controller.css" />
     <title>Document</title>
   </head>
   <body>
@@ -52,11 +53,18 @@
         <img class="home-page-keys-img" src="./assets/images/keys.png" alt="" />
       </div>
 
-      <!-- <h4>How to play:</h4>
-    <p>
-      Just press space in the right moment. You have limited time for lock pick.
-    </p>
-    <p>Are you ready?</p> -->
+      <button class="sound-controller sound-controller--muted">
+        <img
+          src="./assets/icons/volume_on.svg"
+          class="sound-controller__icon sound-controller__icon--unmuted"
+          alt=""
+        />
+        <img
+          src="./assets/icons/volume_off.svg"
+          class="sound-controller__icon sound-controller__icon--muted"
+          alt=""
+        />
+      </button>
     </div>
 
     <script type="module" src="./js/pages/home.js"></script>
