@@ -1,0 +1,26 @@
+.sound-controller {
+  --size: 40px;
+  --offset: 10px;
+  position: fixed;
+  width: var(--size);
+  height: var(--size);
+  right: var(--offset);
+  bottom: var(--offset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.sound-controller__icon {
+  width: 100%;
+}
+
+.sound-controller--muted .sound-controller__icon--unmuted {
+  display: none;
+}
+.sound-controller--unmuted .sound-controller__icon--muted {
+  display: none;
+}
