@@ -87,17 +87,10 @@ export class BarUI {
         +barStyles.marginTop.split("px")[0] +
         +barStyles.marginBottom.split("px")[0];
 
-      const mobileUnlockHeight =
-        document.querySelector(".mobile-unlock-btn").clientHeight || 0;
-
       const viewportHeight = window.innerHeight;
       const additionalOffset = 20;
       const height =
-        viewportHeight -
-        lockpickHeight -
-        mobileUnlockHeight -
-        marginsY -
-        additionalOffset;
+        viewportHeight - lockpickHeight - marginsY - additionalOffset;
 
       this.barLength = height;
       this.node.style.setProperty("--body-length", `${this.barLength}px`);
