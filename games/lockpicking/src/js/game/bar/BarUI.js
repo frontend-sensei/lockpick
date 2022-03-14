@@ -68,21 +68,28 @@ export class BarUI {
     this.node.style.setProperty("--area-length-percents", this.areaHeight);
     this.node.style.setProperty("--pointer-length", `${this.pointerLength}px`);
 
-    this.calculateHeight();
+    this.calcHeightForTouchDevice();
   }
 
-  calculateHeight() {
-    if (window.innerWidth >= 768) {
+  calcHeightForTouchDevice() {
+    if (!this.root.isMobile) {
       return;
     }
+
     setTimeout(() => {
+      let lockpickHeight = 0;
+      if (window.innerWidth < 768) {
+        lockpickHeight = document.querySelector(".lockpick").clientHeight;
+      }
+
       const barStyles = getComputedStyle(this.node.parentNode);
       const marginsY =
         +barStyles.marginTop.split("px")[0] +
         +barStyles.marginBottom.split("px")[0];
-      const lockpickHeight = document.querySelector(".lockpick").clientHeight;
+
       const mobileUnlockHeight =
         document.querySelector(".mobile-unlock-btn").clientHeight || 0;
+
       const viewportHeight = window.innerHeight;
       const additionalOffset = 20;
       const height =
@@ -91,7 +98,6 @@ export class BarUI {
         mobileUnlockHeight -
         marginsY -
         additionalOffset;
-      // - 60;
 
       this.barLength = height;
       this.node.style.setProperty("--body-length", `${this.barLength}px`);
