@@ -33,9 +33,20 @@ export class Component {
   renderSelf() {
     this.el = document.createElement("div");
     this.el.innerHTML = this.html();
-    this.el.dataset.id = this.id;
 
-    this.parentNode.appendChild(this.el);
-    this.el = document.querySelector(`[data-id="${this.id}"]`);
+    const htmlElements = [...this.el.childNodes].filter(
+      (node) => node instanceof HTMLElement
+    );
+
+    if (htmlElements.length > 1) {
+      [...this.el.childNodes].forEach((el) => {
+        this.parentNode.appendChild(el);
+      });
+    } else {
+      this.el = htmlElements[0];
+      this.el.dataset.id = this.id;
+      this.parentNode.appendChild(this.el);
+      this.el = document.querySelector(`[data-id="${this.id}"]`);
+    }
   }
 }
