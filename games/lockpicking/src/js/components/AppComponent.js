@@ -5,7 +5,7 @@ export class App extends Component {
   constructor() {
     const options = {
       components: {
-        "test-component-1": TestComponent1,
+        TestComponent1,
       },
     };
     super(options);
@@ -28,7 +28,7 @@ export class App extends Component {
     return `
     <div>
       <div>Self</div>
-      <!-- test-component-1 -->
+      <!-- TestComponent1 -->
       <!-- test-component-2 -->
     </div>
     `;

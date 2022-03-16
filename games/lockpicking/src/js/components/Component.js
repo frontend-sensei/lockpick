@@ -3,7 +3,7 @@ import { isObjectEmpty } from "../utils/isObjectEmpty.js";
 
 export class Component {
   constructor(options = {}) {
-    this.componentName = this.constructor.name;
+    this.name = this.constructor.name;
     this.el = null;
     this.id = uniqueId();
     this.props = options.props || {};
@@ -18,7 +18,7 @@ export class Component {
   }
 
   isComponentDeclarationExists() {
-    console.log("Component", this.componentName, this.parentNode.childNodes);
+    console.log("Component", this.name, this.parentNode.childNodes);
   }
 
   renderSelf() {
@@ -47,7 +47,7 @@ export class Component {
     }
 
     const comments = {};
-    for (const node of [...this.el.childNodes]) {
+    for (const node of this.el.childNodes) {
       if (node instanceof Comment) {
         comments[node.nodeValue.trim()] = node;
       }
@@ -59,6 +59,7 @@ export class Component {
   }
 
   renderComponent(component, comments) {
-    console.log(comments);
+    const replacableNode = comments[component.name];
+    replacableNode.replaceWith(component);
   }
 }
