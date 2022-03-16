@@ -2,32 +2,22 @@ import { uniqueId } from "../utils/uniqueId.js";
 
 export class Component {
   constructor(options = {}) {
+    this.componentName = this.constructor.name;
     this.el = null;
     this.id = uniqueId();
     this.props = options.props || {};
     this.components = {};
     this.parentNode = options.parentNode || {};
-    this.parentNodeSelector = `[data-id="${this.parentNode.id}"]`;
   }
 
   render() {
-    this.findParentNode();
+    this.isComponentDeclarationExists();
     this.renderSelf();
     // this.renderComponents();
   }
 
-  findParentNode() {
-    const parentNode = this.getParentNode();
-    if (!parentNode) {
-      throw new Error(
-        `Element with selector ${this.parentNodeSelector} is not found`
-      );
-    }
-    this.parentNode = parentNode;
-  }
-
-  getParentNode() {
-    return document.querySelector(this.parentNodeSelector);
+  isComponentDeclarationExists() {
+    console.log("Component", this.componentName, this.parentNode.childNodes);
   }
 
   renderSelf() {
