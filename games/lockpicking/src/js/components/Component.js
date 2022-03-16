@@ -1,4 +1,5 @@
 import { uniqueId } from "../utils/uniqueId.js";
+import { isObjectEmpty } from "../utils/isObjectEmpty.js";
 
 export class Component {
   constructor(options = {}) {
@@ -6,14 +7,14 @@ export class Component {
     this.el = null;
     this.id = uniqueId();
     this.props = options.props || {};
-    this.components = {};
+    this.components = options.components || {};
     this.parentNode = options.parentNode || {};
   }
 
   render() {
     this.isComponentDeclarationExists();
     this.renderSelf();
-    // this.renderComponents();
+    this.renderComponents();
   }
 
   isComponentDeclarationExists() {
@@ -38,5 +39,26 @@ export class Component {
       this.parentNode.appendChild(this.el);
       this.el = document.querySelector(`[data-id="${this.id}"]`);
     }
+  }
+
+  renderComponents() {
+    if (isObjectEmpty(this.components)) {
+      return;
+    }
+
+    const comments = {};
+    for (const node of [...this.el.childNodes]) {
+      if (node instanceof Comment) {
+        comments[node.nodeValue.trim()] = node;
+      }
+    }
+
+    for (const componentName in this.components) {
+      this.renderComponent(this.components[componentName], comments);
+    }
+  }
+
+  renderComponent(component, comments) {
+    console.log(comments);
   }
 }
