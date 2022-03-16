@@ -29,16 +29,10 @@ export class Component {
       (node) => node instanceof HTMLElement
     );
 
-    if (htmlElements.length > 1) {
-      [...this.el.childNodes].forEach((el) => {
-        this.parentNode.appendChild(el);
-      });
-    } else {
-      this.el = htmlElements[0];
-      this.el.dataset.id = this.id;
-      this.parentNode.appendChild(this.el);
-      this.el = document.querySelector(`[data-id="${this.id}"]`);
-    }
+    this.el = htmlElements[0];
+    this.el.dataset.id = this.id;
+    this.parentNode.appendChild(this.el);
+    this.el = document.querySelector(`[data-id="${this.id}"]`);
   }
 
   renderComponents() {
