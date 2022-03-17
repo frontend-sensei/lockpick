@@ -22,17 +22,42 @@ export class Component {
   }
 
   renderSelf() {
-    this.el = document.createElement("div");
-    this.el.innerHTML = this.html();
+    const node = this.createNode();
 
-    const htmlElements = [...this.el.childNodes].filter(
-      (node) => node instanceof HTMLElement
+    // append to el or
+    // replace node with component
+    this.renderNode(node);
+
+    this.el = document.querySelector(`[data-id="${this.id}"]`);
+  }
+
+  createNode() {
+    const temporaryNode = document.createElement("div");
+    temporaryNode.innerHTML = this.html();
+
+    const htmlElements = [...temporaryNode.childNodes].filter(
+      (childNode) => childNode instanceof HTMLElement // or comment. it can be other component as root
     );
 
-    this.el = htmlElements[0];
-    this.el.dataset.id = this.id;
-    this.parentNode.appendChild(this.el);
-    this.el = document.querySelector(`[data-id="${this.id}"]`);
+    if (!htmlElements[0]) {
+      console.warn("Element for rendering in the component not found");
+      return;
+    }
+
+    const node = htmlElements[0];
+    node.dataset.id = this.id;
+
+    return node;
+  }
+
+  renderNode(node) {
+    for (const childNode of this.parentNode.childNodes) {
+      const isCommentNode = childNode instanceof Comment;
+      const isTargetComment = childNode.nodeValue.trim() === this.name;
+      if (isCommentNode && isTargetComment) {
+        childNode.replaceWith(node);
+      }
+    }
   }
 
   renderComponents() {

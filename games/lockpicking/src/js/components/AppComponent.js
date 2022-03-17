@@ -24,6 +24,10 @@ export class App extends Component {
     this.parentNode = parentNode;
   }
 
+  renderNode(node) {
+    this.parentNode.appendChild(node);
+  }
+
   html() {
     return `
     <div>
