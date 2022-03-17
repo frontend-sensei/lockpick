@@ -5,10 +5,11 @@ export class Component {
   constructor(options = {}) {
     this.name = this.constructor.name;
     this.el = null;
-    this.id = uniqueId();
+    this.id = null;
     this.props = options.props || {};
     this.components = options.components || {};
     this.parentNode = options.parentNode || {};
+    console.log(options);
   }
 
   render() {
@@ -18,16 +19,11 @@ export class Component {
   }
 
   isComponentDeclarationExists() {
-    console.log("Component", this.name, this.parentNode.childNodes);
+    // console.log("Component", this.name, this.parentNode.childNodes);
   }
 
   renderSelf() {
-    const node = this.createNode();
-
-    // append to el or
-    // replace node with component
-    this.renderNode(node);
-
+    this.renderNode();
     this.el = document.querySelector(`[data-id="${this.id}"]`);
   }
 
@@ -45,16 +41,19 @@ export class Component {
     }
 
     const node = htmlElements[0];
-    node.dataset.id = this.id;
+    node.dataset.id = this.id = uniqueId();
 
     return node;
   }
 
-  renderNode(node) {
+  renderNode() {
     for (const childNode of this.parentNode.childNodes) {
-      const isCommentNode = childNode instanceof Comment;
+      if (!(childNode instanceof Comment)) {
+        continue;
+      }
       const isTargetComment = childNode.nodeValue.trim() === this.name;
-      if (isCommentNode && isTargetComment) {
+      if (isTargetComment) {
+        const node = this.createNode();
         childNode.replaceWith(node);
       }
     }
@@ -78,7 +77,8 @@ export class Component {
   }
 
   renderComponent(component, comments) {
-    const replacableNode = comments[component.name];
-    replacableNode.replaceWith(component);
+    new component({
+      parentNode: this.el,
+    }).render();
   }
 }

@@ -24,7 +24,8 @@ export class App extends Component {
     this.parentNode = parentNode;
   }
 
-  renderNode(node) {
+  renderNode() {
+    const node = this.createNode();
     this.parentNode.appendChild(node);
   }
 
@@ -34,6 +35,7 @@ export class App extends Component {
       <div>Self</div>
       <!-- TestComponent1 -->
       <!-- test-component-2 -->
+      <!-- TestComponent1 -->
     </div>
     `;
   }
