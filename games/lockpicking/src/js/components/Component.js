@@ -1,6 +1,8 @@
 import { uniqueId } from "../utils/uniqueId.js";
 import { isObjectEmpty } from "../utils/isObjectEmpty.js";
 
+const COMPONENT_ID_ATTRIBUTE = "component-id";
+
 export class Component {
   constructor(options = {}) {
     this.name = this.constructor.name;
@@ -9,7 +11,6 @@ export class Component {
     this.props = options.props || {};
     this.components = options.components || {};
     this.parentNode = options.parentNode || {};
-    console.log(options);
   }
 
   render() {
@@ -24,7 +25,10 @@ export class Component {
 
   renderSelf() {
     this.renderNode();
-    this.el = document.querySelector(`[data-id="${this.id}"]`);
+    this.el = document.querySelector(
+      `[${COMPONENT_ID_ATTRIBUTE}="${this.id}"]`
+    );
+    console.log(this.el);
   }
 
   createNode() {
@@ -32,7 +36,7 @@ export class Component {
     temporaryNode.innerHTML = this.html();
 
     const htmlElements = [...temporaryNode.childNodes].filter(
-      (childNode) => childNode instanceof HTMLElement // or comment. it can be other component as root
+      (childNode) => childNode instanceof HTMLElement
     );
 
     if (!htmlElements[0]) {
@@ -40,8 +44,9 @@ export class Component {
       return;
     }
 
+    this.id = uniqueId();
     const node = htmlElements[0];
-    node.dataset.id = this.id = uniqueId();
+    node.setAttribute(COMPONENT_ID_ATTRIBUTE, this.id);
 
     return node;
   }
