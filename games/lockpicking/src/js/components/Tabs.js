@@ -53,15 +53,17 @@ export class Tabs {
     `;
   }
 
-  render() {
+  render(selector) {
+    const parentNode = document.querySelector(selector);
+    if (!parentNode) {
+      throw new Error(`element with ${selector} not found`);
+    }
     const tabsEl = document.createElement("div");
     tabsEl.className = "tabs-wrapper";
     tabsEl.id = uniqueId();
     tabsEl.innerHTML = this.getHTML();
-    document.body.appendChild(tabsEl);
+    parentNode.prepend(tabsEl);
     console.dir(document);
     this.node = document.getElementById(tabsEl.id);
-
-    return this;
   }
 }

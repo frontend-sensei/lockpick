@@ -30,7 +30,6 @@ document.getElementById("howToPlay").addEventListener("click", (event) => {
 });
 
 let scoresPopup = null;
-let tabs = null;
 
 document.getElementById("scores").addEventListener("click", (event) => {
   event.preventDefault();
@@ -39,12 +38,10 @@ document.getElementById("scores").addEventListener("click", (event) => {
     scoresPopup.show();
     return;
   }
-  tabs = new Tabs({});
 
   scoresPopup = new Popup({
     html: `<h2 class="popup-headline">Scores</h2>
     <div class="popup-scores-content">
-    ${tabs.render()}
       
       <div class="tabel-wrapper">
 
@@ -61,8 +58,8 @@ document.getElementById("scores").addEventListener("click", (event) => {
     },
     hideButtonId: "okBtn",
     callback: () => {
-      console.log("Iamcallback");
-      // new Tabs(options).render(selector)
+      const options = {};
+      new Tabs(options).render(".popup-scores-content");
     },
   });
   scoresPopup.render();
