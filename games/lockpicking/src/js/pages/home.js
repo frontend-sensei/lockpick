@@ -1,5 +1,6 @@
 import { Progress } from "../game/progress/Progress.js";
 import { Popup } from "../game/popup/Popup.js";
+import { Tabs } from "../components/Tabs.js";
 
 const progress = new Progress().restore();
 
@@ -29,6 +30,7 @@ document.getElementById("howToPlay").addEventListener("click", (event) => {
 });
 
 let scoresPopup = null;
+let tabs = null;
 
 document.getElementById("scores").addEventListener("click", (event) => {
   event.preventDefault();
@@ -37,45 +39,13 @@ document.getElementById("scores").addEventListener("click", (event) => {
     scoresPopup.show();
     return;
   }
+  tabs = new Tabs({});
+
   scoresPopup = new Popup({
     html: `<h2 class="popup-headline">Scores</h2>
     <div class="popup-scores-content">
-      <div class="tabs-wrapper">
-        <input type="radio" id="standart" name="tabs-radio" class="tabs__radio visually-hidden" checked/>
-        <input type="radio" id="hard" name="tabs-radio" class="tabs__radio visually-hidden" />
-        <input type="radio" id="time" name="tabs-radio" class="tabs__radio visually-hidden" />
-        <div class="tabs">
-          <label class="tabs__label" for="standart">Standart</label>
-          <label class="tabs__label" for="hard">Hardcore</label>
-          <label class="tabs__label" for="time">Time</label>
-        </div>
-        <div class="tabs__content">
-          <div class="tabs-content__element tabs-content__element--standart">
-            <div class="block"></div>
-            <div class="block"></div>
-            <div class="block"></div>
-            <div class="block"></div>
-            <div class="block"></div>
-            <div class="block"></div>
-          </div> 
-          <div class="tabs-content__element tabs-content__element--hard">
-            <div class="alock"></div>
-            <div class="alock"></div>
-            <div class="alock"></div>
-            <div class="alock"></div>
-            <div class="alock"></div>
-            <div class="alock"></div>
-          </div> 
-          <div class="tabs-content__element tabs-content__element--time">
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-          </div>
-        </div>
-      </div>
+    ${tabs.render()}
+      
       <div class="tabel-wrapper">
 
       </div>
@@ -90,7 +60,10 @@ document.getElementById("scores").addEventListener("click", (event) => {
       },
     },
     hideButtonId: "okBtn",
+    callback: () => {
+      console.log("Iamcallback");
+      // new Tabs(options).render(selector)
+    },
   });
-
   scoresPopup.render();
 });
