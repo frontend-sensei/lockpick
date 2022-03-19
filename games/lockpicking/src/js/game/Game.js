@@ -25,7 +25,10 @@ export class Game {
     this._progress = new Progress().restore();
     this._levels = new LevelBuilder().build();
     this.level = this._levels.levels.get(this._progress.progress.nextLevel.id);
-    this._timer = new Timer(this, 12000);
+    this._timer = new Timer({
+      onStopCallback: this.onDefeat.bind(this),
+      timer: 2000,
+    });
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
     this.sounds = {
