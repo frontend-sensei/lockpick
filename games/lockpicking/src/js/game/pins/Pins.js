@@ -1,5 +1,5 @@
 /**
- * Creates a Pins class
+ * Creates a Pins visualization
  * @class Pins
  */
 export class Pins {
@@ -8,6 +8,10 @@ export class Pins {
     this.node = null;
   }
 
+  /**
+   * @private
+   * @returns {string} HTML string
+   */
   getHTML() {
     const pins = this.root.level.steps;
     return `
@@ -22,6 +26,10 @@ export class Pins {
     `;
   }
 
+  /**
+   * @public
+   * @param {string} selector
+   */
   render(selector) {
     const pinsEl = document.createElement("div");
     pinsEl.classList = "pins";
@@ -31,6 +39,10 @@ export class Pins {
     this.unlockedNode = this.node.querySelector(".pins-unlocked");
   }
 
+  /**
+   * @public
+   * @param {number} pinsUnlocked
+   */
   updateUnlocked(pinsUnlocked) {
     this.unlockedNode.innerHTML = pinsUnlocked;
   }
