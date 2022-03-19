@@ -2,7 +2,7 @@
  * Creates a Pins class
  * @class Pins
  */
-export class PinsUI {
+export class Pins {
   constructor(root) {
     this.root = root;
     this.node = null;
@@ -12,7 +12,7 @@ export class PinsUI {
     const pins = this.root.level.steps;
     return `
     <div class="pins-wrapper">
-        <span class="pins-label">Pins:</span>
+      <span class="pins-label">Pins:</span>
       <div class="pins-counter">
         <span class="pins-unlocked">0</span>
         <span class="pins-delimiter">/</span>

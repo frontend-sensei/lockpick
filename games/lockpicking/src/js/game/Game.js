@@ -165,7 +165,7 @@ export class Game {
         this.sounds.unlocked.play();
         this._ui._Lockpick.stopAnimate();
         this.pinsUnlocked++;
-        this._ui._PinsUI.updateUnlocked(this.pinsUnlocked);
+        this._ui._Pins.updateUnlocked(this.pinsUnlocked);
       }
 
       if (this.pinsUnlocked === this.level.steps) {
