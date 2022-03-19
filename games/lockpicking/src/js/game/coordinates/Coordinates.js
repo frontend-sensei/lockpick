@@ -27,6 +27,7 @@ export class Coordinates {
 
   /**
    * Check whether pointer coordinates matches with safe area coordinates
+   * @public
    * @returns {boolean} Whether the coordinates are correct
    */
   checkPosition() {
@@ -58,6 +59,7 @@ export class Coordinates {
   }
 
   /**
+   * @private
    * @param {HTMLElement} node
    * @returns {Range} Range
    */
@@ -79,6 +81,7 @@ export class Coordinates {
   }
 
   /**
+   * @private
    * @param {HTMLElement} node
    * @returns {Coordinates} Coordinates
    */
@@ -90,6 +93,7 @@ export class Coordinates {
   }
 
   /**
+   * @private
    * @param {HTMLElement} node
    * @returns {TransformStyles} TransformStyles
    */
