@@ -7,6 +7,7 @@ import { Countdown } from "./countdown/Countdown.js";
 import { Popup } from "./popup/Popup.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
+import { Keyboard } from "../utils/Keyboard.js";
 
 /**
  * Creates a new Game
@@ -31,6 +32,7 @@ export class Game {
     });
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
+    this._keyboard = new Keyboard();
     this.sounds = {
       unlocked: new Audio("../../assets/sounds/unlock_sound.wav"),
       failed: new Audio("../../assets/sounds/fail_sound.wav"),
@@ -137,14 +139,12 @@ export class Game {
     }
   }
 
-  unlockHandler(event, conditionFn = () => {}) {
+  unlockHandler(event) {
     try {
       if (this.pendingHandler || this._timer.finished) {
         return;
       }
       this.pendingHandler = true;
-
-      conditionFn(event);
 
       this._timer.pause();
       this._ui._Bar._ui.stopPointer();
@@ -200,17 +200,14 @@ export class Game {
     }
   }
 
-  isSpaceTriggered(event) {
-    if (event.keyCode !== 32) {
-      throw new Error();
-    }
-  }
-
   mobileUnlockHandler(event) {
     this.unlockHandler(event);
   }
 
   desktopUnlockHandler(event) {
-    this.unlockHandler(event, this.isSpaceTriggered);
+    if (!this._keyboard.isSpacePressed(event)) {
+      return;
+    }
+    this.unlockHandler(event);
   }
 }
