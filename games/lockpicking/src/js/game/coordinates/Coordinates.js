@@ -1,4 +1,22 @@
 /**
+ * @typedef {Object} Range
+ * @property {number} from
+ * @property {number} to
+ */
+
+/**
+ * @typedef {Object} Coordinates
+ * @property {number} height
+ * @property {number} [TransformStyles.translateY]
+ */
+
+/**
+ * @typedef {Object} TransformStyles
+ * @property {number} [translateY]
+ * @property {number} [translateX]
+ */
+
+/**
  * Creates a coordinates class
  * @class Coordinates
  */
@@ -7,42 +25,14 @@ export class Coordinates {
     this.root = root;
   }
 
-  getCoordinates(node) {
-    return {
-      height: node.clientHeight,
-      ...this.getTransformProperties(node),
-    };
-  }
-
+  /**
+   * Check whether pointer coordinates matches with safe area coordinates
+   * @public
+   * @returns {boolean} Whether the coordinates are correct
+   */
   checkPosition() {
-    const areaStyles = this.getCoordinates(this.root._ui._Bar._ui.areaNode);
-    const pointerStyles = this.getCoordinates(
-      this.root._ui._Bar._ui.pointerNode
-    );
-
-    const areaRange = {};
-    const areaTranslateY = areaStyles.translateY;
-    const areaHeight = areaStyles.height;
-
-    if (!areaTranslateY) {
-      areaRange.from = 0;
-      areaRange.to = areaHeight;
-    } else {
-      areaRange.from = areaTranslateY;
-      areaRange.to = areaTranslateY + areaHeight;
-    }
-
-    const pointerRange = {};
-    const pointerTranslateY = pointerStyles.translateY;
-    const pointerHeight = pointerStyles.height;
-
-    if (!pointerTranslateY) {
-      pointerRange.from = 0;
-      pointerRange.to = pointerHeight;
-    } else {
-      pointerRange.from = pointerTranslateY;
-      pointerRange.to = pointerTranslateY + pointerHeight;
-    }
+    const areaRange = this.getRange(this.root._ui._Bar._ui.areaNode);
+    const pointerRange = this.getRange(this.root._ui._Bar._ui.pointerNode);
 
     if (
       pointerRange.from === areaRange.from ||
@@ -68,6 +58,45 @@ export class Coordinates {
     return true;
   }
 
+  /**
+   * @private
+   * @param {HTMLElement} node
+   * @returns {Range} Range
+   */
+  getRange(node) {
+    const range = {};
+    const styles = this.getCoordinates(node);
+    const translateY = styles.translateY;
+    const height = styles.height;
+
+    if (!translateY) {
+      range.from = 0;
+      range.to = height;
+    } else {
+      range.from = translateY;
+      range.to = translateY + height;
+    }
+
+    return range;
+  }
+
+  /**
+   * @private
+   * @param {HTMLElement} node
+   * @returns {Coordinates} Coordinates
+   */
+  getCoordinates(node) {
+    return {
+      height: node.clientHeight,
+      ...this.getTransformProperties(node),
+    };
+  }
+
+  /**
+   * @private
+   * @param {HTMLElement} node
+   * @returns {TransformStyles} TransformStyles
+   */
   getTransformProperties(node) {
     const transformStyles = {};
     const rawValues = node.style.transform.split(" ");

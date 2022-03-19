@@ -1,18 +1,22 @@
 /**
- * Creates a Pins class
+ * Creates a Pins visualization
  * @class Pins
  */
-export class PinsUI {
+export class Pins {
   constructor(root) {
     this.root = root;
     this.node = null;
   }
 
+  /**
+   * @private
+   * @returns {string} HTML string
+   */
   getHTML() {
     const pins = this.root.level.steps;
     return `
     <div class="pins-wrapper">
-        <span class="pins-label">Pins:</span>
+      <span class="pins-label">Pins:</span>
       <div class="pins-counter">
         <span class="pins-unlocked">0</span>
         <span class="pins-delimiter">/</span>
@@ -22,6 +26,10 @@ export class PinsUI {
     `;
   }
 
+  /**
+   * @public
+   * @param {string} selector
+   */
   render(selector) {
     const pinsEl = document.createElement("div");
     pinsEl.classList = "pins";
@@ -31,6 +39,10 @@ export class PinsUI {
     this.unlockedNode = this.node.querySelector(".pins-unlocked");
   }
 
+  /**
+   * @public
+   * @param {number} pinsUnlocked
+   */
   updateUnlocked(pinsUnlocked) {
     this.unlockedNode.innerHTML = pinsUnlocked;
   }

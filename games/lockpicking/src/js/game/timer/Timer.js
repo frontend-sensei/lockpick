@@ -4,18 +4,19 @@
  */
 export class Timer {
   /**
-   * @param {Object} root - The root object
-   * @param {number} timer - The timer value, in milliseconds
+   * @param {Object} options - options object
    */
-  constructor(root, timer) {
-    this.root = root;
-    this.timer = timer;
+  constructor(options) {
     this.launched = false;
     this.paused = false;
     this.finished = false;
-    this.interval = 1000;
     this.intervalId = null;
+    this.timer = options.timer;
+    // TODO: Save time left
     this.timeLeft = 0;
+    this.onStopCallback = options.onStopCallback
+      ? options.onStopCallback
+      : () => {};
   }
 
   /**
@@ -38,7 +39,7 @@ export class Timer {
   }
 
   /**
-   * Starts timer and set up status properties
+   * Pause timer and change status properties
    */
   pause() {
     this.intervalId = clearInterval(this.intervalId);
@@ -53,6 +54,6 @@ export class Timer {
     this.intervalId = clearInterval(this.intervalId);
     this.launched = false;
     this.finished = true;
-    this.root.onDefeat();
+    this.onStopCallback();
   }
 }
