@@ -1,11 +1,24 @@
 import { uniqueId } from "../../utils/uniqueId.js";
 
+/**
+ * Create UnlockLabel
+ * @class UnlockLabel
+ */
 export class UnlockLabel {
   constructor() {
     this.node = null;
   }
 
+  /**
+   * @public
+   * @param {string} selector
+   */
   render(selector) {
+    const previousNode = document.querySelector(selector);
+    if (!previousNode) {
+      throw new Error(`Selector - "${selector}" not found`);
+    }
+
     const el = document.createElement("div");
     el.className = "unlock-label";
     el.id = uniqueId();
@@ -14,12 +27,7 @@ export class UnlockLabel {
     <span class="unlock-label__text">Unlock pin</div>
     `;
 
-    const previousNode = document.querySelector(selector);
-    if (!previousNode) {
-      throw new Error(`Selector - "${selector}" not found`);
-    }
     previousNode.after(el);
-
     this.node = document.getElementById(el.id);
   }
 }
