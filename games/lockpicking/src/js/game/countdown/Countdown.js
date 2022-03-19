@@ -1,10 +1,18 @@
+/**
+ * Creates a new Countdown
+ * @class Countdown
+ */
 export class Countdown {
   constructor(root) {
     this.root = root;
+    this.countdown = 1;
     this.countdownNode = null;
     this.countdownValueNode = null;
   }
 
+  /**
+   * @private
+   */
   render() {
     const countdownEl = document.createElement("div");
     countdownEl.className = "countdown";
@@ -16,22 +24,24 @@ export class Countdown {
       this.root._ui.node.querySelector(".countdown-value");
   }
 
+  /**
+   * @public
+   */
   start() {
     this.render();
-    const countdown = 1;
 
     return new Promise((resolve) => {
       let secondsPassed = 0;
       let interval = setInterval(() => {
-        if (secondsPassed >= countdown) {
-          interval = clearInterval(interval);
+        if (secondsPassed >= this.countdown) {
+          clearInterval(interval);
           this.countdownValueNode.innerHTML = "Go!";
           this.countdownNode.classList.add("hidden");
           resolve();
           return;
         }
 
-        this.countdownValueNode.innerHTML = countdown - secondsPassed;
+        this.countdownValueNode.innerHTML = this.countdown - secondsPassed;
         secondsPassed++;
       }, 1000);
     });
