@@ -15,13 +15,14 @@ import { Keyboard } from "../utils/Keyboard.js";
  */
 export class Game {
   constructor() {
-    this.attempts = new Observable(3);
-    this.launched = false;
-    this.pendingHandler = false;
-    this.desktopUnlockHandler = this.desktopUnlockHandler.bind(this);
-    this.mobileUnlockHandler = this.mobileUnlockHandler.bind(this);
-    this.popup = null;
     this.isMobile = isMobile();
+    this.attempts = new Observable(3);
+    this.pinsUnlocked = 0;
+
+    this.pendingHandler = false;
+    this.deviceHandler = this.isMobile
+      ? this.mobileUnlockHandler.bind(this)
+      : this.desktopUnlockHandler.bind(this);
 
     this._progress = new Progress().restore();
     this._levels = new LevelBuilder().build();
@@ -33,14 +34,13 @@ export class Game {
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
     this._keyboard = new Keyboard();
+
     this.sounds = {
       unlocked: new Audio("../../assets/sounds/unlock_sound.wav"),
       failed: new Audio("../../assets/sounds/fail_sound.wav"),
     };
     this.sounds.unlocked.volume = 0.05;
     this.sounds.failed.volume = 0.05;
-
-    this.pinsUnlocked = 0;
 
     this.render();
   }
@@ -51,7 +51,6 @@ export class Game {
 
   async start() {
     await new Countdown(this).start();
-    this.launched = true;
     this.addListeners();
     this._timer.start();
     this._ui._Bar._ui.movePointer();
@@ -60,21 +59,18 @@ export class Game {
 
   stop() {
     this._timer.stop();
-    this.launched = false;
     this.removeListeners();
     this._ui._Bar._ui.stopPointer();
     this._ui._Lockpick.stopAnimate();
   }
 
   onDefeat() {
-    this.launched = false;
     this.removeListeners();
     this._ui._Bar._ui.stopPointer();
     this.gameOver();
   }
 
   onWon() {
-    this.launched = false;
     this.removeListeners();
 
     const isLastLevel = this._levels.isLastLevel(this.level.id);
@@ -121,22 +117,22 @@ export class Game {
     if (this.isMobile) {
       this._ui._MobileUnlockBtn.node.addEventListener(
         "click",
-        this.mobileUnlockHandler
+        this.deviceHandler
       );
-    } else {
-      window.addEventListener("keydown", this.desktopUnlockHandler);
+      return;
     }
+    window.addEventListener("keydown", this.deviceHandler);
   }
 
   removeListeners() {
     if (this.isMobile) {
       this._ui._MobileUnlockBtn.node.removeEventListener(
         "click",
-        this.mobileUnlockHandler
+        this.deviceHandler
       );
-    } else {
-      window.removeEventListener("keydown", this.desktopUnlockHandler);
+      return;
     }
+    window.removeEventListener("keydown", this.deviceHandler);
   }
 
   unlockHandler(event) {
