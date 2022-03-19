@@ -12,6 +12,7 @@ export class Timer {
     this.finished = false;
     this.intervalId = null;
     this.timer = options.timer;
+    // TODO: Save time left
     this.timeLeft = 0;
     this.onStopCallback = options.onStopCallback
       ? options.onStopCallback
