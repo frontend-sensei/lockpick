@@ -4,8 +4,7 @@
  */
 export class Timer {
   /**
-   * @param {Object} root - The root object
-   * @param {number} timer - The timer value, in milliseconds
+   * @param {Object} options - options object
    */
   constructor(options) {
     this.launched = false;
