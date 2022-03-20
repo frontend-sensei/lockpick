@@ -5,7 +5,7 @@ import "../components/mainThemeSound.js";
 
 const progress = new Progress().restore();
 
-const playAudio = new Audio("../../assets/sounds/reverse_sound.wav");
+const playAudio = new Audio("../../assets/sounds/reverse.mp3");
 playAudio.volume = 0.01;
 
 document.getElementById("play").addEventListener("click", () => {
@@ -34,6 +34,17 @@ document.getElementById("howToPlay").addEventListener("click", (event) => {
   });
   howToPlayPopup.render();
 });
+
+function renderVideoSource() {
+  const videoSourceEl = document.createElement("source");
+  const videoSourcePath = "./assets/video/";
+  videoSourceEl.src =
+    window.innerWidth > 480
+      ? `${videoSourcePath}desktop_bg.mp4`
+      : `${videoSourcePath}mobile_bg.mp4`;
+  document.querySelector(".home-page__video-background").prepend(videoSourceEl);
+}
+renderVideoSource();
 
 let scoresPopup = null;
 document.getElementById("scores").addEventListener("click", (event) => {

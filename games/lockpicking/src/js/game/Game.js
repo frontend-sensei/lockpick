@@ -27,6 +27,7 @@ export class Game {
     this._progress = new Progress().restore();
     this._levels = new LevelBuilder().build();
     this.level = this._levels.levels.get(this._progress.progress.nextLevel.id);
+    // pass timer only for Timer Mode
     this._timer = new Timer({
       onStopCallback: this.onDefeat.bind(this),
       timer: 2000,
@@ -36,8 +37,8 @@ export class Game {
     this._keyboard = new Keyboard();
 
     this.sounds = {
-      unlocked: new Audio("../../assets/sounds/unlock_sound.wav"),
-      failed: new Audio("../../assets/sounds/fail_sound.wav"),
+      unlocked: new Audio("../../assets/sounds/unlock.mp3"),
+      failed: new Audio("../../assets/sounds/fail.mp3"),
     };
     this.sounds.unlocked.volume = 0.05;
     this.sounds.failed.volume = 0.05;
