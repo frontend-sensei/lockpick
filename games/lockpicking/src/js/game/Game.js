@@ -18,6 +18,7 @@ export class Game {
     this.isMobile = isMobile();
     this.attempts = new Observable(3);
     this.pinsUnlocked = 0;
+    this.PAUSE_TIMEOUT = 1500;
 
     this.pendingHandler = false;
     this.deviceHandler = this.isMobile
@@ -147,18 +148,8 @@ export class Game {
       this._ui._Bar._ui.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
-      const TIMEOUT = 1500;
       if (!positionCorrect) {
-        this.sounds.failed.play();
-        const bar = document.querySelector(".bar");
-        bar.classList.add("bar--failure");
-        this._ui._Lockpick.node.classList.add("failure");
-        setTimeout(() => {
-          bar.classList.remove("bar--failure");
-          this._ui._Lockpick.node.classList.remove("failure");
-        }, TIMEOUT - 150);
-
-        this.attempts.set(this.attempts.value - 1);
+        this.positionIncorrectHandler();
       }
 
       if (positionCorrect) {
@@ -178,23 +169,42 @@ export class Game {
         throw new Error();
       }
 
-      const spaceButtonLabel = document.querySelector(".unlock-label__img");
-      if (spaceButtonLabel) {
-        spaceButtonLabel.classList.add("unlock-label__img--active");
+      const tipIcon = document.querySelector(".unlock-label__img");
+      if (tipIcon) {
+        tipIcon.classList.add("unlock-label__img--active");
         setTimeout(() => {
-          spaceButtonLabel.classList.remove("unlock-label__img--active");
+          tipIcon.classList.remove("unlock-label__img--active");
         }, 100);
       }
 
       setTimeout(() => {
-        this._timer.start();
-        this._ui._Bar._ui.movePointer();
-        this._ui._Lockpick.animate();
-        this.pendingHandler = false;
-      }, TIMEOUT);
+        this.continue();
+      }, this.PAUSE_TIMEOUT);
     } catch (e) {
       this.pendingHandler = false;
     }
+  }
+
+  positionIncorrectHandler() {
+    this.sounds.failed.play();
+    this.barFailure();
+    this.attempts.set(this.attempts.value - 1);
+  }
+
+  barFailure() {
+    this._ui._Bar._ui.node.classList.add("bar--failure");
+    this._ui._Lockpick.node.classList.add("failure");
+    setTimeout(() => {
+      this._ui._Bar._ui.node.classList.remove("bar--failure");
+      this._ui._Lockpick.node.classList.remove("failure");
+    }, this.PAUSE_TIMEOUT - 150);
+  }
+
+  continue() {
+    this._timer.start();
+    this._ui._Bar._ui.movePointer();
+    this._ui._Lockpick.animate();
+    this.pendingHandler = false;
   }
 
   mobileUnlockHandler(event) {
