@@ -9,9 +9,11 @@ import { isMobile } from "../utils/isMobile.js";
 import { Keyboard } from "../utils/Keyboard.js";
 import { GameOverPopup } from "./popups/GameOverPopup.js";
 import { GameWonPopup } from "./popups/GameWonPopup.js";
+import { Listeners } from "./listeners/Listeners.js";
 
 /**
  * Creates a new Game
+ * In the constructor should be passed level
  * @class Game
  */
 export class Game {
@@ -46,6 +48,12 @@ export class Game {
     this.sounds.failed.volume = 0.05;
 
     this.render();
+
+    this._listeners = new Listeners(
+      this.deviceHandler,
+      this.isMobile,
+      this._ui?._MobileUnlockBtn?.node
+    );
   }
 
   render() {
@@ -54,7 +62,7 @@ export class Game {
 
   async start() {
     await new Countdown(this).start();
-    this.addListeners();
+    this._listeners.register();
     this._timer.start();
     this._ui._Bar._ui.movePointer();
     this._ui._Lockpick.animate();
@@ -62,19 +70,19 @@ export class Game {
 
   stop() {
     this._timer.stop();
-    this.removeListeners();
+    this._listeners.remove();
     this._ui._Bar._ui.stopPointer();
     this._ui._Lockpick.stopAnimate();
   }
 
   onDefeat() {
-    this.removeListeners();
+    this._listeners.remove();
     this._ui._Bar._ui.stopPointer();
     this.gameOver();
   }
 
   onWon() {
-    this.removeListeners();
+    this._listeners.remove();
 
     const isLastLevel = this._levels.isLastLevel(this.level.id);
     const levelToSave = {
@@ -90,28 +98,6 @@ export class Game {
 
   gameOver() {
     new GameOverPopup().render();
-  }
-
-  addListeners() {
-    if (this.isMobile) {
-      this._ui._MobileUnlockBtn.node.addEventListener(
-        "click",
-        this.deviceHandler
-      );
-      return;
-    }
-    window.addEventListener("keydown", this.deviceHandler);
-  }
-
-  removeListeners() {
-    if (this.isMobile) {
-      this._ui._MobileUnlockBtn.node.removeEventListener(
-        "click",
-        this.deviceHandler
-      );
-      return;
-    }
-    window.removeEventListener("keydown", this.deviceHandler);
   }
 
   unlockHandler(event) {
