@@ -4,7 +4,6 @@ import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
 import { Countdown } from "./countdown/Countdown.js";
-import { Popup } from "./popup/Popup.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
 import { Keyboard } from "../utils/Keyboard.js";
