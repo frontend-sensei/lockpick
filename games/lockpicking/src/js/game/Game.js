@@ -8,6 +8,7 @@ import { Popup } from "./popup/Popup.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
 import { Keyboard } from "../utils/Keyboard.js";
+import { GameOverPopup } from "./popups/GameOverPopup.js";
 
 /**
  * Creates a new Game
@@ -96,15 +97,7 @@ export class Game {
   }
 
   gameOver() {
-    new Popup({
-      html: `<h2 class="popup-headline">Game over :(</h2>
-      <button class="popup-button" id="backToHome">back to home</button>
-      <button class="popup-button" id="reloadPage">Retry</button>`,
-      listeners: {
-        backToHome: this.backToHomeHandler,
-        reloadPage: this.reloadPage,
-      },
-    }).render();
+    new GameOverPopup().render();
   }
 
   backToHomeHandler() {
