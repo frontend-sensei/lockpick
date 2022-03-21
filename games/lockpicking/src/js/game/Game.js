@@ -9,6 +9,7 @@ import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
 import { Keyboard } from "../utils/Keyboard.js";
 import { GameOverPopup } from "./popups/GameOverPopup.js";
+import { GameWonPopup } from "./popups/GameWonPopup.js";
 
 /**
  * Creates a new Game
@@ -85,27 +86,11 @@ export class Game {
     }
     this._progress.save(levelToSave);
 
-    new Popup({
-      html: `<h2 class="popup-headline">You Won!</h2>
-      <button class="popup-button" id="backToHome">back to home</button>
-      <button class="popup-button" id="reloadPage">Continue</button>`,
-      listeners: {
-        backToHome: this.backToHomeHandler,
-        reloadPage: this.reloadPage,
-      },
-    }).render();
+    new GameWonPopup().render();
   }
 
   gameOver() {
     new GameOverPopup().render();
-  }
-
-  backToHomeHandler() {
-    location.href = "/";
-  }
-
-  reloadPage() {
-    location.reload();
   }
 
   addListeners() {
