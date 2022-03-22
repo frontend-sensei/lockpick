@@ -1,5 +1,5 @@
 import { Bar } from "./bar/Bar.js";
-import { PinsUI } from "./pins/PinsUI.js";
+import { Pins } from "./pins/Pins.js";
 import { Attempts } from "./attempts/Attempts.js";
 import { MobileUnlockBtn } from "./mobile-unlock-btn/MobileUnlockBtn.js";
 import { UnlockLabel } from "./unlock-label/UnlockLabel.js";
@@ -10,7 +10,7 @@ export class UI {
     this.root = root;
     this.node = null;
     this._Bar = new Bar(root);
-    this._PinsUI = new PinsUI(root);
+    this._Pins = new Pins(root);
     this._Attempts = new Attempts(root);
     this._Lockpick = new Lockpick(this.root.level.steps);
 
@@ -39,7 +39,7 @@ export class UI {
     this.node = document.querySelector(".game");
 
     this._Bar.render(".bar-row");
-    this._PinsUI.render(".bar-row");
+    this._Pins.render(".bar-row");
     this._Lockpick.render(".bar-row");
     this._Attempts.render(".game");
     if (this.root.isMobile) {

@@ -4,6 +4,7 @@
  */
 export class Level {
   /**
+   * @param {number} id - The id value.
    * @param {number} steps - The steps value.
    * @param {number} areaHeight - The areaHeight value, in pixels.
    * @param {number} areaMovingSpeed - The areaMovingSpeed value, in milliseconds.

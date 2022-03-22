@@ -7,6 +7,7 @@ import { Countdown } from "./countdown/Countdown.js";
 import { Popup } from "./popup/Popup.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
+import { Keyboard } from "../utils/Keyboard.js";
 
 /**
  * Creates a new Game
@@ -14,22 +15,33 @@ import { isMobile } from "../utils/isMobile.js";
  */
 export class Game {
   constructor() {
-    this.attempts = new Observable(3);
-    this.launched = false;
-    this.pendingHandler = false;
-    this.desktopUnlockHandler = this.desktopUnlockHandler.bind(this);
-    this.mobileUnlockHandler = this.mobileUnlockHandler.bind(this);
-    this.popup = null;
     this.isMobile = isMobile();
+    this.attempts = new Observable(3);
+    this.pinsUnlocked = 0;
+
+    this.pendingHandler = false;
+    this.deviceHandler = this.isMobile
+      ? this.mobileUnlockHandler.bind(this)
+      : this.desktopUnlockHandler.bind(this);
 
     this._progress = new Progress().restore();
     this._levels = new LevelBuilder().build();
     this.level = this._levels.levels.get(this._progress.progress.nextLevel.id);
-    this._timer = new Timer(this, 12000);
+    // pass timer only for Timer Mode
+    this._timer = new Timer({
+      onStopCallback: this.onDefeat.bind(this),
+      timer: 2000,
+    });
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
+    this._keyboard = new Keyboard();
 
-    this.pinsUnlocked = 0;
+    this.sounds = {
+      unlocked: new Audio("../../assets/sounds/unlock.mp3"),
+      failed: new Audio("../../assets/sounds/fail.mp3"),
+    };
+    this.sounds.unlocked.volume = 0.05;
+    this.sounds.failed.volume = 0.05;
 
     this.render();
   }
@@ -40,7 +52,6 @@ export class Game {
 
   async start() {
     await new Countdown(this).start();
-    this.launched = true;
     this.addListeners();
     this._timer.start();
     this._ui._Bar._ui.movePointer();
@@ -49,21 +60,18 @@ export class Game {
 
   stop() {
     this._timer.stop();
-    this.launched = false;
     this.removeListeners();
     this._ui._Bar._ui.stopPointer();
     this._ui._Lockpick.stopAnimate();
   }
 
   onDefeat() {
-    this.launched = false;
     this.removeListeners();
     this._ui._Bar._ui.stopPointer();
     this.gameOver();
   }
 
   onWon() {
-    this.launched = false;
     this.removeListeners();
 
     const isLastLevel = this._levels.isLastLevel(this.level.id);
@@ -110,32 +118,30 @@ export class Game {
     if (this.isMobile) {
       this._ui._MobileUnlockBtn.node.addEventListener(
         "click",
-        this.mobileUnlockHandler
+        this.deviceHandler
       );
-    } else {
-      window.addEventListener("keydown", this.desktopUnlockHandler);
+      return;
     }
+    window.addEventListener("keydown", this.deviceHandler);
   }
 
   removeListeners() {
     if (this.isMobile) {
       this._ui._MobileUnlockBtn.node.removeEventListener(
         "click",
-        this.mobileUnlockHandler
+        this.deviceHandler
       );
-    } else {
-      window.removeEventListener("keydown", this.desktopUnlockHandler);
+      return;
     }
+    window.removeEventListener("keydown", this.deviceHandler);
   }
 
-  unlockHandler(event, conditionFn = () => {}) {
+  unlockHandler(event) {
     try {
       if (this.pendingHandler || this._timer.finished) {
         return;
       }
       this.pendingHandler = true;
-
-      conditionFn(event);
 
       this._timer.pause();
       this._ui._Bar._ui.stopPointer();
@@ -143,6 +149,7 @@ export class Game {
       const positionCorrect = this._coordinates.checkPosition();
       const TIMEOUT = 1500;
       if (!positionCorrect) {
+        this.sounds.failed.play();
         const bar = document.querySelector(".bar");
         bar.classList.add("bar--failure");
         this._ui._Lockpick.node.classList.add("failure");
@@ -155,9 +162,10 @@ export class Game {
       }
 
       if (positionCorrect) {
+        this.sounds.unlocked.play();
         this._ui._Lockpick.stopAnimate();
         this.pinsUnlocked++;
-        this._ui._PinsUI.updateUnlocked(this.pinsUnlocked);
+        this._ui._Pins.updateUnlocked(this.pinsUnlocked);
       }
 
       if (this.pinsUnlocked === this.level.steps) {
@@ -189,17 +197,14 @@ export class Game {
     }
   }
 
-  isSpaceTriggered(event) {
-    if (event.keyCode !== 32) {
-      throw new Error();
-    }
-  }
-
   mobileUnlockHandler(event) {
     this.unlockHandler(event);
   }
 
   desktopUnlockHandler(event) {
-    this.unlockHandler(event, this.isSpaceTriggered);
+    if (!this._keyboard.isSpacePressed(event)) {
+      return;
+    }
+    this.unlockHandler(event);
   }
 }

@@ -9,6 +9,10 @@ export class LevelBuilder {
     this.levels = new Map();
   }
 
+  /**
+   * Build levels
+   * @public
+   */
   build() {
     const levels = [
       [
@@ -42,6 +46,11 @@ export class LevelBuilder {
     return this;
   }
 
+  /**
+   * @public
+   * @param {number} levelId
+   * @returns {boolean} Whether has next level
+   */
   isLastLevel(levelId) {
     const possibleNextLevelId = levelId + 1;
     const hasNextLevel = this.levels.has(possibleNextLevelId);

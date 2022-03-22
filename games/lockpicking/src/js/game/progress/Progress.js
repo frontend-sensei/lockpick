@@ -1,5 +1,5 @@
 /**
- * Creates instance that can be used to save, restore and display progress
+ * Creates Progress that can be used to save, restore and display progress
  * @class Progress
  */
 export class Progress {
@@ -14,6 +14,9 @@ export class Progress {
     this.storageKey = "progress";
   }
 
+  /**
+   * @public
+   */
   save(level) {
     const levelId = level.data.id;
     this.progress.completedLevels[levelId] = level.data;
@@ -26,6 +29,9 @@ export class Progress {
     return this;
   }
 
+  /**
+   * @public
+   */
   restore() {
     const result = JSON.parse(localStorage.getItem(this.storageKey)) || {};
     if (Object.keys(result).length !== 0) {
@@ -35,6 +41,9 @@ export class Progress {
     return this;
   }
 
+  /**
+   * @public
+   */
   clear() {
     localStorage.setItem(this.storageKey, JSON.stringify({}));
 

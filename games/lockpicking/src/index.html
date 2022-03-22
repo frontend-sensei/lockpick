@@ -14,18 +14,12 @@
     <link rel="stylesheet" href="./styles/pages/home.css" />
     <link rel="stylesheet" href="./styles/game/popup.css" />
     <link rel="stylesheet" href="./styles/pages/score-tabs.css" />
-
+    <link rel="stylesheet" href="./styles/components/sound-controller.css" />
     <title>Document</title>
   </head>
   <body>
     <div class="home-page">
-      <video
-        class="home-page__video-background"
-        src="./assets/video/bg.mp4"
-        loop
-        muted
-        autoplay
-      ></video>
+      <video class="home-page__video-background" loop muted autoplay></video>
       <div class="home-page__color-layer"></div>
       <div class="home-page__top-bar">
         <div class="home-page__line home-page-top-bar__line"></div>
@@ -48,17 +42,23 @@
       </div>
       <h1>LOCKPICKER</h1>
 
-        <div class="home-page__play-wrapper" id="playWrapper">
-          <button class="home-page__play-button" id="play">play</button>
-          <img
-            class="home-page-keys-img"
-            src="./assets/images/keys.png"
-            alt=""
-          />
-        </div>
-
-        <button id="resetProgress">Reset progress</button>
+      <div class="home-page__play-wrapper" id="playWrapper">
+        <button class="home-page__play-button" id="play">play</button>
+        <img class="home-page-keys-img" src="./assets/images/keys.png" alt="" />
       </div>
+
+      <button class="sound-controller sound-controller--muted">
+        <img
+          src="./assets/icons/volume_on.svg"
+          class="sound-controller__icon sound-controller__icon--unmuted"
+          alt=""
+        />
+        <img
+          src="./assets/icons/volume_off.svg"
+          class="sound-controller__icon sound-controller__icon--muted"
+          alt=""
+        />
+      </button>
     </div>
 
     <script type="module" src="./js/pages/home.js"></script>
