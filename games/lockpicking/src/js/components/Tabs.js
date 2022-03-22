@@ -14,43 +14,43 @@ export class Tabs {
 
   getHTML() {
     return `
-      <div class="tabs-wrapper">
-        <input type="radio" id="standart" name="tabs-radio" class="tabs__radio visually-hidden" checked/>
-        <input type="radio" id="hard" name="tabs-radio" class="tabs__radio visually-hidden" />
-        <input type="radio" id="time" name="tabs-radio" class="tabs__radio visually-hidden" />
-        <div class="tabs">
-          <label class="tabs__label" for="standart">Standart</label>
-          <label class="tabs__label" for="hard">Hardcore</label>
-          <label class="tabs__label" for="time">Time</label>
-        </div>
-        <div class="tabs__content">
-          <div class="tabs-content__element tabs-content__element--standart">
-            <div class="block"></div>
-            <div class="block"></div>
-            <div class="block"></div>
-            <div class="block"></div>
-            <div class="block"></div>
-            <div class="block"></div>
-          </div> 
-          <div class="tabs-content__element tabs-content__element--hard">
-            <div class="alock"></div>
-            <div class="alock"></div>
-            <div class="alock"></div>
-            <div class="alock"></div>
-            <div class="alock"></div>
-            <div class="alock"></div>
-          </div> 
-          <div class="tabs-content__element tabs-content__element--time">
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-            <div class="vlock"></div>
-          </div>
-        </div>
+      <div class="tabs">
+       
+      </div>
+      <div class="tabs__content">
+        
       </div>
     `;
+  }
+
+  addElement(element, radioSelector, tabsSelector, contentSelector) {
+    const parentNode = document.querySelector(radioSelector);
+    const tabLabelNode = document.querySelector(tabsSelector);
+    const contentNode = document.querySelector(contentSelector);
+    console.log(element);
+    if (!element) {
+      throw new Error("no element");
+    }
+    const radioTabEl = document.createElement(element.tab);
+    const labelTabEl = document.createElement(element.content);
+    const contentTabEl = document.createElement("div");
+
+    radioTabEl.className = "tabs__radio visually-hidden";
+    radioTabEl.setAttribute("type", "radio");
+    radioTabEl.setAttribute("name", "tabs-radio");
+    radioTabEl.id = uniqueId();
+    parentNode.prepend(radioTabEl);
+
+    labelTabEl.className = "tabs__label";
+    labelTabEl.setAttribute("for", radioTabEl.id);
+    labelTabEl.innerHTML = element.name;
+    tabLabelNode.prepend(labelTabEl);
+
+    contentTabEl.className = "tabs-content__element";
+    contentTabEl.innerHTML = `<div class="block"></div>`;
+    contentNode.appendChild(contentTabEl);
+
+    this.node = document.getElementById(radioTabEl.id);
   }
 
   render(selector) {
@@ -63,7 +63,6 @@ export class Tabs {
     tabsEl.id = uniqueId();
     tabsEl.innerHTML = this.getHTML();
     parentNode.prepend(tabsEl);
-    console.dir(document);
     this.node = document.getElementById(tabsEl.id);
   }
 }

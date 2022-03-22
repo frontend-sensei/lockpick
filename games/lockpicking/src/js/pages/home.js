@@ -58,8 +58,35 @@ document.getElementById("scores").addEventListener("click", (event) => {
     },
     hideButtonId: "okBtn",
     callback: () => {
-      const options = {};
+      const options = {
+        standart: {
+          name: "Standart",
+          tab: `input`,
+          content: `label`,
+        },
+        hardcore: {
+          name: "Hardcore",
+          tab: `input`,
+          content: `label`,
+        },
+        time: {
+          name: "Time",
+          tab: `input`,
+          content: `label`,
+        },
+      };
       new Tabs(options).render(".popup-scores-content");
+      let keys = Object.keys(options);
+
+      for (let i = 0; i < keys.length; i++) {
+        let currentObject = Object.values(options);
+        new Tabs(options).addElement(
+          currentObject[i],
+          ".tabs-wrapper",
+          ".tabs",
+          ".tabs__content"
+        );
+      }
     },
   });
   scoresPopup.render();
