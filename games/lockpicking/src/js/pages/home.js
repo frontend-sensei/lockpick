@@ -77,34 +77,79 @@ document.getElementById("scores").addEventListener("click", (event) => {
     hideButtonId: "okBtn",
     callback: () => {
       const options = {
-        standart: {
-          name: "Standart",
-          tab: `input`,
-          content: `label`,
-        },
-        hardcore: {
-          name: "Hardcore",
-          tab: `input`,
-          content: `label`,
-        },
-        time: {
-          name: "Time",
-          tab: `input`,
-          content: `label`,
+        tabs: {
+          standard: {
+            name: "Standard",
+            content: `<div class="block"></div>`,
+          },
+          hardcore: {
+            name: "Hardcore",
+            content: `<div class="alock"></div>`,
+          },
+          time: {
+            name: "Time",
+            content: `
+          <table class="tabs-table">
+              <tr class="tabs-table__row">
+                <th class="tabs-table__header">№</th>
+                <th class="tabs-table__header">Pinlocks</th>
+                <th class="tabs-table__header">Time</th>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">1.1</td>
+                <td class="tabs-table__data">1.2</td>
+                <td class="tabs-table__data">1.3</td>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">2.1</td>
+                <td class="tabs-table__data">2.2</td>
+                <td class="tabs-table__data">2.3</td>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">3.1</td>
+                <td class="tabs-table__data">3.2</td>
+                <td class="tabs-table__data">3.3</td>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">3.1</td>
+                <td class="tabs-table__data">3.2</td>
+                <td class="tabs-table__data">3.3</td>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">3.1</td>
+                <td class="tabs-table__data">3.2</td>
+                <td class="tabs-table__data">3.3</td>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">3.1</td>
+                <td class="tabs-table__data">3.2</td>
+                <td class="tabs-table__data">3.3</td>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">3.1</td>
+                <td class="tabs-table__data">3.2</td>
+                <td class="tabs-table__data">3.3</td>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">3.1</td>
+                <td class="tabs-table__data">3.2</td>
+                <td class="tabs-table__data">3.3</td>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">3.1</td>
+                <td class="tabs-table__data">3.2</td>
+                <td class="tabs-table__data">3.3</td>
+              </tr>
+              <tr class="tabs-table__row">
+                <td class="tabs-table__data">3.1</td>
+                <td class="tabs-table__data">3.2</td>
+                <td class="tabs-table__data">3.3</td>
+              </tr>
+          </table>`,
+          },
         },
       };
       new Tabs(options).render(".popup-scores-content");
-      let keys = Object.keys(options);
-
-      for (let i = 0; i < keys.length; i++) {
-        let currentObject = Object.values(options);
-        new Tabs(options).addElement(
-          currentObject[i],
-          ".tabs-wrapper",
-          ".tabs",
-          ".tabs__content"
-        );
-      }
     },
   });
   scoresPopup.render();

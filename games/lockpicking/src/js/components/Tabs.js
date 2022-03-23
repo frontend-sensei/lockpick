@@ -14,50 +14,62 @@ export class Tabs {
 
   getHTML() {
     return `
+      ${this.renderInputs()}
       <div class="tabs">
+      ${this.renderLabels()}
        
       </div>
       <div class="tabs__content">
-        
+        ${this.renderContent()}
       </div>
     `;
   }
 
-  addElement(element, radioSelector, tabsSelector, contentSelector) {
-    const parentNode = document.querySelector(radioSelector);
-    const tabLabelNode = document.querySelector(tabsSelector);
-    const contentNode = document.querySelector(contentSelector);
-    console.log(element);
-    if (!element) {
-      throw new Error("no element");
-    }
-    const radioTabEl = document.createElement(element.tab);
-    const labelTabEl = document.createElement(element.content);
-    const contentTabEl = document.createElement("div");
-
-    radioTabEl.className = "tabs__radio visually-hidden";
-    radioTabEl.setAttribute("type", "radio");
-    radioTabEl.setAttribute("name", "tabs-radio");
-    radioTabEl.id = uniqueId();
-    parentNode.prepend(radioTabEl);
-
-    labelTabEl.className = "tabs__label";
-    labelTabEl.setAttribute("for", radioTabEl.id);
-    labelTabEl.innerHTML = element.name;
-    tabLabelNode.prepend(labelTabEl);
-
-    contentTabEl.className = "tabs-content__element";
-    contentTabEl.innerHTML = `<div class="block"></div>`;
-    contentNode.appendChild(contentTabEl);
-
-    this.node = document.getElementById(radioTabEl.id);
+  renderInputs() {
+    const tabKeys = Object.keys(this.options.tabs);
+    let HTML = "";
+    tabKeys.forEach((tabKey) => {
+      HTML += `<input type="radio" id="${this.options.tabs[tabKey].id}" name="tabs-radio" class="tabs__radio visually-hidden" />`;
+    });
+    return HTML;
   }
+  //return string
+  renderLabels() {
+    const tabKeys = Object.keys(this.options.tabs);
+    let HTML = "";
+    tabKeys.forEach((tabKey) => {
+      HTML += `<label for="${this.options.tabs[tabKey].id}" class="tabs__label">${this.options.tabs[tabKey].name}</label>`;
+    });
+    return HTML;
+  }
+  //return string
+  renderContent() {
+    const tabKeys = Object.keys(this.options.tabs);
+    let HTML = "";
+    tabKeys.forEach((tabKey) => {
+      HTML += `
+      <div class="tabs-content__element"> 
+        ${this.options.tabs[tabKey].content}
+      </div>`;
+    });
+    return HTML;
+  }
+  //return string
+  createUniqeId() {
+    const tabKeys = Object.keys(this.options.tabs);
+    tabKeys.forEach((tabKey) => {
+      this.options.tabs[tabKey].id = uniqueId();
+    });
+  }
+
+  //
 
   render(selector) {
     const parentNode = document.querySelector(selector);
     if (!parentNode) {
       throw new Error(`element with ${selector} not found`);
     }
+    this.createUniqeId();
     const tabsEl = document.createElement("div");
     tabsEl.className = "tabs-wrapper";
     tabsEl.id = uniqueId();
