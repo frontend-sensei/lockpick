@@ -1,18 +1,15 @@
-.tabs-table {
+.table {
   width: 100%;
   border-spacing: 0;
 }
 
-.tabs-table__header {
+.table-header {
   border-bottom: 1px solid #009dac;
   font-size: 20px;
 }
 
-.tabs-table__row {
-}
-
-.tabs-table__data,
-.tabs-table__header {
+.table-data,
+.table-header {
   border-right: 1px solid #009dac;
   border-left: 1px solid #009dac;
   background-color: #009eac15;
@@ -20,10 +17,6 @@
   padding: 10px 0;
 }
 
-.tabs-table__data {
+.table-data {
   font-size: 19px;
-}
-
-tbody {
-  overflow: auto;
 }

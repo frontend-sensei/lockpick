@@ -80,70 +80,70 @@ document.getElementById("scores").addEventListener("click", (event) => {
         tabs: {
           standard: {
             name: "Standard",
-            content: `<div class="block"></div>`,
+            content: ``,
           },
           hardcore: {
             name: "Hardcore",
-            content: `<div class="alock"></div>`,
+            content: ``,
           },
           time: {
             name: "Time",
             content: `
-          <table class="tabs-table">
-              <tr class="tabs-table__row">
-                <th class="tabs-table__header">№</th>
-                <th class="tabs-table__header">Pinlocks</th>
-                <th class="tabs-table__header">Time</th>
+          <table class="table">
+              <tr class="table-row">
+                <th class="table-header">№</th>
+                <th class="table-header">Pinlocks</th>
+                <th class="table-header">Time</th>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">1.1</td>
-                <td class="tabs-table__data">1.2</td>
-                <td class="tabs-table__data">1.3</td>
+              <tr class="table-row">
+                <td class="table-data">1.1</td>
+                <td class="table-data">1.2</td>
+                <td class="table-data">1.3</td>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">2.1</td>
-                <td class="tabs-table__data">2.2</td>
-                <td class="tabs-table__data">2.3</td>
+              <tr class="table-row">
+                <td class="table-data">2.1</td>
+                <td class="table-data">2.2</td>
+                <td class="table-data">2.3</td>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">3.1</td>
-                <td class="tabs-table__data">3.2</td>
-                <td class="tabs-table__data">3.3</td>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">3.1</td>
-                <td class="tabs-table__data">3.2</td>
-                <td class="tabs-table__data">3.3</td>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">3.1</td>
-                <td class="tabs-table__data">3.2</td>
-                <td class="tabs-table__data">3.3</td>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">3.1</td>
-                <td class="tabs-table__data">3.2</td>
-                <td class="tabs-table__data">3.3</td>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">3.1</td>
-                <td class="tabs-table__data">3.2</td>
-                <td class="tabs-table__data">3.3</td>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">3.1</td>
-                <td class="tabs-table__data">3.2</td>
-                <td class="tabs-table__data">3.3</td>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">3.1</td>
-                <td class="tabs-table__data">3.2</td>
-                <td class="tabs-table__data">3.3</td>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
               </tr>
-              <tr class="tabs-table__row">
-                <td class="tabs-table__data">3.1</td>
-                <td class="tabs-table__data">3.2</td>
-                <td class="tabs-table__data">3.3</td>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
               </tr>
           </table>`,
           },
