@@ -29,9 +29,8 @@ document.getElementById("howToPlay").addEventListener("click", (event) => {
     <img class="popup-img" src="https://media.giphy.com/media/BkL4Vyz0z2iYQMhwFw/giphy.gif">
     <p>Just press space in the right moment. You have limited time for lock pick.</p>
     <div class="popup-buttons">
-      <button class="popup-button" id="okBtn">Ok</button>
+      <button class="popup-button" data-hide-btn>Ok</button>
     </div>`,
-    hideButtonId: "okBtn",
   });
   howToPlayPopup.render();
 });
@@ -67,14 +66,13 @@ document.getElementById("scores").addEventListener("click", (event) => {
       <button class="popup-button" id="resetProgress">Reset progress</button>
     </div>
     <div class="popup-buttons">
-      <button class="popup-button" id="okBtn">Ok</button>
+      <button class="popup-button" data-hide-btn>Ok</button>
     </div>`,
     listeners: {
       resetProgress: () => {
         progress.clear();
       },
     },
-    hideButtonId: "okBtn",
     onCreated: () => {
       const options = {
         tabs: {
