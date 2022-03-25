@@ -57,39 +57,6 @@
   transition: opacity var(--switch-transition);
 }
 
-.tabs__radio:nth-child(1):checked ~ .tabs .tabs__label:nth-child(1),
-.tabs__radio:nth-child(2):checked ~ .tabs .tabs__label:nth-child(2),
-.tabs__radio:nth-child(3):checked ~ .tabs .tabs__label:nth-child(3),
-.tabs__radio:nth-child(4):checked ~ .tabs .tabs__label:nth-child(4),
-.tabs__radio:nth-child(5):checked ~ .tabs .tabs__label:nth-child(5),
-.tabs__radio:nth-child(6):checked ~ .tabs .tabs__label:nth-child(6),
-.tabs__radio:nth-child(7):checked ~ .tabs .tabs__label:nth-child(7) {
-  color: #07a0af;
-  border-bottom: 2px solid #07a0af;
-}
-
-.tabs__radio:nth-child(1):checked
-  ~ .tabs__content
-  .tabs-content__element:nth-child(1),
-.tabs__radio:nth-child(2):checked
-  ~ .tabs__content
-  .tabs-content__element:nth-child(2),
-.tabs__radio:nth-child(3):checked
-  ~ .tabs__content
-  .tabs-content__element:nth-child(3),
-.tabs__radio:nth-child(4):checked
-  ~ .tabs__content
-  .tabs-content__element:nth-child(4),
-.tabs__radio:nth-child(5):checked
-  ~ .tabs__content
-  .tabs-content__element:nth-child(5),
-.tabs__radio:nth-child(6):checked
-  ~ .tabs__content
-  .tabs-content__element:nth-child(6) {
-  display: block;
-  opacity: 1;
-}
-
 .tabs::-webkit-scrollbar,
 .tabs__content::-webkit-scrollbar {
   width: 10px;

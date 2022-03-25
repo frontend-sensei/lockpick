@@ -15,14 +15,50 @@ export class Tabs {
 
   getHTML() {
     return `
-      ${this.renderInputs()}
+        ${this.renderInputs()}
       <div class="tabs">
-      ${this.renderLabels()}
+        ${this.renderLabels()}
       </div>
       <div class="tabs__content">
         ${this.renderContent()}
       </div>
     `;
+  }
+
+  getTabsStyles() {
+    return `${this.renderStyles()}${this.renderStyles2()}`;
+  }
+
+  renderStyles() {
+    let CSS = "";
+    this.tabKeys.forEach((tabKey, index) => {
+      CSS += `.tabs__radio:nth-child(${
+        index + 1
+      }):checked ~ .tabs .tabs__label:nth-child(${index + 1}),`;
+    });
+    CSS = CSS.slice(0, -1);
+    CSS += `{color: #07a0af;border-bottom: 2px solid #07a0af;}`;
+    return CSS;
+  }
+
+  renderStyles2() {
+    let CSS = "";
+    this.tabKeys.forEach((tabKey, index) => {
+      CSS += `.tabs__radio:nth-child(${
+        index + 1
+      }):checked ~ .tabs__content .tabs-content__element:nth-child(${
+        index + 1
+      }),`;
+    });
+    CSS = CSS.slice(0, -1);
+    CSS += `{display: block;opacity: 1;}`;
+    return CSS;
+  }
+
+  renderTabStyles() {
+    const style = document.createElement("style");
+    style.innerHTML = this.getTabsStyles();
+    document.head.appendChild(style);
   }
 
   renderInputs() {
@@ -64,6 +100,7 @@ export class Tabs {
       throw new Error(`element with ${selector} not found`);
     }
     this.generateTabsUniqueId();
+    this.renderTabStyles();
     const tabsEl = document.createElement("div");
     tabsEl.className = "tabs-wrapper";
     tabsEl.id = uniqueId();
