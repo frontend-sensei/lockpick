@@ -1,0 +1,22 @@
+.table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.table-header {
+  border-bottom: 1px solid #009dac;
+  font-size: 20px;
+}
+
+.table-data,
+.table-header {
+  border-right: 1px solid #009dac;
+  border-left: 1px solid #009dac;
+  background-color: #009eac15;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.table-data {
+  font-size: 19px;
+}

@@ -1,5 +1,6 @@
 import { Progress } from "../game/progress/Progress.js";
 import { Popup } from "../game/popup/Popup.js";
+import { Tabs } from "../components/Tabs.js";
 import "../components/clickSound.js";
 import "../components/mainThemeSound.js";
 
@@ -47,6 +48,7 @@ function renderVideoSource() {
 renderVideoSource();
 
 let scoresPopup = null;
+
 document.getElementById("scores").addEventListener("click", (event) => {
   event.preventDefault();
 
@@ -54,12 +56,11 @@ document.getElementById("scores").addEventListener("click", (event) => {
     scoresPopup.show();
     return;
   }
+
   scoresPopup = new Popup({
     html: `<h2 class="popup-headline">Scores</h2>
     <div class="popup-scores-content">
-      <div class="tabs">
-        <div class="tab">Standart</div>
-      </div>
+      
       <div class="tabel-wrapper">
 
       </div>
@@ -74,6 +75,82 @@ document.getElementById("scores").addEventListener("click", (event) => {
       },
     },
     hideButtonId: "okBtn",
+    callback: () => {
+      const options = {
+        tabs: {
+          standard: {
+            name: "Standard",
+            content: ``,
+          },
+          hardcore: {
+            name: "Hardcore",
+            content: ``,
+          },
+          time: {
+            name: "Time",
+            content: `
+          <table class="table">
+              <tr class="table-row">
+                <th class="table-header">№</th>
+                <th class="table-header">Pinlocks</th>
+                <th class="table-header">Time</th>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">1.1</td>
+                <td class="table-data">1.2</td>
+                <td class="table-data">1.3</td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">2.1</td>
+                <td class="table-data">2.2</td>
+                <td class="table-data">2.3</td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-data">3.1</td>
+                <td class="table-data">3.2</td>
+                <td class="table-data">3.3</td>
+              </tr>
+          </table>`,
+          },
+        },
+      };
+      new Tabs(options).render(".popup-scores-content");
+    },
   });
   scoresPopup.render();
 });
