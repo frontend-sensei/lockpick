@@ -75,7 +75,7 @@ document.getElementById("scores").addEventListener("click", (event) => {
       },
     },
     hideButtonId: "okBtn",
-    callback: () => {
+    onCreated: () => {
       const options = {
         tabs: {
           standard: {

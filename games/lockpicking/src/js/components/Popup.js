@@ -8,14 +8,14 @@ import { isFunction } from "../utils/isFunction.js";
  */
 export class Popup {
   constructor(options) {
+    this.id = "";
     this.node = null;
     this.options = options;
-    this.id = "";
     this.ANIMATION_DURATION = 500;
 
-    this.callback = () => {};
-    if (isFunction(options.callback)) {
-      this.callback = options.callback;
+    this.onCreated = () => {};
+    if (isFunction(options.onCreated)) {
+      this.onCreated = options.onCreated;
     }
   }
 
@@ -41,7 +41,7 @@ export class Popup {
     setTimeout(() => this.node.classList.add("show"));
 
     this.addListeners();
-    this.callback();
+    this.onCreated();
     return this;
   }
 
@@ -63,6 +63,7 @@ export class Popup {
       el.addEventListener("click", listener);
     });
   }
+
   addHideListener() {
     if (!this.options.hasOwnProperty("hideButtonId")) {
       return;
@@ -95,10 +96,12 @@ export class Popup {
     this.node.classList.add("show");
     return this;
   }
+
   hide() {
     this.node.classList.remove("show");
     return this;
   }
+
   close() {
     this.node.classList.remove("show");
     setTimeout(() => this.node.remove(), this.ANIMATION_DURATION);
