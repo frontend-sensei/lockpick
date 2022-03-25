@@ -15,43 +15,43 @@ export class Tabs {
 
   getHTML() {
     return `
-        ${this.renderInputs()}
+        ${this.getInputs()}
       <div class="tabs">
-        ${this.renderLabels()}
+        ${this.getLabels()}
       </div>
       <div class="tabs__content">
-        ${this.renderContent()}
+        ${this.getContent()}
       </div>
     `;
   }
 
   getTabsStyles() {
-    return `${this.renderStyles()}${this.renderStyles2()}`;
+    return `${this.getLabelStyles()}${this.getContentStyles()}`;
   }
 
-  renderStyles() {
-    let CSS = "";
-    this.tabKeys.forEach((tabKey, index) => {
-      CSS += `.tabs__radio:nth-child(${
-        index + 1
-      }):checked ~ .tabs .tabs__label:nth-child(${index + 1}),`;
-    });
-    CSS = CSS.slice(0, -1);
-    CSS += `{color: #07a0af;border-bottom: 2px solid #07a0af;}`;
-    return CSS;
+  getLabelStyles() {
+    const getLabelSelector = (index) => {
+      return `.tabs__radio:nth-child(${index}):checked ~ .tabs .tabs__label:nth-child(${index}),`;
+    };
+    const rules = "{color: #07a0af;border-bottom: 2px solid #07a0af;}";
+    return this.getStyles(getLabelSelector, rules);
   }
 
-  renderStyles2() {
+  getContentStyles() {
+    const getContentSelector = (index) => {
+      return `.tabs__radio:nth-child(${index}):checked ~ .tabs__content .tabs-content__element:nth-child(${index}),`;
+    };
+    const rules = "{display: block;}";
+    return this.getStyles(getContentSelector, rules);
+  }
+
+  getStyles(getSelector, rules) {
     let CSS = "";
     this.tabKeys.forEach((tabKey, index) => {
-      CSS += `.tabs__radio:nth-child(${
-        index + 1
-      }):checked ~ .tabs__content .tabs-content__element:nth-child(${
-        index + 1
-      }),`;
+      CSS += getSelector(index + 1);
     });
     CSS = CSS.slice(0, -1);
-    CSS += `{display: block;opacity: 1;}`;
+    CSS += rules;
     return CSS;
   }
 
@@ -61,7 +61,7 @@ export class Tabs {
     document.head.appendChild(style);
   }
 
-  renderInputs() {
+  getInputs() {
     let HTML = "";
     this.tabKeys.forEach((tabKey) => {
       HTML += `<input type="radio" id="${this.options.tabs[tabKey].id}" name="tabs-radio" class="tabs__radio visually-hidden" />`;
@@ -69,7 +69,7 @@ export class Tabs {
     return HTML;
   }
 
-  renderLabels() {
+  getLabels() {
     let HTML = "";
     this.tabKeys.forEach((tabKey) => {
       HTML += `<label for="${this.options.tabs[tabKey].id}" class="tabs__label">${this.options.tabs[tabKey].name}</label>`;
@@ -77,7 +77,7 @@ export class Tabs {
     return HTML;
   }
 
-  renderContent() {
+  getContent() {
     let HTML = "";
     this.tabKeys.forEach((tabKey) => {
       HTML += `
