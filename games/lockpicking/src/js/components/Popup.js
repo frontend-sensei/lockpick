@@ -1,8 +1,9 @@
-import { uniqueId } from "../../utils/uniqueId.js";
-import { isFunction } from "../../utils/isFunction.js";
+import { uniqueId } from "../utils/uniqueId.js";
+import { isFunction } from "../utils/isFunction.js";
 
 /**
- * Creates a new Popup
+ * Creates a new Popupgst
+ * @param {Object} options
  * @class Popup
  */
 export class Popup {

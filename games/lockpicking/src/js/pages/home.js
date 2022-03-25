@@ -1,5 +1,5 @@
 import { Progress } from "../game/progress/Progress.js";
-import { Popup } from "../game/popup/Popup.js";
+import { Popup } from "../components/Popup.js";
 import { Tabs } from "../components/Tabs.js";
 import "../components/clickSound.js";
 import "../components/mainThemeSound.js";
@@ -60,7 +60,7 @@ document.getElementById("scores").addEventListener("click", (event) => {
   scoresPopup = new Popup({
     html: `<h2 class="popup-headline">Scores</h2>
     <div class="popup-scores-content">
-      
+
       <div class="tabel-wrapper">
 
       </div>

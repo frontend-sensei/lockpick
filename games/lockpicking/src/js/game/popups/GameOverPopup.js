@@ -1,4 +1,4 @@
-import { Popup } from "../popup/Popup.js";
+import { Popup } from "../../components/Popup.js";
 
 export class GameOverPopup {
   constructor() {
