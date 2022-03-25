@@ -1,4 +1,5 @@
 import { uniqueId } from "../../utils/uniqueId.js";
+import { isFunction } from "../../utils/isFunction.js";
 
 /**
  * Creates a new Popup
@@ -10,6 +11,11 @@ export class Popup {
     this.options = options;
     this.id = "";
     this.ANIMATION_DURATION = 500;
+
+    this.callback = () => {};
+    if (isFunction(options.callback)) {
+      this.callback = options.callback;
+    }
   }
 
   getHTML() {
@@ -34,6 +40,7 @@ export class Popup {
     setTimeout(() => this.node.classList.add("show"));
 
     this.addListeners();
+    this.callback();
     return this;
   }
 
