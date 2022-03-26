@@ -1,20 +1,21 @@
-import { uniqueId } from "../../utils/uniqueId.js";
-import { isFunction } from "../../utils/isFunction.js";
+import { uniqueId } from "../utils/uniqueId.js";
+import { isFunction } from "../utils/isFunction.js";
 
 /**
- * Creates a new Popup
+ * Creates a new Popupgst
+ * @param {Object} options
  * @class Popup
  */
 export class Popup {
   constructor(options) {
+    this.id = uniqueId();
     this.node = null;
     this.options = options;
-    this.id = "";
     this.ANIMATION_DURATION = 500;
 
-    this.callback = () => {};
-    if (isFunction(options.callback)) {
-      this.callback = options.callback;
+    this.onCreated = () => {};
+    if (isFunction(options.onCreated)) {
+      this.onCreated = options.onCreated;
     }
   }
 
@@ -33,14 +34,14 @@ export class Popup {
       `${this.ANIMATION_DURATION / 1000}s`
     );
     popupEl.className = "popup-wrapper";
-    popupEl.id = uniqueId();
+    popupEl.id = this.id;
     popupEl.innerHTML = this.getHTML();
     document.body.appendChild(popupEl);
     this.node = document.getElementById(popupEl.id);
     setTimeout(() => this.node.classList.add("show"));
 
     this.addListeners();
-    this.callback();
+    this.onCreated();
     return this;
   }
 
@@ -50,11 +51,15 @@ export class Popup {
     this.addHideListener();
   }
 
+  getSelector(selector) {
+    return `#${this.id} ${selector}`;
+  }
+
   addButtonListeners() {
     const listeners = this.options.listeners || {};
     Object.entries(listeners).forEach((listenerData) => {
       const [id, listener] = listenerData;
-      const el = document.getElementById(id);
+      const el = document.querySelector(this.getSelector(`#${id}`));
       if (!el) {
         console.error(`Element with id: "${id} not found"`);
         return;
@@ -62,29 +67,20 @@ export class Popup {
       el.addEventListener("click", listener);
     });
   }
+
   addHideListener() {
-    if (!this.options.hasOwnProperty("hideButtonId")) {
-      return;
-    }
-    const hideBtn = document.getElementById(this.options.hideButtonId);
+    const hideBtn = document.querySelector(this.getSelector("[data-hide-btn]"));
     if (!hideBtn) {
-      console.error(
-        `Element with id: "${this.options.hideButtonId} not found"`
-      );
       return;
     }
     hideBtn.addEventListener("click", this.hide.bind(this));
   }
 
   addCloseListener() {
-    if (!this.options.hasOwnProperty("closeButtonId")) {
-      return;
-    }
-    const closeBtn = document.getElementById(this.options.closeButtonId);
+    const closeBtn = document.querySelector(
+      this.getSelector("[data-close-btn]")
+    );
     if (!closeBtn) {
-      console.error(
-        `Element with id: "${this.options.closeButtonId} not found"`
-      );
       return;
     }
     closeBtn.addEventListener("click", this.close.bind(this));
@@ -94,10 +90,12 @@ export class Popup {
     this.node.classList.add("show");
     return this;
   }
+
   hide() {
     this.node.classList.remove("show");
     return this;
   }
+
   close() {
     this.node.classList.remove("show");
     setTimeout(() => this.node.remove(), this.ANIMATION_DURATION);

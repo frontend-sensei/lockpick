@@ -4,13 +4,16 @@ import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
 import { Countdown } from "./countdown/Countdown.js";
-import { Popup } from "./popup/Popup.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
 import { Keyboard } from "../utils/Keyboard.js";
+import { GameOverPopup } from "./popups/GameOverPopup.js";
+import { GameWonPopup } from "./popups/GameWonPopup.js";
+import { Listeners } from "./listeners/Listeners.js";
 
 /**
  * Creates a new Game
+ * In the constructor should be passed level
  * @class Game
  */
 export class Game {
@@ -18,6 +21,7 @@ export class Game {
     this.isMobile = isMobile();
     this.attempts = new Observable(3);
     this.pinsUnlocked = 0;
+    this.PAUSE_TIMEOUT = 1500;
 
     this.pendingHandler = false;
     this.deviceHandler = this.isMobile
@@ -44,6 +48,12 @@ export class Game {
     this.sounds.failed.volume = 0.05;
 
     this.render();
+
+    this._listeners = new Listeners(
+      this.deviceHandler,
+      this.isMobile,
+      this._ui?._MobileUnlockBtn?.node
+    );
   }
 
   render() {
@@ -52,7 +62,7 @@ export class Game {
 
   async start() {
     await new Countdown(this).start();
-    this.addListeners();
+    this._listeners.register();
     this._timer.start();
     this._ui._Bar._ui.movePointer();
     this._ui._Lockpick.animate();
@@ -60,19 +70,19 @@ export class Game {
 
   stop() {
     this._timer.stop();
-    this.removeListeners();
+    this._listeners.remove();
     this._ui._Bar._ui.stopPointer();
     this._ui._Lockpick.stopAnimate();
   }
 
   onDefeat() {
-    this.removeListeners();
+    this._listeners.remove();
     this._ui._Bar._ui.stopPointer();
     this.gameOver();
   }
 
   onWon() {
-    this.removeListeners();
+    this._listeners.remove();
 
     const isLastLevel = this._levels.isLastLevel(this.level.id);
     const levelToSave = {
@@ -83,57 +93,11 @@ export class Game {
     }
     this._progress.save(levelToSave);
 
-    new Popup({
-      html: `<h2 class="popup-headline">You Won!</h2>
-      <button class="popup-button" id="backToHome">back to home</button>
-      <button class="popup-button" id="reloadPage">Continue</button>`,
-      listeners: {
-        backToHome: this.backToHomeHandler,
-        reloadPage: this.reloadPage,
-      },
-    }).render();
+    new GameWonPopup().render();
   }
 
   gameOver() {
-    new Popup({
-      html: `<h2 class="popup-headline">Game over :(</h2>
-      <button class="popup-button" id="backToHome">back to home</button>
-      <button class="popup-button" id="reloadPage">Retry</button>`,
-      listeners: {
-        backToHome: this.backToHomeHandler,
-        reloadPage: this.reloadPage,
-      },
-    }).render();
-  }
-
-  backToHomeHandler() {
-    location.href = "/";
-  }
-
-  reloadPage() {
-    location.reload();
-  }
-
-  addListeners() {
-    if (this.isMobile) {
-      this._ui._MobileUnlockBtn.node.addEventListener(
-        "click",
-        this.deviceHandler
-      );
-      return;
-    }
-    window.addEventListener("keydown", this.deviceHandler);
-  }
-
-  removeListeners() {
-    if (this.isMobile) {
-      this._ui._MobileUnlockBtn.node.removeEventListener(
-        "click",
-        this.deviceHandler
-      );
-      return;
-    }
-    window.removeEventListener("keydown", this.deviceHandler);
+    new GameOverPopup().render();
   }
 
   unlockHandler(event) {
@@ -147,18 +111,8 @@ export class Game {
       this._ui._Bar._ui.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
-      const TIMEOUT = 1500;
       if (!positionCorrect) {
-        this.sounds.failed.play();
-        const bar = document.querySelector(".bar");
-        bar.classList.add("bar--failure");
-        this._ui._Lockpick.node.classList.add("failure");
-        setTimeout(() => {
-          bar.classList.remove("bar--failure");
-          this._ui._Lockpick.node.classList.remove("failure");
-        }, TIMEOUT - 150);
-
-        this.attempts.set(this.attempts.value - 1);
+        this.positionIncorrectHandler();
       }
 
       if (positionCorrect) {
@@ -178,23 +132,42 @@ export class Game {
         throw new Error();
       }
 
-      const spaceButtonLabel = document.querySelector(".unlock-label__img");
-      if (spaceButtonLabel) {
-        spaceButtonLabel.classList.add("unlock-label__img--active");
+      const tipIcon = document.querySelector(".unlock-label__img");
+      if (tipIcon) {
+        tipIcon.classList.add("unlock-label__img--active");
         setTimeout(() => {
-          spaceButtonLabel.classList.remove("unlock-label__img--active");
+          tipIcon.classList.remove("unlock-label__img--active");
         }, 100);
       }
 
       setTimeout(() => {
-        this._timer.start();
-        this._ui._Bar._ui.movePointer();
-        this._ui._Lockpick.animate();
-        this.pendingHandler = false;
-      }, TIMEOUT);
+        this.continue();
+      }, this.PAUSE_TIMEOUT);
     } catch (e) {
       this.pendingHandler = false;
     }
+  }
+
+  positionIncorrectHandler() {
+    this.sounds.failed.play();
+    this.barFailure();
+    this.attempts.set(this.attempts.value - 1);
+  }
+
+  barFailure() {
+    this._ui._Bar._ui.node.classList.add("bar--failure");
+    this._ui._Lockpick.node.classList.add("failure");
+    setTimeout(() => {
+      this._ui._Bar._ui.node.classList.remove("bar--failure");
+      this._ui._Lockpick.node.classList.remove("failure");
+    }, this.PAUSE_TIMEOUT - 150);
+  }
+
+  continue() {
+    this._timer.start();
+    this._ui._Bar._ui.movePointer();
+    this._ui._Lockpick.animate();
+    this.pendingHandler = false;
   }
 
   mobileUnlockHandler(event) {
