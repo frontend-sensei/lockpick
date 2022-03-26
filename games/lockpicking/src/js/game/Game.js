@@ -2,6 +2,7 @@ import { UI } from "./UI.js";
 import { Timer } from "./timer/Timer.js";
 import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
+import { Levels } from "./level/Levels.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
 import { Countdown } from "./countdown/Countdown.js";
 import { Observable } from "../utils/observable.js";
@@ -29,8 +30,8 @@ export class Game {
       : this.desktopUnlockHandler.bind(this);
 
     this._progress = new Progress().restore();
-    this._levels = new LevelBuilder().build();
-    this.level = this._levels.levels.get(this._progress.progress.nextLevel.id);
+    this._levels = new Levels(new LevelBuilder().build());
+    this.level = this._levels.get(this._progress.progress.nextLevel.id);
     // pass timer only for Timer Mode
     this._timer = new Timer({
       onStopCallback: this.onDefeat.bind(this),
