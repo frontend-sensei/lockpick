@@ -6,7 +6,7 @@ import { Level } from "./Level.js";
  */
 export class LevelBuilder {
   constructor() {
-    this.levels = new Map();
+    this.levels = [];
   }
 
   /**
@@ -14,7 +14,7 @@ export class LevelBuilder {
    * @public
    */
   build() {
-    const levels = [
+    this.levels = [
       [
         1,
         new Level({
@@ -41,19 +41,6 @@ export class LevelBuilder {
       ],
     ];
 
-    this.levels = new Map(levels);
-
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {number} levelId
-   * @returns {boolean} Whether has next level
-   */
-  isLastLevel(levelId) {
-    const possibleNextLevelId = levelId + 1;
-    const hasNextLevel = this.levels.has(possibleNextLevelId);
-    return !hasNextLevel;
+    return this.levels;
   }
 }
