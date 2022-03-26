@@ -8,7 +8,7 @@ import { isFunction } from "../utils/isFunction.js";
  */
 export class Popup {
   constructor(options) {
-    this.id = uniqueId();
+    this.id = uniqueId("popup-");
     this.node = null;
     this.options = options;
     this.ANIMATION_DURATION = 500;
@@ -60,6 +60,7 @@ export class Popup {
     Object.entries(listeners).forEach((listenerData) => {
       const [id, listener] = listenerData;
       const el = document.querySelector(this.getSelector(`#${id}`));
+      console.log(el);
       if (!el) {
         console.error(`Element with id: "${id} not found"`);
         return;
