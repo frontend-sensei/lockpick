@@ -1,5 +1,5 @@
-export function uniqueId(length = 10) {
-  var result = "";
+export function uniqueId(prefix, length = 10) {
+  var result = `${prefix || ""}`;
   var characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var charactersLength = characters.length;
