@@ -57,6 +57,17 @@ export class Game {
     );
   }
 
+  mobileUnlockHandler(event) {
+    this.unlockHandler(event);
+  }
+
+  desktopUnlockHandler(event) {
+    if (!this._keyboard.isSpacePressed(event)) {
+      return;
+    }
+    this.unlockHandler(event);
+  }
+
   render() {
     this._ui.render(".game-page");
   }
@@ -65,20 +76,20 @@ export class Game {
     await new Countdown(this).start();
     this._listeners.register();
     this._timer.start();
-    this._ui._Bar._ui.movePointer();
+    this._ui._Bar.movePointer();
     this._ui._Lockpick.animate();
   }
 
   stop() {
     this._timer.stop();
     this._listeners.remove();
-    this._ui._Bar._ui.stopPointer();
+    this._ui._Bar.stopPointer();
     this._ui._Lockpick.stopAnimate();
   }
 
   onDefeat() {
     this._listeners.remove();
-    this._ui._Bar._ui.stopPointer();
+    this._ui._Bar.stopPointer();
     this.gameOver();
   }
 
@@ -109,18 +120,15 @@ export class Game {
       this.pendingHandler = true;
 
       this._timer.pause();
-      this._ui._Bar._ui.stopPointer();
+      this._ui._Bar.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
       if (!positionCorrect) {
-        this.positionIncorrectHandler();
+        this.incorrectPositionHandler();
       }
 
       if (positionCorrect) {
-        this.sounds.unlocked.play();
-        this._ui._Lockpick.stopAnimate();
-        this.pinsUnlocked++;
-        this._ui._Pins.updateUnlocked(this.pinsUnlocked);
+        this.correctPositionHandler();
       }
 
       if (this.pinsUnlocked === this.level.steps) {
@@ -133,13 +141,7 @@ export class Game {
         throw new Error();
       }
 
-      const tipIcon = document.querySelector(".unlock-label__img");
-      if (tipIcon) {
-        tipIcon.classList.add("unlock-label__img--active");
-        setTimeout(() => {
-          tipIcon.classList.remove("unlock-label__img--active");
-        }, 100);
-      }
+      this.animateTip();
 
       setTimeout(() => {
         this.continue();
@@ -149,36 +151,42 @@ export class Game {
     }
   }
 
-  positionIncorrectHandler() {
+  incorrectPositionHandler() {
     this.sounds.failed.play();
     this.barFailure();
     this.attempts.set(this.attempts.value - 1);
   }
 
+  correctPositionHandler() {
+    this.sounds.unlocked.play();
+    this._ui._Lockpick.stopAnimate();
+    this.pinsUnlocked++;
+    this._ui._Pins.updateUnlocked(this.pinsUnlocked);
+  }
+
+  animateTip() {
+    const tipIcon = document.querySelector(".unlock-label__img");
+    if (tipIcon) {
+      tipIcon.classList.add("unlock-label__img--active");
+      setTimeout(() => {
+        tipIcon.classList.remove("unlock-label__img--active");
+      }, 100);
+    }
+  }
+
   barFailure() {
-    this._ui._Bar._ui.node.classList.add("bar--failure");
+    this._ui._Bar.node.classList.add("bar--failure");
     this._ui._Lockpick.node.classList.add("failure");
     setTimeout(() => {
-      this._ui._Bar._ui.node.classList.remove("bar--failure");
+      this._ui._Bar.node.classList.remove("bar--failure");
       this._ui._Lockpick.node.classList.remove("failure");
     }, this.PAUSE_TIMEOUT - 150);
   }
 
   continue() {
     this._timer.start();
-    this._ui._Bar._ui.movePointer();
+    this._ui._Bar.movePointer();
     this._ui._Lockpick.animate();
     this.pendingHandler = false;
-  }
-
-  mobileUnlockHandler(event) {
-    this.unlockHandler(event);
-  }
-
-  desktopUnlockHandler(event) {
-    if (!this._keyboard.isSpacePressed(event)) {
-      return;
-    }
-    this.unlockHandler(event);
   }
 }

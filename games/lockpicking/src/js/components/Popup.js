@@ -60,7 +60,6 @@ export class Popup {
     Object.entries(listeners).forEach((listenerData) => {
       const [id, listener] = listenerData;
       const el = document.querySelector(this.getSelector(`#${id}`));
-      console.log(el);
       if (!el) {
         console.error(`Element with id: "${id} not found"`);
         return;

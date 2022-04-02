@@ -31,8 +31,8 @@ export class Coordinates {
    * @returns {boolean} Whether the coordinates are correct
    */
   checkPosition() {
-    const areaRange = this.getRange(this.root._ui._Bar._ui.areaNode);
-    const pointerRange = this.getRange(this.root._ui._Bar._ui.pointerNode);
+    const areaRange = this.getRange(this.root._ui._Bar.areaNode);
+    const pointerRange = this.getRange(this.root._ui._Bar.pointerNode);
 
     if (
       pointerRange.from === areaRange.from ||
