@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "browser-sync start --server 'src' --files '**/*.html' '**/*.css'",
+    "watch": "browser-sync start --server 'src' --files '**/*.html' '**/*.css' '**/*.js'",
     "test": "jest"
   },
   "keywords": [],
