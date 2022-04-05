@@ -11,6 +11,7 @@ import { Keyboard } from "../utils/Keyboard.js";
 import { GameOverPopup } from "./popups/GameOverPopup.js";
 import { GameWonPopup } from "./popups/GameWonPopup.js";
 import { Listeners } from "./listeners/Listeners.js";
+import { GameSounds } from "./sounds/GameSounds.js.js";
 
 /**
  * Creates a new Game
@@ -40,13 +41,7 @@ export class Game {
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
     this._keyboard = new Keyboard();
-
-    this.sounds = {
-      unlocked: new Audio("../../assets/sounds/unlock.mp3"),
-      failed: new Audio("../../assets/sounds/fail.mp3"),
-    };
-    this.sounds.unlocked.volume = 0.05;
-    this.sounds.failed.volume = 0.05;
+    this._Sounds = new GameSounds();
 
     this.render();
 
@@ -152,13 +147,13 @@ export class Game {
   }
 
   incorrectPositionHandler() {
-    this.sounds.failed.play();
+    this._Sounds.playFailed();
     this._ui.barFailure();
     this.attempts.set(this.attempts.value - 1);
   }
 
   correctPositionHandler() {
-    this.sounds.unlocked.play();
+    this._Sounds.playUnlocked();
     this._ui._Lockpick.stopAnimate();
     this.pinsUnlocked++;
     this._ui._Pins.updateUnlocked(this.pinsUnlocked);
