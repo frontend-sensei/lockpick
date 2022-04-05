@@ -11,7 +11,7 @@ import { Keyboard } from "../utils/Keyboard.js";
 import { GameOverPopup } from "./popups/GameOverPopup.js";
 import { GameWonPopup } from "./popups/GameWonPopup.js";
 import { Listeners } from "./listeners/Listeners.js";
-import { GameSounds } from "./sounds/GameSounds.js.js";
+import { GameSounds } from "./sounds/GameSounds.js";
 
 /**
  * Creates a new Game
