@@ -141,7 +141,7 @@ export class Game {
         throw new Error();
       }
 
-      this.animateTip();
+      this._ui._UnlockLabel.animateTip();
 
       setTimeout(() => {
         this.continue();
@@ -153,7 +153,7 @@ export class Game {
 
   incorrectPositionHandler() {
     this.sounds.failed.play();
-    this.barFailure();
+    this._ui.barFailure();
     this.attempts.set(this.attempts.value - 1);
   }
 
@@ -162,25 +162,6 @@ export class Game {
     this._ui._Lockpick.stopAnimate();
     this.pinsUnlocked++;
     this._ui._Pins.updateUnlocked(this.pinsUnlocked);
-  }
-
-  animateTip() {
-    const tipIcon = document.querySelector(".unlock-label__img");
-    if (tipIcon) {
-      tipIcon.classList.add("unlock-label__img--active");
-      setTimeout(() => {
-        tipIcon.classList.remove("unlock-label__img--active");
-      }, 100);
-    }
-  }
-
-  barFailure() {
-    this._ui._Bar.node.classList.add("bar--failure");
-    this._ui._Lockpick.node.classList.add("failure");
-    setTimeout(() => {
-      this._ui._Bar.node.classList.remove("bar--failure");
-      this._ui._Lockpick.node.classList.remove("failure");
-    }, this.PAUSE_TIMEOUT - 150);
   }
 
   continue() {

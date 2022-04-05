@@ -16,6 +16,8 @@ export class UI {
 
     if (this.root.isMobile) {
       this._MobileUnlockBtn = new MobileUnlockBtn(root);
+    } else {
+      this._UnlockLabel = null;
     }
   }
 
@@ -45,7 +47,16 @@ export class UI {
     if (this.root.isMobile) {
       this._MobileUnlockBtn.render();
     } else {
-      new UnlockLabel().render(".bar-row");
+      this._UnlockLabel = new UnlockLabel().render(".bar-row");
     }
+  }
+
+  barFailure() {
+    this._Bar.node.classList.add("bar--failure");
+    this._Lockpick.node.classList.add("failure");
+    setTimeout(() => {
+      this._Bar.node.classList.remove("bar--failure");
+      this._Lockpick.node.classList.remove("failure");
+    }, this.root.PAUSE_TIMEOUT - 150);
   }
 }

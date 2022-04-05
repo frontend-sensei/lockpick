@@ -29,5 +29,16 @@ export class UnlockLabel {
 
     previousNode.after(el);
     this.node = document.getElementById(el.id);
+    return this;
+  }
+
+  animateTip() {
+    const tipIcon = document.querySelector(".unlock-label__img");
+    if (tipIcon) {
+      tipIcon.classList.add("unlock-label__img--active");
+      setTimeout(() => {
+        tipIcon.classList.remove("unlock-label__img--active");
+      }, 100);
+    }
   }
 }
