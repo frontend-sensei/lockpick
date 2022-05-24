@@ -1,17 +1,14 @@
 import { UI } from "./UI.js";
-import { Timer } from "./timer/Timer.js";
 import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Levels } from "./level/Levels.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
-import { Countdown } from "./countdown/Countdown.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
 import { Keyboard } from "../utils/Keyboard.js";
-import { GameOverPopup } from "./popups/GameOverPopup.js";
-import { GameWonPopup } from "./popups/GameWonPopup.js";
 import { Listeners } from "./listeners/Listeners.js";
 import { GameSounds } from "./sounds/GameSounds.js";
+import { Modes } from "./modes/Modes.js";
 
 /**
  * Creates a new Game
@@ -20,36 +17,28 @@ import { GameSounds } from "./sounds/GameSounds.js";
  */
 export class Game {
   constructor() {
-    this.isMobile = isMobile();
-    this.attempts = new Observable(3);
-    this.pinsUnlocked = 0;
-    this.PAUSE_TIMEOUT = 1500;
+    this._progress = new Progress().restore();
+    this._mode = new Modes(this).initMode(this._progress.getCurrentMode());
+    // Should build levels depending on mode
+    this._levels = new Levels(new LevelBuilder().build());
+    this.level = this._levels.get(this._progress.progress.nextLevel.id);
 
-    this.pendingHandler = false;
+    this.attempts = this._mode.attempts || new Observable(3);
+    this.PAUSE_TIMEOUT = this._mode.PAUSE_TIMEOUT || 1500;
+
+    this.isMobile = isMobile();
     this.deviceHandler = this.isMobile
       ? this.mobileUnlockHandler.bind(this)
       : this.desktopUnlockHandler.bind(this);
 
-    this._progress = new Progress().restore();
-    this._levels = new Levels(new LevelBuilder().build());
-    this.level = this._levels.get(this._progress.progress.nextLevel.id);
-    // pass timer only for Timer Mode
-    this._timer = new Timer({
-      onStopCallback: this.onDefeat.bind(this),
-      timer: 2000,
-    });
+    this.pinsUnlocked = 0;
+    this.pendingHandler = false;
+
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
     this._keyboard = new Keyboard();
-    this._Sounds = new GameSounds();
-
-    this.render();
-
-    this._listeners = new Listeners(
-      this.deviceHandler,
-      this.isMobile,
-      this._ui?._MobileUnlockBtn?.node
-    );
+    this._sounds = new GameSounds();
+    this._listeners = null
   }
 
   mobileUnlockHandler(event) {
@@ -63,58 +52,51 @@ export class Game {
     this.unlockHandler(event);
   }
 
+  /**
+   * Render the game
+   * @public
+   */
   render() {
     this._ui.render(".game-page");
+    this.afterRender()
   }
 
-  async start() {
-    await new Countdown(this).start();
-    this._listeners.register();
-    this._timer.start();
-    this._ui._Bar.movePointer();
-    this._ui._Lockpick.animate();
+  afterRender() {
+    this._listeners = new Listeners(
+      this.deviceHandler,
+      this.isMobile,
+      this._ui?._MobileUnlockBtn?.node
+    );
+  }
+
+  /**
+   * Start the game
+   * @public
+   */
+  start() {
+    this._mode.start();
   }
 
   stop() {
-    this._timer.stop();
-    this._listeners.remove();
-    this._ui._Bar.stopPointer();
-    this._ui._Lockpick.stopAnimate();
+    this._mode.stop();
   }
 
   onDefeat() {
-    this._listeners.remove();
-    this._ui._Bar.stopPointer();
-    this.gameOver();
+    this._mode.onDefeat();
   }
 
   onWon() {
-    this._listeners.remove();
-
-    const isLastLevel = this._levels.isLastLevel(this.level.id);
-    const levelToSave = {
-      data: this.level,
-    };
-    if (isLastLevel) {
-      levelToSave.isLastLevel = true;
-    }
-    this._progress.save(levelToSave);
-
-    new GameWonPopup().render();
+    this._mode.onWon();
   }
 
-  gameOver() {
-    new GameOverPopup().render();
-  }
-
-  unlockHandler(event) {
+  unlockHandler() {
     try {
-      if (this.pendingHandler || this._timer.finished) {
+      if (this.pendingHandler || this._mode.isNeedReturn()) {
         return;
       }
       this.pendingHandler = true;
 
-      this._timer.pause();
+      this._mode.beforePositionChecking()
       this._ui._Bar.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
@@ -147,22 +129,22 @@ export class Game {
   }
 
   incorrectPositionHandler() {
-    this._Sounds.playFailed();
+    this._sounds.playFailed();
     this._ui.barFailure();
     this.attempts.set(this.attempts.value - 1);
   }
 
   correctPositionHandler() {
-    this._Sounds.playUnlocked();
+    this._sounds.playUnlocked();
     this._ui._Lockpick.stopAnimate();
     this.pinsUnlocked++;
     this._ui._Pins.updateUnlocked(this.pinsUnlocked);
   }
 
   continue() {
-    this._timer.start();
     this._ui._Bar.movePointer();
     this._ui._Lockpick.animate();
     this.pendingHandler = false;
+    this._mode.continue();
   }
 }

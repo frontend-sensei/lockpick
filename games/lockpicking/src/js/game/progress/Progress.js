@@ -1,3 +1,5 @@
+import {MODES_DICTIONARY} from "../modes/Modes.js";
+
 /**
  * Creates Progress that can be used to save, restore and display progress
  * @class Progress
@@ -5,6 +7,7 @@
 export class Progress {
   constructor() {
     this.progress = {
+      mode: MODES_DICTIONARY.STANDARD,
       completedLevels: {},
       nextLevel: {
         id: 1,
@@ -21,8 +24,7 @@ export class Progress {
     const levelId = level.data.id;
     this.progress.completedLevels[levelId] = level.data;
 
-    const nextLevelId = level.isLastLevel ? levelId : levelId + 1;
-    this.progress.nextLevel.id = nextLevelId;
+    this.progress.nextLevel.id = level.isLastLevel ? levelId : levelId + 1;
 
     localStorage.setItem(this.storageKey, JSON.stringify(this.progress));
 
@@ -48,5 +50,13 @@ export class Progress {
     localStorage.setItem(this.storageKey, JSON.stringify({}));
 
     return this;
+  }
+
+  /**
+   * @public
+   * @return current game mode name
+   */
+  getCurrentMode() {
+    return this.progress.mode
   }
 }
