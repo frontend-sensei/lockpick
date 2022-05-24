@@ -9,4 +9,5 @@ const navigationLayer = new NavigationLayer();
 navigationLayer.render();
 
 const game = new Game();
+game.render();
 game.start();

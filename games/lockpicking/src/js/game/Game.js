@@ -43,13 +43,7 @@ export class Game {
     this._keyboard = new Keyboard();
     this._Sounds = new GameSounds();
 
-    this.render();
-
-    this._listeners = new Listeners(
-      this.deviceHandler,
-      this.isMobile,
-      this._ui?._MobileUnlockBtn?.node
-    );
+    this._listeners = null
   }
 
   mobileUnlockHandler(event) {
@@ -65,8 +59,22 @@ export class Game {
 
   render() {
     this._ui.render(".game-page");
+    this.afterRender()
   }
 
+  afterRender() {
+    this._listeners = new Listeners(
+      this.deviceHandler,
+      this.isMobile,
+      this._ui?._MobileUnlockBtn?.node
+    );
+  }
+
+  /**
+   * Start the game
+   * @public
+   * @returns {Promise<void>}
+   */
   async start() {
     await new Countdown(this).start();
     this._listeners.register();
@@ -107,7 +115,7 @@ export class Game {
     new GameOverPopup().render();
   }
 
-  unlockHandler(event) {
+  unlockHandler() {
     try {
       if (this.pendingHandler || this._timer.finished) {
         return;
