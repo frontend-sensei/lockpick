@@ -4,7 +4,6 @@ import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Levels } from "./level/Levels.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
-import { Countdown } from "./countdown/Countdown.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
 import { Keyboard } from "../utils/Keyboard.js";
@@ -23,20 +22,20 @@ export class Game {
   constructor() {
     this._progress = new Progress().restore();
     // Set mode depending on progress data
-    this.mode = new Modes(this).initMode(this._progress.getCurrentMode());
+    this._mode = new Modes(this).initMode(this._progress.getCurrentMode());
     this._levels = new Levels(new LevelBuilder().build());
     this.level = this._levels.get(this._progress.progress.nextLevel.id);
 
+    this.attempts = this._mode.attempts || new Observable(3);
+    this.PAUSE_TIMEOUT = this._mode.PAUSE_TIMEOUT || 1500;
 
     this.isMobile = isMobile();
-    this.attempts = new Observable(3);
-    this.pinsUnlocked = 0;
-    this.PAUSE_TIMEOUT = 1500;
-
-    this.pendingHandler = false;
     this.deviceHandler = this.isMobile
       ? this.mobileUnlockHandler.bind(this)
       : this.desktopUnlockHandler.bind(this);
+
+    this.pinsUnlocked = 0;
+    this.pendingHandler = false;
 
     // pass timer only for Timer Mode
     this._timer = new Timer({
@@ -47,7 +46,6 @@ export class Game {
     this._coordinates = new Coordinates(this);
     this._keyboard = new Keyboard();
     this._sounds = new GameSounds();
-
     this._listeners = null
   }
 
@@ -78,14 +76,14 @@ export class Game {
   /**
    * Start the game
    * @public
-   * @returns {Promise<void>}
    */
-  async start() {
-    await new Countdown(this).start();
-    this._listeners.register();
-    this._timer.start();
-    this._ui._Bar.movePointer();
-    this._ui._Lockpick.animate();
+  start() {
+    this._mode.start()
+    // await new Countdown(this).start();
+    // this._listeners.register();
+    // this._timer.start();
+    // this._ui._Bar.movePointer();
+    // this._ui._Lockpick.animate();
   }
 
   stop() {
