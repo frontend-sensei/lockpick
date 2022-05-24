@@ -1,5 +1,4 @@
 import { UI } from "./UI.js";
-import { Timer } from "./timer/Timer.js";
 import { Progress } from "./progress/Progress.js";
 import { LevelBuilder } from "./level/LevelBuilder.js";
 import { Levels } from "./level/Levels.js";
@@ -7,8 +6,6 @@ import { Coordinates } from "./coordinates/Coordinates.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
 import { Keyboard } from "../utils/Keyboard.js";
-import { GameOverPopup } from "./popups/GameOverPopup.js";
-import { GameWonPopup } from "./popups/GameWonPopup.js";
 import { Listeners } from "./listeners/Listeners.js";
 import { GameSounds } from "./sounds/GameSounds.js";
 import { Modes } from "./modes/Modes.js";
@@ -21,8 +18,8 @@ import { Modes } from "./modes/Modes.js";
 export class Game {
   constructor() {
     this._progress = new Progress().restore();
-    // Set mode depending on progress data
     this._mode = new Modes(this).initMode(this._progress.getCurrentMode());
+    // Should build levels depending on mode
     this._levels = new Levels(new LevelBuilder().build());
     this.level = this._levels.get(this._progress.progress.nextLevel.id);
 
@@ -37,11 +34,6 @@ export class Game {
     this.pinsUnlocked = 0;
     this.pendingHandler = false;
 
-    // pass timer only for Timer Mode
-    this._timer = new Timer({
-      onStopCallback: this.onDefeat.bind(this),
-      timer: 2000,
-    });
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
     this._keyboard = new Keyboard();
@@ -60,6 +52,10 @@ export class Game {
     this.unlockHandler(event);
   }
 
+  /**
+   * Render the game
+   * @public
+   */
   render() {
     this._ui.render(".game-page");
     this.afterRender()
@@ -78,49 +74,29 @@ export class Game {
    * @public
    */
   start() {
-    this._mode.start()
+    this._mode.start();
   }
 
   stop() {
-    this._timer.stop();
-    this._listeners.remove();
-    this._ui._Bar.stopPointer();
-    this._ui._Lockpick.stopAnimate();
+    this._mode.stop();
   }
 
   onDefeat() {
-    this._listeners.remove();
-    this._ui._Bar.stopPointer();
-    this.gameOver();
+    this._mode.onDefeat();
   }
 
   onWon() {
-    this._listeners.remove();
-
-    const isLastLevel = this._levels.isLastLevel(this.level.id);
-    const levelToSave = {
-      data: this.level,
-    };
-    if (isLastLevel) {
-      levelToSave.isLastLevel = true;
-    }
-    this._progress.save(levelToSave);
-
-    new GameWonPopup().render();
-  }
-
-  gameOver() {
-    new GameOverPopup().render();
+    this._mode.onWon();
   }
 
   unlockHandler() {
     try {
-      if (this.pendingHandler || this._timer.finished) {
+      if (this.pendingHandler || this._mode.isNeedReturn()) {
         return;
       }
       this.pendingHandler = true;
 
-      this._timer.pause();
+      this._mode.beforePositionChecking()
       this._ui._Bar.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
@@ -166,9 +142,9 @@ export class Game {
   }
 
   continue() {
-    this._timer.start();
     this._ui._Bar.movePointer();
     this._ui._Lockpick.animate();
     this.pendingHandler = false;
+    this._mode.continue();
   }
 }
