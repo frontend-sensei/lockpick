@@ -21,6 +21,13 @@ import { Modes } from "./modes/Modes.js";
  */
 export class Game {
   constructor() {
+    this._progress = new Progress().restore();
+    // Set mode depending on progress data
+    this.mode = new Modes(this).initMode(this._progress.getCurrentMode());
+    this._levels = new Levels(new LevelBuilder().build());
+    this.level = this._levels.get(this._progress.progress.nextLevel.id);
+
+
     this.isMobile = isMobile();
     this.attempts = new Observable(3);
     this.pinsUnlocked = 0;
@@ -30,13 +37,6 @@ export class Game {
     this.deviceHandler = this.isMobile
       ? this.mobileUnlockHandler.bind(this)
       : this.desktopUnlockHandler.bind(this);
-
-    this._progress = new Progress().restore();
-    this._levels = new Levels(new LevelBuilder().build());
-    this.level = this._levels.get(this._progress.progress.nextLevel.id);
-
-    // Set mode depending on progress data
-    this.mode = new Modes(this).initMode(this._progress.getCurrentMode());
 
     // pass timer only for Timer Mode
     this._timer = new Timer({
