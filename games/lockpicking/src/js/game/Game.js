@@ -41,7 +41,7 @@ export class Game {
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
     this._keyboard = new Keyboard();
-    this._Sounds = new GameSounds();
+    this._sounds = new GameSounds();
 
     this._listeners = null
   }
@@ -155,13 +155,13 @@ export class Game {
   }
 
   incorrectPositionHandler() {
-    this._Sounds.playFailed();
+    this._sounds.playFailed();
     this._ui.barFailure();
     this.attempts.set(this.attempts.value - 1);
   }
 
   correctPositionHandler() {
-    this._Sounds.playUnlocked();
+    this._sounds.playUnlocked();
     this._ui._Lockpick.stopAnimate();
     this.pinsUnlocked++;
     this._ui._Pins.updateUnlocked(this.pinsUnlocked);
