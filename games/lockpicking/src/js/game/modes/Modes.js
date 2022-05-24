@@ -4,6 +4,9 @@ export const MODES_DICTIONARY = {
   STANDARD: "standard",
 }
 
+/**
+ * Works with game modes. Create new instances relying on modes' dictionary.
+ */
 export class Modes {
   constructor(root) {
     this.root = root;
