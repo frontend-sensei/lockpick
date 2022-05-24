@@ -12,6 +12,7 @@ import { GameOverPopup } from "./popups/GameOverPopup.js";
 import { GameWonPopup } from "./popups/GameWonPopup.js";
 import { Listeners } from "./listeners/Listeners.js";
 import { GameSounds } from "./sounds/GameSounds.js";
+import { Modes } from "./modes/Modes.js";
 
 /**
  * Creates a new Game
@@ -33,6 +34,10 @@ export class Game {
     this._progress = new Progress().restore();
     this._levels = new Levels(new LevelBuilder().build());
     this.level = this._levels.get(this._progress.progress.nextLevel.id);
+
+    // Set mode depending on progress data
+    this.mode = new Modes(this).initMode(this._progress.getCurrentMode());
+
     // pass timer only for Timer Mode
     this._timer = new Timer({
       onStopCallback: this.onDefeat.bind(this),
