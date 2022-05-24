@@ -1,6 +1,6 @@
-import { StandardMode } from "./Standard";
+import { StandardMode } from "./Standard.js";
 
-const MODES_DICTIONARY = {
+export const MODES_DICTIONARY = {
   STANDARD: "standard",
 }
 
