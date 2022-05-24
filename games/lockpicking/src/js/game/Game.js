@@ -79,11 +79,6 @@ export class Game {
    */
   start() {
     this._mode.start()
-    // await new Countdown(this).start();
-    // this._listeners.register();
-    // this._timer.start();
-    // this._ui._Bar.movePointer();
-    // this._ui._Lockpick.animate();
   }
 
   stop() {
