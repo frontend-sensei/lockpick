@@ -1,3 +1,5 @@
+import { uniqueId } from "../../utils/uniqueId.js";
+
 /**
  * Creates a Timer
  * @class Timer
@@ -7,6 +9,7 @@ export class Timer {
    * @param {Object} options - options object
    */
   constructor(options) {
+    this.id = uniqueId();
     this.launched = false;
     this.paused = false;
     this.finished = false;
@@ -17,6 +20,21 @@ export class Timer {
     this.onStopCallback = options.onStopCallback
       ? options.onStopCallback
       : () => {};
+  }
+
+  render(selector) {
+    const targetNode = document.querySelector(selector)
+    if(!targetNode) {
+      console.error(`Node with selector ${selector} not found!`)
+      return this
+    }
+    const timerNode = document.createElement("div");
+    timerNode.id = this.id;
+    timerNode.className = "timer";
+    timerNode.innerHTML = "00:00";
+    targetNode.appendChild(timerNode)
+
+    return this
   }
 
   /**
