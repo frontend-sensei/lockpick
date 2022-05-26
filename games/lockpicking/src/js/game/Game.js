@@ -118,7 +118,12 @@ export class Game {
         throw new Error();
       }
 
-      this._ui._UnlockLabel.animateTip();
+      // next part means "continue to the next level step"
+
+      // For desktop only. If UnlockLabel exists
+      if(this._ui._UnlockLabel) {
+        this._ui._UnlockLabel.animateTip();
+      }
 
       setTimeout(() => {
         this.continue();
