@@ -1,7 +1,9 @@
 import { StandardMode } from "./Standard.js";
+import { TimerMode } from "./Timer.js";
 
 export const MODES_DICTIONARY = {
   STANDARD: "standard",
+  TIMER: "timer",
 }
 
 /**
@@ -11,7 +13,8 @@ export class Modes {
   constructor(root) {
     this.root = root;
     this.MODES = {
-      [MODES_DICTIONARY.STANDARD]: StandardMode
+      [MODES_DICTIONARY.STANDARD]: StandardMode,
+      [MODES_DICTIONARY.TIMER]: TimerMode
     };
   }
 
