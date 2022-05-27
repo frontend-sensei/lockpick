@@ -1,4 +1,4 @@
-import {MODES_DICTIONARY} from "../modes/Modes.js";
+import { MODES_DICTIONARY } from "../modes/Modes.js";
 
 /**
  * Creates Progress that can be used to save, restore and display progress
@@ -7,7 +7,7 @@ import {MODES_DICTIONARY} from "../modes/Modes.js";
 export class Progress {
   constructor() {
     this.progress = {
-      mode: MODES_DICTIONARY.STANDARD,
+      mode: MODES_DICTIONARY.TIMER,
       completedLevels: {},
       nextLevel: {
         id: 1,

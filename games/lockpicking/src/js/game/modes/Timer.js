@@ -10,8 +10,8 @@ export class TimerMode {
     this.attempts = new Observable(3);
     this._timer = new Timer({
       onStopCallback: this.onDefeat.bind(this),
-      timer: 2000,
-    });
+      timer: 10000,
+    }).render(".game-page");
   }
 
   async start() {

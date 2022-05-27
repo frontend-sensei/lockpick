@@ -10,6 +10,7 @@ export class Timer {
    */
   constructor(options) {
     this.id = uniqueId();
+    this.node = null;
     this.launched = false;
     this.paused = false;
     this.finished = false;
@@ -33,6 +34,7 @@ export class Timer {
     timerNode.className = "timer";
     timerNode.innerHTML = "00:00";
     targetNode.appendChild(timerNode)
+    this.node = document.getElementById(this.id);
 
     return this
   }
@@ -53,7 +55,29 @@ export class Timer {
         return this.stop();
       }
       this.timer -= 50;
+      this.updateInnerHtml()
     }, 50);
+  }
+
+  updateInnerHtml() {
+    this.node.innerHTML = `${this.formatTimer(this.timer)}`
+  }
+
+  formatTimer(timer) {
+    const seconds = (() => {
+      const seconds = (timer / 1000).toFixed()
+      if(seconds < 10) {
+        return "0" + seconds
+      }
+      if(seconds >= 30) {
+        return 30
+      }
+      return seconds
+    })();
+
+    const milliseconds = (timer / 1000 % 1).toFixed(2).substring(2)
+
+    return `${seconds}:${milliseconds}`
   }
 
   /**
