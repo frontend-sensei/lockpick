@@ -61,4 +61,8 @@ export class TimerMode {
   beforePositionChecking() {
     this._timer.pause();
   }
+
+  correctPositionHandler() {
+    this._timer.increase(1500)
+  }
 }

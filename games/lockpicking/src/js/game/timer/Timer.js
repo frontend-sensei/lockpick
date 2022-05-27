@@ -55,11 +55,11 @@ export class Timer {
         return this.stop();
       }
       this.timer -= 50;
-      this.updateInnerHtml()
+      this.updateTimer()
     }, 50);
   }
 
-  updateInnerHtml() {
+  updateTimer() {
     this.node.innerHTML = `${this.formatTimer(this.timer)}`
   }
 
@@ -78,6 +78,11 @@ export class Timer {
     const milliseconds = (timer / 1000 % 1).toFixed(2).substring(2)
 
     return `${seconds}:${milliseconds}`
+  }
+
+  increase(milliseconds = 0) {
+    this.timer += milliseconds;
+    this.updateTimer()
   }
 
   /**
