@@ -43,6 +43,7 @@ export class TimerMode {
     this.root.level = this._levels.get(this.root.level.id + 1)
 
     // rerender
+    this.root._listeners.remove();
     this.root._ui.node.remove();
     this.root._ui = new UI(this.root);
     this.root.render();
