@@ -13,8 +13,8 @@ export class Levels {
    * @returns {object} Level
    * @public
    */
-  get(levelId) {
-    return this.levels.get(levelId);
+  get(id) {
+    return this.levels.get(id);
   }
 
   /**
