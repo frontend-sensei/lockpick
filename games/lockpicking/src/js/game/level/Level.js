@@ -1,5 +1,3 @@
-import { uniqueId } from "../../utils/uniqueId.js";
-
 /**
  * Creates a new Level
  * @class Level
@@ -13,7 +11,7 @@ export class Level {
    * @param {number} timer - The timer value, in milliseconds.
    */
   constructor({ id, steps, areaHeight, pointerMovingSpeed, timer }) {
-    this.id = uniqueId();
+    this.id = id;
     this.steps = steps;
     this.areaHeight = areaHeight;
     this.pointerMovingSpeed = pointerMovingSpeed;

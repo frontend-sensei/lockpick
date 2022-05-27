@@ -1,17 +1,21 @@
 import { Observable } from "../../utils/observable.js";
 import { Countdown } from "../countdown/Countdown.js";
-import { GameWonPopup } from "../popups/GameWonPopup.js";
 import { GameOverPopup } from "../popups/GameOverPopup.js";
 import { Timer } from "../timer/Timer.js";
+import { Levels } from "../level/Levels.js";
+import { LevelBuilder } from "../level/LevelBuilder.js";
+import { UI } from "../UI.js";
 
 export class TimerMode {
   constructor(root) {
     this.root = root;
     this.attempts = new Observable(3);
+    this._levels = new Levels(new LevelBuilder().buildForTimerMode());
     this._timer = new Timer({
       onStopCallback: this.onDefeat.bind(this),
       timer: 10000,
     }).render(".game-page");
+    this.PAUSE_TIMEOUT = 1000
   }
 
   async start() {
@@ -36,18 +40,21 @@ export class TimerMode {
   }
 
   onWon() {
-    this.root._listeners.remove();
+    this.root.level = this._levels.get(this.root.level.id + 1)
 
-    const isLastLevel = this.root._levels.isLastLevel(this.root.level.id);
-    const levelToSave = {
-      data: this.root.level,
-    };
-    if (isLastLevel) {
-      levelToSave.isLastLevel = true;
-    }
-    this.root._progress.save(levelToSave);
+    // rerender
+    this.root._ui.node.remove();
+    this.root._ui = new UI(this.root);
+    this.root.render();
 
-    new GameWonPopup().render();
+    this.root.pinsUnlocked = 0;
+
+    setTimeout(() => {
+      this._timer.start();
+      this.root._listeners.register();
+      this.root._ui._Bar.movePointer();
+      this.root._ui._Lockpick.animate();
+    }, this.PAUSE_TIMEOUT);
   }
 
   continue() {
@@ -63,6 +70,7 @@ export class TimerMode {
   }
 
   correctPositionHandler() {
+    // Need save score
     this._timer.increase(1500)
   }
 }

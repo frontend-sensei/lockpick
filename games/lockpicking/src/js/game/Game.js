@@ -1,7 +1,5 @@
 import { UI } from "./UI.js";
 import { Progress } from "./progress/Progress.js";
-import { LevelBuilder } from "./level/LevelBuilder.js";
-import { Levels } from "./level/Levels.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
@@ -19,8 +17,7 @@ export class Game {
   constructor() {
     this._progress = new Progress().restore();
     this._mode = new Modes(this).initMode(this._progress.getCurrentMode());
-    // Should build levels depending on mode
-    this._levels = new Levels(new LevelBuilder().build());
+    this._levels = this._mode._levels;
     this.level = this._levels.get(this._progress.progress.nextLevel.id);
 
     this.attempts = this._mode.attempts || new Observable(3);
