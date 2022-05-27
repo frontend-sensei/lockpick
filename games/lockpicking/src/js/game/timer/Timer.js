@@ -69,7 +69,7 @@ export class Timer {
       if(seconds < 10) {
         return "0" + seconds
       }
-      if(seconds >= 30) {
+      if(seconds > 30) {
         return 30
       }
       return seconds
@@ -81,6 +81,10 @@ export class Timer {
   }
 
   increase(milliseconds = 0) {
+    if(this.timer > 30000) {
+      this.timer = 30000
+      return
+    }
     this.timer += milliseconds;
     this.updateTimer()
   }
