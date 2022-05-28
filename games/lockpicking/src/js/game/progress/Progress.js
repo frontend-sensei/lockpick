@@ -75,9 +75,13 @@ export class Progress {
    * @public
    */
   restore() {
-    const result = JSON.parse(localStorage.getItem(this.storageKey)) || {};
-    if (Object.keys(result).length !== 0) {
-      this.progress = result;
+    try {
+      const result = JSON.parse(localStorage.getItem(this.storageKey)) || {};
+      if (Object.keys(result).length !== 0) {
+        this.progress = result;
+      }
+    } catch (err) {
+      console.error("progress restore failed", err)
     }
 
     return this;
