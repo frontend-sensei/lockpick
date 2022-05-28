@@ -29,6 +29,7 @@ export class Game {
       : this.desktopUnlockHandler.bind(this);
 
     this.pinsUnlocked = 0;
+    // to isHandlerBusy
     this.pendingHandler = false;
 
     this._ui = new UI(this);
@@ -127,7 +128,7 @@ export class Game {
         this.continue();
       }, this.PAUSE_TIMEOUT);
     } catch (e) {
-      this.pendingHandler = false;
+      this.updatePendingHandlerAfterDelay()
     }
   }
 
@@ -135,6 +136,10 @@ export class Game {
     this._sounds.playFailed();
     this._ui.barFailure();
     this.attempts.set(this.attempts.value - 1);
+  }
+
+  updatePendingHandlerAfterDelay() {
+    setTimeout(() => this.pendingHandler = false, 350)
   }
 
   correctPositionHandler() {
@@ -148,7 +153,7 @@ export class Game {
   continue() {
     this._ui._Bar.movePointer();
     this._ui._Lockpick.animate();
-    this.pendingHandler = false;
+    this.updatePendingHandlerAfterDelay()
     this._mode.continue();
   }
 }
