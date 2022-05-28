@@ -40,6 +40,9 @@ export class TimerMode {
   }
 
   async onWon() {
+    // Need remove listeners immediately
+    this.root._listeners.remove();
+
     this.root.level = this._levels.get(this.root.level.id + 1)
 
     // smooth hiding
@@ -49,7 +52,6 @@ export class TimerMode {
       setTimeout(resolve, 500)
     })
     // rerender
-    this.root._listeners.remove();
     this.root._ui.node.remove();
     this.root._ui = new UI(this.root);
     this.root.render();

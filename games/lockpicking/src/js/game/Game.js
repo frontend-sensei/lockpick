@@ -21,7 +21,7 @@ export class Game {
     this.level = this._levels.get(this._progress.progress.nextLevel.id);
 
     this.attempts = this._mode.attempts || new Observable(3);
-    this.PAUSE_TIMEOUT = this._mode.PAUSE_TIMEOUT || 1500;
+    this.PAUSE_TIMEOUT = this._mode.PAUSE_TIMEOUT || 500;
 
     this.isMobile = isMobile();
     this.deviceHandler = this.isMobile
@@ -45,6 +45,9 @@ export class Game {
 
   desktopUnlockHandler(event) {
     if (!this._keyboard.isSpacePressed(event)) {
+      return;
+    }
+    if(event.repeat) {
       return;
     }
     this.unlockHandler(event);
@@ -139,7 +142,7 @@ export class Game {
   }
 
   updatePendingHandlerAfterDelay() {
-    setTimeout(() => this.pendingHandler = false, 350)
+    setTimeout(() => this.pendingHandler = false, 250)
   }
 
   correctPositionHandler() {
