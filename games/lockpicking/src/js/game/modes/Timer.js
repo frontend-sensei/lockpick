@@ -44,6 +44,7 @@ export class TimerMode {
 
     // smooth hiding
     await new Promise((resolve) => {
+      this.root._ui.node.classList.remove('game--hidden', 'game--rerender-showing')
       this.root._ui.node.classList.add('game--rerender-hiding')
       setTimeout(resolve, 500)
     })
