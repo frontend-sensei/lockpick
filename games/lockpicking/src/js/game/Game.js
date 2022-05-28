@@ -50,7 +50,7 @@ export class Game {
     if(event.repeat) {
       return;
     }
-    this.unlockHandler(event);
+    this.unlockHandler();
   }
 
   /**
