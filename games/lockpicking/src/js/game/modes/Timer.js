@@ -44,28 +44,35 @@ export class TimerMode {
     this.root._listeners.remove();
 
     this.root.level = this._levels.get(this.root.level.id + 1)
-
-    // smooth hiding
-    await new Promise((resolve) => {
-      this.root._ui.node.classList.remove('game--hidden', 'game--rerender-showing')
-      this.root._ui.node.classList.add('game--rerender-hiding')
-      setTimeout(resolve, 500)
-    })
-    // rerender
-    this.root._ui.node.remove();
-    this.root._ui = new UI(this.root);
-    this.root.render();
-    this.root.pinsUnlocked = 0;
-
-    // smooth showing
-    this.root._ui.node.classList.add('game--hidden')
-    this.root._ui.node.style.setProperty('--rerender-showing-duration', '.5s')
-    requestAnimationFrame(() => this.root._ui.node.classList.add('game--rerender-showing'))
+    await this.hideGame()
+    this.rerenderGame()
+    this.showGame()
 
     setTimeout(() => {
       this.root._listeners.register();
       this.root.continue();
     }, this.PAUSE_TIMEOUT);
+  }
+
+  async hideGame() {
+    return new Promise((resolve) => {
+      this.root._ui.node.classList.remove('game--hidden', 'game--rerender-showing')
+      this.root._ui.node.classList.add('game--rerender-hiding')
+      setTimeout(resolve, 500)
+    })
+  }
+
+  showGame() {
+    this.root._ui.node.classList.add('game--hidden')
+    this.root._ui.node.style.setProperty('--rerender-showing-duration', '.5s')
+    requestAnimationFrame(() => this.root._ui.node.classList.add('game--rerender-showing'))
+  }
+
+  rerenderGame() {
+    this.root._ui.node.remove();
+    this.root._ui = new UI(this.root);
+    this.root.render();
+    this.root.pinsUnlocked = 0;
   }
 
   continue() {
