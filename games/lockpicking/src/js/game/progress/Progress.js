@@ -12,7 +12,6 @@ export class Progress {
       nextLevel: {
         id: 1,
       },
-      gameCompleted: false,
     };
     this.storageKey = "progress";
   }

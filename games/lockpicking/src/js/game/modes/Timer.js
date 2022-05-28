@@ -9,7 +9,7 @@ import { UI } from "../UI.js";
 export class TimerMode {
   constructor(root) {
     this.root = root;
-    this.attempts = new Observable(3);
+    this.attempts = new Observable(10);
     this._levels = new Levels(new LevelBuilder().buildForTimerMode());
     this._timer = new Timer({
       onStopCallback: this.onDefeat.bind(this),

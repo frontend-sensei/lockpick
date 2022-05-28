@@ -29,8 +29,10 @@ export class Game {
       : this.desktopUnlockHandler.bind(this);
 
     this.pinsUnlocked = 0;
-    // to isHandlerBusy
-    this.pendingHandler = false;
+    this.handlerBusy = false
+
+    this.pendingHandler = new Observable(false);
+    this.pendingHandler.subscribe(this.updateHandlerBusy.bind(this))
 
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
@@ -43,6 +45,12 @@ export class Game {
     this.unlockHandler(event);
   }
 
+  updateHandlerBusy(pendingHandler) {
+    if(pendingHandler) {
+      return
+    }
+    this.handlerBusy = false
+  }
   desktopUnlockHandler(event) {
     if (!this._keyboard.isSpacePressed(event)) {
       return;
@@ -50,6 +58,10 @@ export class Game {
     if(event.repeat) {
       return;
     }
+    if(this.handlerBusy) {
+      return;
+    }
+    this.handlerBusy = true
     this.unlockHandler();
   }
 
@@ -92,10 +104,10 @@ export class Game {
 
   unlockHandler() {
     try {
-      if (this.pendingHandler || this._mode.isNeedReturn()) {
+      if (this.pendingHandler.value || this._mode.isNeedReturn()) {
         return;
       }
-      this.pendingHandler = true;
+      this.pendingHandler.set(true);
 
       this._mode.beforePositionChecking()
       this._ui._Bar.stopPointer();
@@ -142,7 +154,7 @@ export class Game {
   }
 
   updatePendingHandlerAfterDelay() {
-    setTimeout(() => this.pendingHandler = false, 250)
+    setTimeout(() => this.pendingHandler.set(false), 250)
   }
 
   correctPositionHandler() {
