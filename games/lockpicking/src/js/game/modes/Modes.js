@@ -4,6 +4,7 @@ import { TimerMode } from "./Timer.js";
 export const MODES_DICTIONARY = {
   STANDARD: "standard",
   TIMER: "timer",
+  HARDCORE: "hardcore",
 }
 
 /**

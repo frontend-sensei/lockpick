@@ -8,10 +8,52 @@ export class Progress {
   constructor() {
     this.progress = {
       mode: MODES_DICTIONARY.TIMER,
-      completedLevels: {},
-      nextLevel: {
-        id: 1,
+      scores: {
+        modes: {
+          [MODES_DICTIONARY.STANDARD]: {
+            currentLevelId: 1,
+            levels: {
+              1: {
+                time: 3000
+              },
+            }
+          },
+          [MODES_DICTIONARY.TIMER]: {
+            records: {
+              1: {
+                time: 17394,
+                openedLocks: 6,
+                openedPins: 27,
+              }
+            },
+            total: {
+              time: 17394,
+              openedLocks: 6,
+              openedPins: 27,
+            }
+          },
+          [MODES_DICTIONARY.HARDCORE]: {
+            records: {
+              1: {
+                time: 17394,
+                openedLocks: 6,
+                openedPins: 27,
+              }
+            },
+            total: {
+              time: 17394,
+              openedLocks: 6,
+              openedPins: 27,
+            }
+          }
+        }
       },
+      coins: 150,
+      inventory: {
+        "item.id": {
+          name: "itemName"
+        }
+      }
     };
     this.storageKey = "progress";
   }
@@ -21,7 +63,6 @@ export class Progress {
    */
   save(level) {
     const levelId = level.data.id;
-    this.progress.completedLevels[levelId] = level.data;
 
     this.progress.nextLevel.id = level.isLastLevel ? levelId : levelId + 1;
 
