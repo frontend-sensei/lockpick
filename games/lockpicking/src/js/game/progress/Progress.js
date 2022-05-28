@@ -59,19 +59,16 @@ export class Progress {
   }
 
   /**
+   * Saves all progress to the LocalStorage
    * @public
    */
-  save(level) {
-    const levelId = level.data.id;
-
-    this.progress.nextLevel.id = level.isLastLevel ? levelId : levelId + 1;
-
+  save() {
     localStorage.setItem(this.storageKey, JSON.stringify(this.progress));
-
     return this;
   }
 
   /**
+   * Populate data from LocalStorage to the internal state
    * @public
    */
   restore() {
@@ -88,19 +85,50 @@ export class Progress {
   }
 
   /**
+   * Delete all progress from the LocalStorage
    * @public
    */
   clear() {
     localStorage.setItem(this.storageKey, JSON.stringify({}));
-
     return this;
   }
 
-  /**
-   * @public
-   * @return current game mode name
-   */
   getCurrentMode() {
     return this.progress.mode
+  }
+  setCurrentMode(mode) {
+    if(!MODES_DICTIONARY[mode]) {
+      console.error(`Mode "${mode} not found!"`)
+      return this
+    }
+    this.progress.mode = mode
+    this.save()
+    return this
+  }
+
+  getStandardMode() {
+    return this.progress.scores.modes[MODES_DICTIONARY.STANDARD]
+  }
+  getStandardModeCurrentLevelId() {
+    return this.getStandardMode().currentLevelId
+  }
+  setStandardModeCurrentLevelId(id) {
+    this.getStandardMode().currentLevelId = id
+    this.save()
+    return this
+  }
+  getStandardModeLevels() {
+    return this.getStandardMode().levels
+  }
+  getStandardModeLevel(id) {
+    const level = this.getStandardMode().levels[id]
+    if(!level) {
+      console.error(`Level with id ${id} not found!`)
+      return
+    }
+    return level
+  }
+  setStandardModeLevel(id, level) {
+    return this.getStandardMode().levels[id] = level
   }
 }
