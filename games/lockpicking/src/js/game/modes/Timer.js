@@ -5,17 +5,25 @@ import { Timer } from "../timer/Timer.js";
 import { Levels } from "../level/Levels.js";
 import { LevelBuilder } from "../level/LevelBuilder.js";
 import { UI } from "../UI.js";
+import { uniqueId } from "../../utils/uniqueId.js";
 
 export class TimerMode {
   constructor(root) {
     this.root = root;
     this.attempts = new Observable(10);
     this._levels = new Levels(new LevelBuilder().buildForTimerMode());
+    this.level = this._levels[1];
     this._timer = new Timer({
       onStopCallback: this.onDefeat.bind(this),
       timer: 10000,
     }).render(".game-page");
     this.PAUSE_TIMEOUT = 500
+    this.score = {
+      id: uniqueId(),
+      time: 0,
+      openedLocks: 6,
+      openedPins: 27,
+    }
   }
 
   async start() {
@@ -43,6 +51,7 @@ export class TimerMode {
     // Need remove listeners immediately
     this.root._listeners.remove();
 
+    this.saveProgress()
     this.root.level = this._levels.get(this.root.level.id + 1)
     await this.hideGame()
     this.rerenderGame()
@@ -52,6 +61,18 @@ export class TimerMode {
       this.root._listeners.register();
       this.root.continue();
     }, this.PAUSE_TIMEOUT);
+  }
+
+  saveProgress() {
+    const savedScore = this.root._progress.getTimerModeScore(this.score.id)
+    if(!savedScore) {
+      this.root._progress.setTimerModeScore(this.score)
+      return
+    }
+    this.score.time += savedScore.time
+    this.score.openedPins += savedScore.openedPins
+    this.score.openedLocks += savedScore.openedLocks
+    this.root._progress.setTimerModeScore(this.score)
   }
 
   async hideGame() {

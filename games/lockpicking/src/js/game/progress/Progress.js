@@ -19,7 +19,7 @@ export class Progress {
             }
           },
           [MODES_DICTIONARY.TIMER]: {
-            records: {
+            scores: {
               1: {
                 time: 17394,
                 openedLocks: 6,
@@ -129,6 +129,24 @@ export class Progress {
     return level
   }
   setStandardModeLevel(id, level) {
-    return this.getStandardMode().levels[id] = level
+    this.getStandardMode().levels[id] = level
+    this.save()
+    return this
+  }
+
+  getTimerMode() {
+    return this.progress.scores.modes[MODES_DICTIONARY.TIMER]
+  }
+  getTimerModeScore(id) {
+    const score = this.getTimerMode().scores[id]
+    if(!score) {
+      return
+    }
+    return score
+  }
+  setTimerModeScore(score) {
+    this.getTimerMode().scores[score.id] = score
+    this.save()
+    return this
   }
 }

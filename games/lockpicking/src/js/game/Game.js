@@ -18,7 +18,7 @@ export class Game {
     this._progress = new Progress().restore();
     this._mode = new Modes(this).initMode(this._progress.getCurrentMode());
     this._levels = this._mode._levels;
-    this.level = this._levels.get(this._progress.progress.nextLevel.id);
+    this.level = this._mode.levelR;
 
     this.attempts = this._mode.attempts || new Observable(3);
     this.PAUSE_TIMEOUT = this._mode.PAUSE_TIMEOUT || 500;
