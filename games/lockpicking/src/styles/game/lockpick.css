@@ -178,6 +178,7 @@
   transform-origin: left top;
   transform: rotate(var(--angle-slide-out));
   min-width: 299px;
+  transition: .25s ease-in-out;
 }
 
 .lockpick__picklock.animate {
