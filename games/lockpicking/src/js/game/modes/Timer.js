@@ -15,7 +15,7 @@ export class TimerMode {
       onStopCallback: this.onDefeat.bind(this),
       timer: 10000,
     }).render(".game-page");
-    this.PAUSE_TIMEOUT = 1000
+    this.PAUSE_TIMEOUT = 500
   }
 
   async start() {
@@ -39,22 +39,29 @@ export class TimerMode {
     new GameOverPopup().render();
   }
 
-  onWon() {
+  async onWon() {
     this.root.level = this._levels.get(this.root.level.id + 1)
 
+    // smooth hiding
+    await new Promise((resolve) => {
+      this.root._ui.node.classList.add('game--rerender-hiding')
+      setTimeout(resolve, 500)
+    })
     // rerender
     this.root._listeners.remove();
     this.root._ui.node.remove();
     this.root._ui = new UI(this.root);
     this.root.render();
-
     this.root.pinsUnlocked = 0;
 
+    // smooth showing
+    this.root._ui.node.classList.add('game--hidden')
+    this.root._ui.node.style.setProperty('--rerender-showing-duration', '.5s')
+    requestAnimationFrame(() => this.root._ui.node.classList.add('game--rerender-showing'))
+
     setTimeout(() => {
-      this._timer.start();
       this.root._listeners.register();
-      this.root._ui._Bar.movePointer();
-      this.root._ui._Lockpick.animate();
+      this.root.continue();
     }, this.PAUSE_TIMEOUT);
   }
 
