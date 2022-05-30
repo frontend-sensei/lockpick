@@ -1,15 +1,17 @@
 export class Bar {
   constructor(root) {
+    const MAX_SPEED = 35
     this.root = root;
     this.node = null;
     this.areaNode = null;
     this.pointerNode = null;
-    this.inertvalId = null;
     this.barLength = 700;
     this.areaHeight = this.root.level.areaHeight;
     this.pointerLength = 25;
     this.translateY = 0;
     this.movementDirection = "bottom";
+    this.movementSpeed = this.root.level.movementSpeed < MAX_SPEED ? this.root.level.movementSpeed : MAX_SPEED;
+    this.needStop = true;
   }
 
   getHTML() {
@@ -94,31 +96,45 @@ export class Bar {
   }
 
   movePointer() {
-    const movementSpeed = 12;
-    const maxTranslateY = this.barLength - this.pointerLength;
-    const minTranslateY = 0;
+    this.needStop = false;
+    requestAnimationFrame(() => {
+      this.animatePointer(this)
+    })
+  }
 
-    this.inertvalId = setInterval(() => {
-      if (this.movementDirection === "bottom") {
-        if (this.translateY >= maxTranslateY) {
-          this.translateY = maxTranslateY;
-          this.movementDirection = "top";
-          return;
-        }
-        this.translateY += movementSpeed;
-      } else if (this.movementDirection === "top") {
-        if (this.translateY <= minTranslateY) {
-          this.translateY = minTranslateY;
-          this.movementDirection = "bottom";
-          return;
-        }
-        this.translateY -= movementSpeed;
+  animatePointer(root) {
+    if(root.needStop) {
+      return;
+    }
+
+    const minTranslateY = 0;
+    const maxTranslateY = root.barLength - root.pointerLength;
+    const movementSpeed = root.movementSpeed;
+
+    if (root.movementDirection === "bottom") {
+      if (root.translateY + movementSpeed >= maxTranslateY) {
+        root.translateY = maxTranslateY;
+        root.movementDirection = "top";
       }
-      this.pointerNode.style.transform = `translateY(${this.translateY}px)`;
-    }, 16);
+      if(root.translateY + movementSpeed <= maxTranslateY) {
+        root.translateY += movementSpeed;
+      }
+    } else if (root.movementDirection === "top") {
+      if (root.translateY - movementSpeed <= minTranslateY) {
+        root.translateY = minTranslateY;
+        root.movementDirection = "bottom";
+      }
+      if(root.translateY - movementSpeed >= minTranslateY) {
+        root.translateY -= movementSpeed;
+      }
+    }
+
+    root.pointerNode.style.transform = `translateY(${root.translateY}px)`;
+
+    requestAnimationFrame(() => root.animatePointer(root));
   }
 
   stopPointer() {
-    this.inertvalId = clearInterval(this.inertvalId);
+    this.needStop = true;
   }
 }
