@@ -5,7 +5,7 @@
 export class Level {
   /**
    * @param {number} id - The id value.
-   * @param {number} steps - The steps value.
+   * @param {number} steps - The count of pins.
    * @param {number} areaHeight - The areaHeight value, in pixels.
    * @param {number} areaMovingSpeed - The areaMovingSpeed value, in milliseconds.
    * @param {number} timer - The timer value, in milliseconds.
@@ -15,6 +15,5 @@ export class Level {
     this.steps = steps;
     this.areaHeight = areaHeight;
     this.pointerMovingSpeed = pointerMovingSpeed;
-    this.timer = timer;
   }
 }

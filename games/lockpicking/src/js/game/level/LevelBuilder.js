@@ -46,16 +46,37 @@ export class LevelBuilder {
   }
 
   buildForTimerMode() {
-    const LEVELS_COUNT = 5000;
+    const LEVELS_COUNT = 10;
+
+    // Need to create separate object with all constant values to sharing it between other objects
+    const MIN_STEPS = 2
+    const MAX_STEPS = 7
+    const MAX_AREA_HEIGHT = 30
+    const MIN_AREA_HEIGHT = 3
+
     for (let index = 1; index < LEVELS_COUNT; index++) {
+      const getSteps = () => {
+        const stepValue = ((MAX_STEPS - MIN_STEPS) / LEVELS_COUNT) * index
+        const NEXT_AFTER_MIN_STEP = MIN_STEPS + 1
+        const minSteps = Math.round(MIN_STEPS + stepValue)
+        const maxSteps = Math.round(NEXT_AFTER_MIN_STEP + stepValue)
+        return getRandomInt(minSteps, maxSteps)
+      }
+
+      const getAreaHeight = () => {
+        const stepValue = ((MAX_AREA_HEIGHT - MIN_AREA_HEIGHT) / LEVELS_COUNT) * index
+        return MAX_AREA_HEIGHT - stepValue
+      }
+
       // split to functions
       this.levels.push(
         [
           index,
           new Level({
             id: index,
-            steps: getRandomInt(2, 7),
-            areaHeight: getRandomInt(5, 30),
+            steps: getSteps(),
+            areaHeight: getAreaHeight(),
+            pointerMovingSpeed: getRandomInt(5, 30)
           })
         ]
       )
