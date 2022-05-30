@@ -1,3 +1,5 @@
+import { getRandomInt } from "../../utils/randomInt.js";
+
 export class Bar {
   constructor(root) {
     this.MAX_SPEED = 35;
@@ -9,6 +11,7 @@ export class Bar {
     this.pointerNode = null;
     this.barLength = 700;
     this.areaHeight = this.root.level.areaHeight;
+    this.areaTop = 0;
     this.pointerLength = 25;
     this.translateY = 0;
     this.movementDirection = "bottom";
@@ -64,8 +67,9 @@ export class Bar {
     this.areaNode = document.querySelector(".bar__area");
     this.pointerNode = document.querySelector(".bar__pointer");
 
-    this.node.style.setProperty("--body-length", `${this.barLength}px`);
     this.updateAreaHeight();
+    this.setRandomAreaTop();
+    this.node.style.setProperty("--body-length", `${this.barLength}px`);
     this.node.style.setProperty("--pointer-length", `${this.pointerLength}px`);
 
     this.calcHeightForTouchDevice();
@@ -137,6 +141,10 @@ export class Bar {
     this.needStop = true;
   }
 
+  /**
+   * @public
+   * @param speed
+   */
   setMovementSpeed(speed) {
     if(speed > this.MAX_SPEED) {
       this.movementSpeed = this.MAX_SPEED
@@ -149,6 +157,10 @@ export class Bar {
     this.movementSpeed = speed
   }
 
+  /**
+   * @public
+   * @param height
+   */
   setAreaHeight(height) {
     const validate = () => {
       const heightPeaked = height > this.MAX_AREA_HEIGHT
@@ -168,5 +180,14 @@ export class Bar {
   }
   updateAreaHeight() {
     this.node.style.setProperty("--area-length-percents", this.areaHeight);
+  }
+
+  setRandomAreaTop() {
+    const MAX_AREA_TOP = 100 - this.areaHeight
+    this.areaTop = getRandomInt(0, MAX_AREA_TOP)
+    this.updateAreaTop()
+  }
+  updateAreaTop() {
+    this.node.style.setProperty("--area-top", `${this.areaTop}%`);
   }
 }
