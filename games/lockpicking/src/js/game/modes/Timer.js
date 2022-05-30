@@ -12,7 +12,7 @@ export class TimerMode {
     this.root = root;
     this.attempts = new Observable(10);
     this._levels = new Levels(new LevelBuilder().buildForTimerMode());
-    this.level = this._levels[1];
+    this.level = this._levels.get(1);
     this._timer = new Timer({
       onStopCallback: this.onDefeat.bind(this),
       timer: 10000,
@@ -21,8 +21,8 @@ export class TimerMode {
     this.score = {
       id: uniqueId(),
       time: 0,
-      openedLocks: 6,
-      openedPins: 27,
+      openedLocks: 0,
+      openedPins: 0,
     }
   }
 
@@ -51,7 +51,9 @@ export class TimerMode {
     // Need remove listeners immediately
     this.root._listeners.remove();
 
+    this.increaseOpenedLocks();
     this.saveProgress()
+
     this.root.level = this._levels.get(this.root.level.id + 1)
     await this.hideGame()
     this.rerenderGame()
@@ -63,15 +65,15 @@ export class TimerMode {
     }, this.PAUSE_TIMEOUT);
   }
 
+  increaseOpenedPins() {
+    this.score.openedPins += 1
+  }
+
+  increaseOpenedLocks() {
+    this.score.openedLocks += 1
+  }
+
   saveProgress() {
-    const savedScore = this.root._progress.getTimerModeScore(this.score.id)
-    if(!savedScore) {
-      this.root._progress.setTimerModeScore(this.score)
-      return
-    }
-    this.score.time += savedScore.time
-    this.score.openedPins += savedScore.openedPins
-    this.score.openedLocks += savedScore.openedLocks
     this.root._progress.setTimerModeScore(this.score)
   }
 
@@ -111,5 +113,6 @@ export class TimerMode {
   correctPositionHandler() {
     // Need save score
     this._timer.increase(1500)
+    this.increaseOpenedPins()
   }
 }

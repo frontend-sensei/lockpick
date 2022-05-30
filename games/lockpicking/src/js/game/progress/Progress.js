@@ -19,18 +19,8 @@ export class Progress {
             }
           },
           [MODES_DICTIONARY.TIMER]: {
-            scores: {
-              1: {
-                time: 17394,
-                openedLocks: 6,
-                openedPins: 27,
-              }
-            },
-            total: {
-              time: 17394,
-              openedLocks: 6,
-              openedPins: 27,
-            }
+            scores: {},
+            total: {},
           },
           [MODES_DICTIONARY.HARDCORE]: {
             records: {
