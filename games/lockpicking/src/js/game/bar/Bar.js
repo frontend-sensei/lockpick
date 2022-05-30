@@ -1,15 +1,22 @@
+import { getRandomInt } from "../../utils/randomInt.js";
+
 export class Bar {
   constructor(root) {
+    this.MAX_SPEED = 35;
+    this.MAX_AREA_HEIGHT = 30;
+    this.MIN_AREA_HEIGHT = 3;
     this.root = root;
     this.node = null;
     this.areaNode = null;
     this.pointerNode = null;
-    this.inertvalId = null;
     this.barLength = 700;
     this.areaHeight = this.root.level.areaHeight;
+    this.areaTop = 0;
     this.pointerLength = 25;
     this.translateY = 0;
     this.movementDirection = "bottom";
+    this.movementSpeed = this.root.level.movementSpeed < this.MAX_SPEED ? this.root.level.movementSpeed : this.MAX_SPEED;
+    this.needStop = true;
   }
 
   getHTML() {
@@ -60,8 +67,9 @@ export class Bar {
     this.areaNode = document.querySelector(".bar__area");
     this.pointerNode = document.querySelector(".bar__pointer");
 
+    this.updateAreaHeight();
+    this.setRandomAreaTop();
     this.node.style.setProperty("--body-length", `${this.barLength}px`);
-    this.node.style.setProperty("--area-length-percents", this.areaHeight);
     this.node.style.setProperty("--pointer-length", `${this.pointerLength}px`);
 
     this.calcHeightForTouchDevice();
@@ -73,9 +81,9 @@ export class Bar {
     }
 
     setTimeout(() => {
-      let lockpickHeight = 0;
+      let lockPickHeight = 0;
       if (window.innerWidth < 768) {
-        lockpickHeight = document.querySelector(".lockpick").clientHeight;
+        lockPickHeight = document.querySelector(".lockpick").clientHeight;
       }
 
       const barStyles = getComputedStyle(this.node.parentNode);
@@ -85,40 +93,101 @@ export class Bar {
 
       const viewportHeight = window.innerHeight;
       const additionalOffset = 20;
-      const height =
-        viewportHeight - lockpickHeight - marginsY - additionalOffset;
-
-      this.barLength = height;
+      this.barLength = viewportHeight - lockPickHeight - marginsY - additionalOffset;
       this.node.style.setProperty("--body-length", `${this.barLength}px`);
     });
   }
 
   movePointer() {
-    const movementSpeed = 12;
-    const maxTranslateY = this.barLength - this.pointerLength;
-    const minTranslateY = 0;
+    this.needStop = false;
+    requestAnimationFrame(() => {
+      this.animatePointer(this)
+    })
+  }
 
-    this.inertvalId = setInterval(() => {
-      if (this.movementDirection === "bottom") {
-        if (this.translateY >= maxTranslateY) {
-          this.translateY = maxTranslateY;
-          this.movementDirection = "top";
-          return;
-        }
-        this.translateY += movementSpeed;
-      } else if (this.movementDirection === "top") {
-        if (this.translateY <= minTranslateY) {
-          this.translateY = minTranslateY;
-          this.movementDirection = "bottom";
-          return;
-        }
-        this.translateY -= movementSpeed;
+  animatePointer(root) {
+    if(root.needStop) {
+      return;
+    }
+
+    const minTranslateY = 0;
+    const maxTranslateY = root.barLength - root.pointerLength;
+    const movementSpeed = root.movementSpeed;
+
+    if (root.movementDirection === "bottom") {
+      if (root.translateY + movementSpeed >= maxTranslateY) {
+        root.translateY = maxTranslateY;
+        root.movementDirection = "top";
       }
-      this.pointerNode.style.transform = `translateY(${this.translateY}px)`;
-    }, 16);
+      if(root.translateY + movementSpeed <= maxTranslateY) {
+        root.translateY += movementSpeed;
+      }
+    } else if (root.movementDirection === "top") {
+      if (root.translateY - movementSpeed <= minTranslateY) {
+        root.translateY = minTranslateY;
+        root.movementDirection = "bottom";
+      }
+      if(root.translateY - movementSpeed >= minTranslateY) {
+        root.translateY -= movementSpeed;
+      }
+    }
+
+    root.pointerNode.style.transform = `translateY(${root.translateY}px)`;
+
+    requestAnimationFrame(() => root.animatePointer(root));
   }
 
   stopPointer() {
-    this.inertvalId = clearInterval(this.inertvalId);
+    this.needStop = true;
+  }
+
+  /**
+   * @public
+   * @param speed
+   */
+  setMovementSpeed(speed) {
+    if(speed > this.MAX_SPEED) {
+      this.movementSpeed = this.MAX_SPEED
+      return;
+    }
+    if(speed < 1) {
+      this.movementSpeed = 1
+      return;
+    }
+    this.movementSpeed = speed
+  }
+
+  /**
+   * @public
+   * @param height
+   */
+  setAreaHeight(height) {
+    const validate = () => {
+      const heightPeaked = height > this.MAX_AREA_HEIGHT
+      const heightHitALow = height < this.MIN_AREA_HEIGHT
+      if(heightPeaked) {
+        this.areaHeight = this.MAX_AREA_HEIGHT
+        return
+      }
+      if(heightHitALow) {
+        this.areaHeight = this.MIN_AREA_HEIGHT
+        return
+      }
+      this.areaHeight = height
+    }
+    validate()
+    this.updateAreaHeight()
+  }
+  updateAreaHeight() {
+    this.node.style.setProperty("--area-length-percents", this.areaHeight);
+  }
+
+  setRandomAreaTop() {
+    const MAX_AREA_TOP = 100 - this.areaHeight
+    this.areaTop = getRandomInt(0, MAX_AREA_TOP)
+    this.updateAreaTop()
+  }
+  updateAreaTop() {
+    this.node.style.setProperty("--area-top", `${this.areaTop}%`);
   }
 }
