@@ -1,6 +1,8 @@
 export class Bar {
   constructor(root) {
-    this.MAX_SPEED = 35
+    this.MAX_SPEED = 35;
+    this.MAX_AREA_HEIGHT = 30;
+    this.MIN_AREA_HEIGHT = 3;
     this.root = root;
     this.node = null;
     this.areaNode = null;
@@ -63,7 +65,7 @@ export class Bar {
     this.pointerNode = document.querySelector(".bar__pointer");
 
     this.node.style.setProperty("--body-length", `${this.barLength}px`);
-    this.node.style.setProperty("--area-length-percents", this.areaHeight);
+    this.updateAreaHeight();
     this.node.style.setProperty("--pointer-length", `${this.pointerLength}px`);
 
     this.calcHeightForTouchDevice();
@@ -135,7 +137,7 @@ export class Bar {
     this.needStop = true;
   }
 
-  changeMovementSpeed(speed) {
+  setMovementSpeed(speed) {
     if(speed > this.MAX_SPEED) {
       this.movementSpeed = this.MAX_SPEED
       return;
@@ -145,5 +147,26 @@ export class Bar {
       return;
     }
     this.movementSpeed = speed
+  }
+
+  setAreaHeight(height) {
+    const validate = () => {
+      const heightPeaked = height > this.MAX_AREA_HEIGHT
+      const heightHitALow = height < this.MIN_AREA_HEIGHT
+      if(heightPeaked) {
+        this.areaHeight = this.MAX_AREA_HEIGHT
+        return
+      }
+      if(heightHitALow) {
+        this.areaHeight = this.MIN_AREA_HEIGHT
+        return
+      }
+      this.areaHeight = height
+    }
+    validate()
+    this.updateAreaHeight()
+  }
+  updateAreaHeight() {
+    this.node.style.setProperty("--area-length-percents", this.areaHeight);
   }
 }
