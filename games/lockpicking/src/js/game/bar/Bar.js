@@ -1,6 +1,6 @@
 export class Bar {
   constructor(root) {
-    const MAX_SPEED = 35
+    this.MAX_SPEED = 35
     this.root = root;
     this.node = null;
     this.areaNode = null;
@@ -10,7 +10,7 @@ export class Bar {
     this.pointerLength = 25;
     this.translateY = 0;
     this.movementDirection = "bottom";
-    this.movementSpeed = this.root.level.movementSpeed < MAX_SPEED ? this.root.level.movementSpeed : MAX_SPEED;
+    this.movementSpeed = this.root.level.movementSpeed < this.MAX_SPEED ? this.root.level.movementSpeed : this.MAX_SPEED;
     this.needStop = true;
   }
 
@@ -136,5 +136,17 @@ export class Bar {
 
   stopPointer() {
     this.needStop = true;
+  }
+
+  changeMovementSpeed(speed) {
+    if(speed > this.MAX_SPEED) {
+      this.movementSpeed = this.MAX_SPEED
+      return;
+    }
+    if(speed < 1) {
+      this.movementSpeed = 1
+      return;
+    }
+    this.movementSpeed = speed
   }
 }
