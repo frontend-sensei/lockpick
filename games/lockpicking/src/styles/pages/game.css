@@ -4,6 +4,19 @@
   align-items: center;
 }
 
+.game--rerender-hiding {
+  opacity: 0;
+  transition: .5s ease-in-out;
+}
+
+.game--hidden {
+  opacity: 0;
+}
+.game--rerender-showing {
+  opacity: 1;
+  transition: var(--rerender-showing-duration, .5s) ease-in-out;
+}
+
 @media (min-width: 768px) {
   .game {
     justify-content: center;

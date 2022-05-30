@@ -1,4 +1,5 @@
 import { Level } from "./Level.js";
+import { getRandomInt } from "../../utils/randomInt.js";
 
 /**
  * Creates fixed instances of the Levels with different properties
@@ -42,5 +43,23 @@ export class LevelBuilder {
     ];
 
     return this.levels;
+  }
+
+  buildForTimerMode() {
+    const LEVELS_COUNT = 5000;
+    for (let index = 1; index < LEVELS_COUNT; index++) {
+      // split to functions
+      this.levels.push(
+        [
+          index,
+          new Level({
+            id: index,
+            steps: getRandomInt(2, 7),
+            areaHeight: getRandomInt(5, 30),
+          })
+        ]
+      )
+    }
+    return this.levels
   }
 }

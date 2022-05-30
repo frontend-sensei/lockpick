@@ -1,7 +1,5 @@
 import { UI } from "./UI.js";
 import { Progress } from "./progress/Progress.js";
-import { LevelBuilder } from "./level/LevelBuilder.js";
-import { Levels } from "./level/Levels.js";
 import { Coordinates } from "./coordinates/Coordinates.js";
 import { Observable } from "../utils/observable.js";
 import { isMobile } from "../utils/isMobile.js";
@@ -19,12 +17,10 @@ export class Game {
   constructor() {
     this._progress = new Progress().restore();
     this._mode = new Modes(this).initMode(this._progress.getCurrentMode());
-    // Should build levels depending on mode
-    this._levels = new Levels(new LevelBuilder().build());
-    this.level = this._levels.get(this._progress.progress.nextLevel.id);
+    this.level = this._mode.level;
 
     this.attempts = this._mode.attempts || new Observable(3);
-    this.PAUSE_TIMEOUT = this._mode.PAUSE_TIMEOUT || 1500;
+    this.PAUSE_TIMEOUT = this._mode.PAUSE_TIMEOUT || 500;
 
     this.isMobile = isMobile();
     this.deviceHandler = this.isMobile
@@ -49,7 +45,10 @@ export class Game {
     if (!this._keyboard.isSpacePressed(event)) {
       return;
     }
-    this.unlockHandler(event);
+    if(event.repeat) {
+      return;
+    }
+    this.unlockHandler();
   }
 
   /**
@@ -130,7 +129,7 @@ export class Game {
         this.continue();
       }, this.PAUSE_TIMEOUT);
     } catch (e) {
-      this.pendingHandler = false;
+      this.updatePendingHandlerAfterDelay()
     }
   }
 
@@ -140,17 +139,22 @@ export class Game {
     this.attempts.set(this.attempts.value - 1);
   }
 
+  updatePendingHandlerAfterDelay() {
+    setTimeout(() => this.pendingHandler = false, 250)
+  }
+
   correctPositionHandler() {
     this._sounds.playUnlocked();
     this._ui._Lockpick.stopAnimate();
     this.pinsUnlocked++;
     this._ui._Pins.updateUnlocked(this.pinsUnlocked);
+    this._mode.correctPositionHandler();
   }
 
   continue() {
     this._ui._Bar.movePointer();
     this._ui._Lockpick.animate();
-    this.pendingHandler = false;
+    this.updatePendingHandlerAfterDelay()
     this._mode.continue();
   }
 }
