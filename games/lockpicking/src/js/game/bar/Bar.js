@@ -75,9 +75,9 @@ export class Bar {
     }
 
     setTimeout(() => {
-      let lockpickHeight = 0;
+      let lockPickHeight = 0;
       if (window.innerWidth < 768) {
-        lockpickHeight = document.querySelector(".lockpick").clientHeight;
+        lockPickHeight = document.querySelector(".lockpick").clientHeight;
       }
 
       const barStyles = getComputedStyle(this.node.parentNode);
@@ -87,10 +87,7 @@ export class Bar {
 
       const viewportHeight = window.innerHeight;
       const additionalOffset = 20;
-      const height =
-        viewportHeight - lockpickHeight - marginsY - additionalOffset;
-
-      this.barLength = height;
+      this.barLength = viewportHeight - lockPickHeight - marginsY - additionalOffset;
       this.node.style.setProperty("--body-length", `${this.barLength}px`);
     });
   }
