@@ -59,6 +59,8 @@ export class TimerMode {
     this.rerenderGame()
     this.showGame()
 
+    console.log(this.root.level.pointerMovingSpeed)
+
     setTimeout(() => {
       this.root._listeners.register();
       this.root.continue();

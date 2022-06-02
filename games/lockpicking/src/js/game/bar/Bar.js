@@ -16,7 +16,7 @@ export class Bar {
     this.pointerLength = 25;
     this.translateY = 0;
     this.movementDirection = "bottom";
-    this.movementSpeed = this.root.level.movementSpeed < this.MAX_SPEED ? this.root.level.movementSpeed : this.MIN_SPEED;
+    this.movementSpeed = this.root.level.pointerMovingSpeed < this.MAX_SPEED ? this.root.level.pointerMovingSpeed : this.MIN_SPEED;
     this.needStop = true;
   }
 
