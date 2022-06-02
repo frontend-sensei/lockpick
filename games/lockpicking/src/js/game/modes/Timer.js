@@ -6,11 +6,13 @@ import { Levels } from "../level/Levels.js";
 import { LevelBuilder } from "../level/LevelBuilder.js";
 import { UI } from "../UI.js";
 import { uniqueId } from "../../utils/uniqueId.js";
+import { MODES_DICTIONARY } from "./Modes.js";
 
 export class TimerMode {
   constructor(root) {
     this.root = root;
-    this.attempts = new Observable(10);
+    this.name = MODES_DICTIONARY.TIMER;
+    this.attempts = new Observable(10000);
     this._levels = new Levels(new LevelBuilder().buildForTimerMode());
     this.level = this._levels.get(1);
     this._timer = new Timer({
@@ -58,8 +60,6 @@ export class TimerMode {
     await this.hideGame()
     this.rerenderGame()
     this.showGame()
-
-    console.log(this.root.level.pointerMovingSpeed)
 
     setTimeout(() => {
       this.root._listeners.register();

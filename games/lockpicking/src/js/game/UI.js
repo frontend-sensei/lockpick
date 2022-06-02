@@ -39,6 +39,7 @@ export class UI {
     wrapper.appendChild(element);
 
     this.node = document.querySelector(".game");
+    this.node.classList.add(`game--mode-${this.root._mode.name}`)
 
     this._Bar.render(".bar-row");
     this._Pins.render(".bar-row");
