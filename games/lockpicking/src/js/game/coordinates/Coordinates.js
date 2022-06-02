@@ -97,18 +97,17 @@ export class Coordinates {
    * @returns {TransformStyles} TransformStyles
    */
   getTransformProperties(node) {
-    const transformStyles = {};
     const rawValues = node.style.transform.split(" ");
 
     if (!rawValues[0]) {
       return {};
     }
 
+    const transformStyles = {};
     rawValues.forEach((value) => {
-      const splittedValue = value.split("(");
-      const propertyName = splittedValue[0];
-      const propertyValue = +splittedValue[1].slice(0, -1).split("p")[0];
-      transformStyles[propertyName] = propertyValue;
+      const splitValue = value.split("(");
+      const propertyName = splitValue[0];
+      transformStyles[propertyName] = +splitValue[1].slice(0, -1).split("p")[0];
     });
 
     return transformStyles;
