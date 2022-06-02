@@ -52,10 +52,7 @@ export class Coordinates {
       }
     }
 
-    if (pointerRange.from > areaRange.to) {
-      return false;
-    }
-    return true;
+    return pointerRange.from <= areaRange.to;
   }
 
   /**
