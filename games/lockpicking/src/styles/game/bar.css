@@ -130,7 +130,6 @@
 
 .bar__area {
   position: absolute;
-  top: var(--area-top, 0%);
   width: var(--area-width);
   height: var(--area-length);
   transform-style: preserve-3d;

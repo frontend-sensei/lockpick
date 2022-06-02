@@ -189,6 +189,6 @@ export class Bar {
     this.updateAreaTop()
   }
   updateAreaTop() {
-    this.node.style.setProperty("--area-top", `${this.areaTop}%`);
+    this.areaNode.style.top = `${this.areaTop}%`;
   }
 }

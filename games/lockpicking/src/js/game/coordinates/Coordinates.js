@@ -65,17 +65,11 @@ export class Coordinates {
    */
   getRange(node) {
     const range = {};
-    const styles = this.getCoordinates(node);
-    const translateY = styles.translateY;
-    const height = styles.height;
+    const { translateY, top, height } = this.getCoordinates(node);
+    const offset = top || translateY || 0
 
-    if (!translateY) {
-      range.from = 0;
-      range.to = height;
-    } else {
-      range.from = translateY;
-      range.to = translateY + height;
-    }
+    range.from = offset;
+    range.to = offset + height;
 
     return range;
   }
@@ -88,8 +82,13 @@ export class Coordinates {
   getCoordinates(node) {
     return {
       height: node.clientHeight,
+      top: this.percentsOf(this.root._ui._Bar.node.clientHeight, +node.style.top.split("%")[0]),
       ...this.getTransformProperties(node),
     };
+  }
+
+  percentsOf(target, percents) {
+    return target / 100 * percents
   }
 
   /**
