@@ -114,7 +114,7 @@ export class TimerMode {
 
   correctPositionHandler() {
     // Need save score
-    this._timer.increase(1500)
+    this._timer.increase(800)
     this.increaseOpenedPins()
   }
 }
