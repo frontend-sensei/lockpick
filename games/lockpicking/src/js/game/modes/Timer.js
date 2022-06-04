@@ -54,7 +54,8 @@ export class TimerMode {
     this.root._listeners.remove();
 
     this.increaseOpenedLocks();
-    this.saveProgress()
+    this.updateTotalTime();
+    this.saveProgress();
 
     this.root.level = this._levels.get(this.root.level.id + 1)
     await this.hideGame()
@@ -73,6 +74,10 @@ export class TimerMode {
 
   increaseOpenedLocks() {
     this.score.openedLocks += 1
+  }
+
+  updateTotalTime() {
+    this.score.time = this._timer.totalTime
   }
 
   saveProgress() {

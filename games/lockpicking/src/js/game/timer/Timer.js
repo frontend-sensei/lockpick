@@ -16,8 +16,8 @@ export class Timer {
     this.finished = false;
     this.intervalId = null;
     this.timer = options.timer;
-    // TODO: Save time left
-    this.timeLeft = 0;
+    this.previousTimer = 0;
+    this.totalTime = 0;
     this.onStopCallback = options.onStopCallback
       ? options.onStopCallback
       : () => {};
@@ -47,6 +47,7 @@ export class Timer {
 
     this.launched = true;
     this.paused = true;
+    this.previousTimer = this.timer
 
     if (this.intervalId) clearInterval(this.intervalId);
 
@@ -96,6 +97,7 @@ export class Timer {
     this.intervalId = clearInterval(this.intervalId);
     this.launched = false;
     this.paused = true;
+    this.updateTotalTime()
   }
 
   /**
@@ -105,6 +107,11 @@ export class Timer {
     this.intervalId = clearInterval(this.intervalId);
     this.launched = false;
     this.finished = true;
+    this.updateTotalTime()
     this.onStopCallback();
+  }
+
+  updateTotalTime() {
+    this.totalTime += this.previousTimer - this.timer
   }
 }
