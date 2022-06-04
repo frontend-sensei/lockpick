@@ -31,6 +31,18 @@
   height: var(--body-length);
 }
 
+.blink {
+  animation: blink 1s;
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .bar-body__side {
   position: absolute;
   background-color: #353535a8;
@@ -130,7 +142,6 @@
 
 .bar__area {
   position: absolute;
-  top: var(--area-top, 0%);
   width: var(--area-width);
   height: var(--area-length);
   transform-style: preserve-3d;

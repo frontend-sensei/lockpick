@@ -1,0 +1,6 @@
+export const LEVEL = {
+  MIN_STEPS: 2,
+  MAX_STEPS: 7,
+  MAX_AREA_HEIGHT: 30,
+  MIN_AREA_HEIGHT: 3,
+}

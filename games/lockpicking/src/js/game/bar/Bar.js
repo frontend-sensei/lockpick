@@ -3,6 +3,7 @@ import { getRandomInt } from "../../utils/randomInt.js";
 export class Bar {
   constructor(root) {
     this.MAX_SPEED = 35;
+    this.MIN_SPEED = 10;
     this.MAX_AREA_HEIGHT = 30;
     this.MIN_AREA_HEIGHT = 3;
     this.root = root;
@@ -15,7 +16,7 @@ export class Bar {
     this.pointerLength = 25;
     this.translateY = 0;
     this.movementDirection = "bottom";
-    this.movementSpeed = this.root.level.movementSpeed < this.MAX_SPEED ? this.root.level.movementSpeed : this.MAX_SPEED;
+    this.movementSpeed = this.root.level.pointerMovingSpeed < this.MAX_SPEED ? this.root.level.pointerMovingSpeed : this.MIN_SPEED;
     this.needStop = true;
   }
 
@@ -188,6 +189,6 @@ export class Bar {
     this.updateAreaTop()
   }
   updateAreaTop() {
-    this.node.style.setProperty("--area-top", `${this.areaTop}%`);
+    this.areaNode.style.top = `${this.areaTop}%`;
   }
 }

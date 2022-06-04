@@ -52,10 +52,7 @@ export class Coordinates {
       }
     }
 
-    if (pointerRange.from > areaRange.to) {
-      return false;
-    }
-    return true;
+    return pointerRange.from <= areaRange.to;
   }
 
   /**
@@ -65,17 +62,11 @@ export class Coordinates {
    */
   getRange(node) {
     const range = {};
-    const styles = this.getCoordinates(node);
-    const translateY = styles.translateY;
-    const height = styles.height;
+    const { translateY, top, height } = this.getCoordinates(node);
+    const offset = top || translateY || 0
 
-    if (!translateY) {
-      range.from = 0;
-      range.to = height;
-    } else {
-      range.from = translateY;
-      range.to = translateY + height;
-    }
+    range.from = offset;
+    range.to = offset + height;
 
     return range;
   }
@@ -88,8 +79,13 @@ export class Coordinates {
   getCoordinates(node) {
     return {
       height: node.clientHeight,
+      top: this.percentsOf(this.root._ui._Bar.node.clientHeight, +node.style.top.split("%")[0]),
       ...this.getTransformProperties(node),
     };
+  }
+
+  percentsOf(target, percents) {
+    return target / 100 * percents
   }
 
   /**
@@ -98,18 +94,17 @@ export class Coordinates {
    * @returns {TransformStyles} TransformStyles
    */
   getTransformProperties(node) {
-    const transformStyles = {};
     const rawValues = node.style.transform.split(" ");
 
     if (!rawValues[0]) {
       return {};
     }
 
+    const transformStyles = {};
     rawValues.forEach((value) => {
-      const splittedValue = value.split("(");
-      const propertyName = splittedValue[0];
-      const propertyValue = +splittedValue[1].slice(0, -1).split("p")[0];
-      transformStyles[propertyName] = propertyValue;
+      const splitValue = value.split("(");
+      const propertyName = splitValue[0];
+      transformStyles[propertyName] = +splitValue[1].slice(0, -1).split("p")[0];
     });
 
     return transformStyles;

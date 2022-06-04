@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+.game--mode-timer .attempts {
+  display: none;
+}
+
 .game--rerender-hiding {
   opacity: 0;
   transition: .5s ease-in-out;

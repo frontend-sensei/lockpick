@@ -149,6 +149,14 @@ export class Game {
     this.pinsUnlocked++;
     this._ui._Pins.updateUnlocked(this.pinsUnlocked);
     this._mode.correctPositionHandler();
+    if(this.level.steps === this.pinsUnlocked) {
+      return
+    }
+    this._ui._Bar.setRandomAreaTop();
+    this._ui._Bar.node.classList.add('blink');
+    setTimeout(() => {
+      this._ui._Bar.node.classList.remove('blink');
+    },1000)
   }
 
   continue() {
