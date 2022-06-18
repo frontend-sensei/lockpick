@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="./styles/pages/score-tabs.css" />
     <link rel="stylesheet" href="./styles/components/table.css" />
     <link rel="stylesheet" href="./styles/components/sound-controller.css" />
+    <link rel="stylesheet" href="./styles/components/mode-switcher.css" />
     <title>Document</title>
   </head>
   <body>
@@ -53,6 +54,24 @@
       <div class="home-page__play-wrapper" id="playWrapper">
         <button class="home-page__play-button" id="play">play</button>
         <img class="home-page-keys-img" src="./assets/images/keys.png" alt="" />
+      </div>
+
+      <div class="mode-switcher">
+        <h4 class="mode-switcher__title">Select mode</h4>
+        <div class="mode-switcher-wrapper">
+          <label class="mode-switcher__label">
+            <input type="radio" class="mode-switcher__input" name="mode" value="standard">
+            <span>standard</span>
+          </label>
+          <label class="mode-switcher__label">
+            <input type="radio" class="mode-switcher__input" name="mode" value="timer">
+            <span>timer</span>
+          </label>
+          <label class="mode-switcher__label">
+            <input type="radio" class="mode-switcher__input" name="mode" value="hardcore">
+            <span>hardcore</span>
+          </label>
+        </div>
       </div>
 
       <button class="sound-controller sound-controller--muted">
