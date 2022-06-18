@@ -87,7 +87,7 @@ export class Progress {
     return this.progress.mode
   }
   setCurrentMode(mode) {
-    if(!MODES_DICTIONARY[mode]) {
+    if(!MODES_DICTIONARY[mode.toUpperCase()]) {
       console.error(`Mode "${mode} not found!"`)
       return this
     }
