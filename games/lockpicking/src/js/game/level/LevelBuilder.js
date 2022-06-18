@@ -15,7 +15,7 @@ export class LevelBuilder {
    * Build levels
    * @public
    */
-  build() {
+  buildForStandardMode() {
     this.levels = [
       [
         1,
