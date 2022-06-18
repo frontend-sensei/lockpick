@@ -3,6 +3,7 @@ import { Popup } from "../components/Popup.js";
 import { Tabs } from "../components/Tabs.js";
 import "../components/clickSound.js";
 import "../components/mainThemeSound.js";
+import { ModeSwitcher } from "../game/modes/ModeSwitcher.js";
 
 const progress = new Progress().restore();
 
@@ -152,3 +153,17 @@ document.getElementById("scores").addEventListener("click", (event) => {
   });
   scoresPopup.render();
 });
+
+
+function initModeSwitcher() {
+  const currentMode = progress.getCurrentMode()
+  const switcher = new ModeSwitcher({
+    currentMode,
+    onSetCurrentMode: (mode) => {
+      progress.setCurrentMode(mode)
+    }
+  })
+  switcher.init()
+}
+
+initModeSwitcher()
