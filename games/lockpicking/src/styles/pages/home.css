@@ -104,6 +104,7 @@ body,
 }
 
 .home-page__play-wrapper {
+  z-index: 100;
   position: relative;
   max-width: 146px;
   margin: 0px auto;
