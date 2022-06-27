@@ -6,14 +6,14 @@ import { Timer } from "../timer/Timer.js";
 import { MODES_DICTIONARY } from "./Modes.js";
 import { Levels } from "../level/Levels.js";
 import { LevelBuilder } from "../level/LevelBuilder.js";
-import { uniqueId } from "../../utils/uniqueId.js";
 import { UI } from "../UI.js";
 
 export class StandardMode {
   constructor(root) {
+    this.DEFAULT_ATTEMPTS = 3
     this.root = root;
     this.name = MODES_DICTIONARY.STANDARD;
-    this.attempts = new Observable(3);
+    this.attempts = new Observable(this.DEFAULT_ATTEMPTS);
     this._levels = new Levels(new LevelBuilder().buildForStandardMode());
     this.level = this._levels.get(this.root._progress.getStandardModeCurrentLevelId());
 
@@ -57,6 +57,7 @@ export class StandardMode {
     this.increaseOpenedLocks()
     this.updateTotalTime()
     this.saveProgress()
+    this.attempts.set(this.DEFAULT_ATTEMPTS)
 
     const isLastLevel = this._levels.isLastLevel(this.root.level.id);
     if (isLastLevel) {

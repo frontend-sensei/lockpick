@@ -7,7 +7,7 @@ import { MODES_DICTIONARY } from "../modes/Modes.js";
 export class Progress {
   constructor() {
     this.progress = {
-      mode: MODES_DICTIONARY.TIMER,
+      mode: MODES_DICTIONARY.STANDARD,
       scores: {
         modes: {
           [MODES_DICTIONARY.STANDARD]: {
