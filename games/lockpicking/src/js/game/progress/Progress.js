@@ -12,11 +12,7 @@ export class Progress {
         modes: {
           [MODES_DICTIONARY.STANDARD]: {
             currentLevelId: 1,
-            levels: {
-              1: {
-                time: 3000
-              },
-            }
+            scores: {}
           },
           [MODES_DICTIONARY.TIMER]: {
             scores: {},
@@ -68,7 +64,7 @@ export class Progress {
         this.progress = result;
       }
     } catch (err) {
-      console.error("progress restore failed", err)
+      console.error("Progress restoring failed. Error: ", err)
     }
 
     return this;
@@ -107,19 +103,19 @@ export class Progress {
     this.save()
     return this
   }
-  getStandardModeLevels() {
-    return this.getStandardMode().levels
+  getStandardModeScores() {
+    return this.getStandardMode().scores
   }
-  getStandardModeLevel(id) {
-    const level = this.getStandardMode().levels[id]
+  getStandardModeLevelScore(id) {
+    const level = this.getStandardMode().scores[id]
     if(!level) {
       console.error(`Level with id ${id} not found!`)
       return
     }
     return level
   }
-  setStandardModeLevel(id, level) {
-    this.getStandardMode().levels[id] = level
+  setStandardModeLevelScore(score) {
+    this.getStandardMode().scores[score.id] = score
     this.save()
     return this
   }
