@@ -61,6 +61,7 @@ export class Timer {
   }
 
   updateTimer() {
+    if (!this.node) return;
     this.node.innerHTML = `${this.formatTimer(this.timer)}`
   }
 

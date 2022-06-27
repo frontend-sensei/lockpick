@@ -18,10 +18,20 @@ export class Levels {
   }
 
   /**
+   * Returns next level by id
+   * @param currentLevel
+   * @return {unknown}
+   */
+  getNextLevel(currentLevel) {
+    return this.levels.get(currentLevel.id + 1)
+  }
+
+  /**
    * @public
    * @param {number} levelId
    * @returns {boolean} Whether has next level
    */
+  // TODO: Change argument to level object instead of passing levelId
   isLastLevel(levelId) {
     const nextLevelId = levelId + 1;
     const hasNextLevel = this.levels.has(nextLevelId);
