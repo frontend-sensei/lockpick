@@ -18,7 +18,6 @@ export class StandardMode {
     this.level = this._levels.get(this.root._progress.getStandardModeCurrentLevelId());
 
     this._timer = new Timer({
-      onStopCallback: this.onDefeat.bind(this),
       timer: 200000,
     });
 
