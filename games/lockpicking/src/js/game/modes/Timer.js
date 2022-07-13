@@ -77,7 +77,7 @@ export class TimerMode {
   }
 
   updateTotalTime() {
-    this.score.time = this._timer.totalTime
+    this.score.time = this._timer.timeHasPassed
   }
 
   saveProgress() {

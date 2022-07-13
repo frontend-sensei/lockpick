@@ -17,7 +17,7 @@ export class Timer {
     this.intervalId = null;
     this.timer = options.timer;
     this.previousTimer = 0;
-    this.totalTime = 0;
+    this.timeHasPassed = 0;
     this.onStopCallback = options.onStopCallback
       ? options.onStopCallback
       : () => {};
@@ -113,6 +113,6 @@ export class Timer {
   }
 
   updateTotalTime() {
-    this.totalTime += this.previousTimer - this.timer
+    this.timeHasPassed += this.previousTimer - this.timer
   }
 }

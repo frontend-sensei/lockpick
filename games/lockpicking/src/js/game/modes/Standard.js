@@ -120,7 +120,7 @@ export class StandardMode {
   }
 
   updateTotalTime() {
-    this.score.time = this._timer.totalTime
+    this.score.time = this._timer.timeHasPassed
   }
 
   continue() {
