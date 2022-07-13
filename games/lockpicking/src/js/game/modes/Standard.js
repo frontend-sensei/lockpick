@@ -11,6 +11,7 @@ import { UI } from "../UI.js";
 export class StandardMode {
   constructor(root) {
     this.DEFAULT_ATTEMPTS = 3
+    this.THREE_HOURS = 10800000
     this.root = root;
     this.name = MODES_DICTIONARY.STANDARD;
     this.attempts = new Observable(this.DEFAULT_ATTEMPTS);
@@ -18,7 +19,8 @@ export class StandardMode {
     this.level = this._levels.get(this.root._progress.getStandardModeCurrentLevelId());
 
     this._timer = new Timer({
-      timer: 200000,
+      onStopCallback: this.onDefeat.bind(this),
+      timer: this.THREE_HOURS,
     });
 
     this.PAUSE_TIMEOUT = 500
@@ -133,9 +135,5 @@ export class StandardMode {
 
   beforePositionChecking() {
     this._timer.pause();
-  }
-
-  correctPositionHandler() {
-    this._timer.increase(800)
   }
 }

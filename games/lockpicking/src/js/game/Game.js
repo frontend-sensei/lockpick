@@ -148,7 +148,9 @@ export class Game {
     this._ui._Lockpick.stopAnimate();
     this.pinsUnlocked++;
     this._ui._Pins.updateUnlocked(this.pinsUnlocked);
-    this._mode.correctPositionHandler();
+    if(this._mode.correctPositionHandler) {
+      this._mode.correctPositionHandler();
+    }
     if(this.level.steps === this.pinsUnlocked) {
       return
     }
