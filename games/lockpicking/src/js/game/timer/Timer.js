@@ -115,4 +115,8 @@ export class Timer {
   updateTotalTime() {
     this.timeHasPassed += this.previousTimer - this.timer
   }
+
+  resetTotalTime() {
+    this.timeHasPassed = 0;
+  }
 }
