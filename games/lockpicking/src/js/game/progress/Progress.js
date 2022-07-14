@@ -15,21 +15,9 @@ export class Progress {
         },
         [MODES_DICTIONARY.TIMER]: {
           scores: {},
-          total: {},
         },
         [MODES_DICTIONARY.HARDCORE]: {
-          records: {
-            1: {
-              time: 17394,
-              openedLocks: 6,
-              openedPins: 27,
-            }
-          },
-          total: {
-            time: 17394,
-            openedLocks: 6,
-            openedPins: 27,
-          }
+          scores: {},
         }
       },
       coins: 150,
@@ -134,6 +122,15 @@ export class Progress {
   }
   setTimerModeScore(score) {
     this.getTimerMode().scores[score.id] = score
+    this.save()
+    return this
+  }
+
+  getHardcoreMode() {
+    return this.getScores()[MODES_DICTIONARY.HARDCORE]
+  }
+  setHardcoreModeLevelScore(score) {
+    this.getHardcoreMode().scores[score.id] = score
     this.save()
     return this
   }
