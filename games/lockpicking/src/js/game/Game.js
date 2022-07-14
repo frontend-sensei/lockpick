@@ -90,12 +90,12 @@ export class Game {
 
   unlockHandler() {
     try {
-      if (this.pendingHandler || this._mode.isNeedReturn()) {
+      if (this.pendingHandler || this._mode.isNeedReturn?.()) {
         return;
       }
       this.pendingHandler = true;
 
-      this._mode.beforePositionChecking()
+      this._mode.beforePositionChecking?.()
       this._ui._Bar.stopPointer();
 
       const positionCorrect = this._coordinates.checkPosition();
@@ -165,6 +165,6 @@ export class Game {
     this._ui._Bar.movePointer();
     this._ui._Lockpick.animate();
     this.updatePendingHandlerAfterDelay()
-    this._mode.continue();
+    this._mode.continue?.();
   }
 }
