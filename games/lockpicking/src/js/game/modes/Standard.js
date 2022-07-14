@@ -27,7 +27,6 @@ export class StandardMode {
     this.score = {
       id: this.root._progress.getStandardModeCurrentLevelId(),
       time: 0,
-      openedLocks: 0,
     }
   }
 
@@ -55,9 +54,9 @@ export class StandardMode {
   async onWon() {
     this.root._listeners.remove();
 
-    this.increaseOpenedLocks()
     this.updateTotalTime()
     this.saveProgress()
+    this._timer.resetTotalTime()
     this.attempts.set(this.DEFAULT_ATTEMPTS)
 
     const isLastLevel = this._levels.isLastLevel(this.root.level.id);
@@ -105,15 +104,10 @@ export class StandardMode {
     this.root.pinsUnlocked = 0;
   }
 
-  increaseOpenedLocks() {
-    this.score.openedLocks += 1
-  }
-
   resetProgress() {
     this.score = {
       id: this.level.id,
       time: 0,
-      openedLocks: 0,
     }
   }
 
