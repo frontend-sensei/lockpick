@@ -1,5 +1,6 @@
 import { StandardMode } from "./Standard.js";
 import { TimerMode } from "./Timer.js";
+import { HardcoreMode } from "./Hardcore.js";
 
 export const MODES_DICTIONARY = {
   STANDARD: "standard",
@@ -15,7 +16,8 @@ export class Modes {
     this.root = root;
     this.MODES = {
       [MODES_DICTIONARY.STANDARD]: StandardMode,
-      [MODES_DICTIONARY.TIMER]: TimerMode
+      [MODES_DICTIONARY.TIMER]: TimerMode,
+      [MODES_DICTIONARY.HARDCORE]: HardcoreMode
     };
   }
 
