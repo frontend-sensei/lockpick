@@ -9,28 +9,26 @@ export class Progress {
     this.progress = {
       mode: MODES_DICTIONARY.STANDARD,
       scores: {
-        modes: {
-          [MODES_DICTIONARY.STANDARD]: {
-            currentLevelId: 1,
-            scores: {}
-          },
-          [MODES_DICTIONARY.TIMER]: {
-            scores: {},
-            total: {},
-          },
-          [MODES_DICTIONARY.HARDCORE]: {
-            records: {
-              1: {
-                time: 17394,
-                openedLocks: 6,
-                openedPins: 27,
-              }
-            },
-            total: {
+        [MODES_DICTIONARY.STANDARD]: {
+          currentLevelId: 1,
+          scores: {}
+        },
+        [MODES_DICTIONARY.TIMER]: {
+          scores: {},
+          total: {},
+        },
+        [MODES_DICTIONARY.HARDCORE]: {
+          records: {
+            1: {
               time: 17394,
               openedLocks: 6,
               openedPins: 27,
             }
+          },
+          total: {
+            time: 17394,
+            openedLocks: 6,
+            openedPins: 27,
           }
         }
       },
@@ -92,8 +90,12 @@ export class Progress {
     return this
   }
 
+  getScores() {
+    return this.progress.scores
+  }
+
   getStandardMode() {
-    return this.progress.scores.modes[MODES_DICTIONARY.STANDARD]
+    return this.getScores()[MODES_DICTIONARY.STANDARD]
   }
   getStandardModeCurrentLevelId() {
     return this.getStandardMode().currentLevelId
@@ -121,7 +123,7 @@ export class Progress {
   }
 
   getTimerMode() {
-    return this.progress.scores.modes[MODES_DICTIONARY.TIMER]
+    return this.getScores()[MODES_DICTIONARY.TIMER]
   }
   getTimerModeScore(id) {
     const score = this.getTimerMode().scores[id]
