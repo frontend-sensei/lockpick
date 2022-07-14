@@ -964,7 +964,7 @@ export class LevelBuilder {
   }
 
   buildForHardcoreMode() {
-    const LEVELS_COUNT = 1000;
+    const LEVELS_COUNT = 500;
     const MAX_AREA_HEIGHT = 10;
     const MAX_SPEED = 30;
     const MIN_SPEED = 5;
