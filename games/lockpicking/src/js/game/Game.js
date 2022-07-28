@@ -19,7 +19,7 @@ export class Game {
     this._mode = new Modes(this).initMode(this._progress.getCurrentMode());
     this.level = this._mode.level;
 
-    this.COINS_FOR_WIN = this._mode.COINS_FOR_WIN || 1;
+    this.COINS_FOR_WIN = this._mode.COINS_FOR_WIN;
     this.attempts = this._mode.attempts || new Observable(3);
     this.coins = new Observable(this._progress.getCoins());
     this.PAUSE_TIMEOUT = this._mode.PAUSE_TIMEOUT || 500;
@@ -171,7 +171,7 @@ export class Game {
   }
 
   updateCoins() {
-    this.coins.set(this.coins.value + this.COINS_FOR_WIN)
+    this.coins.set(this.coins.value + this.COINS_FOR_WIN.value)
   }
 
   saveCoins() {

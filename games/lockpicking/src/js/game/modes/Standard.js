@@ -11,7 +11,9 @@ import { UI } from "../UI.js";
 export class StandardMode {
   constructor(root) {
     this.DEFAULT_ATTEMPTS = 3
-    this.COINS_FOR_WIN = 1
+    this.COINS_FOR_WIN = {
+      value: 1
+    }
     this.THREE_HOURS = 10800000
     this.root = root;
     this.name = MODES_DICTIONARY.STANDARD;
