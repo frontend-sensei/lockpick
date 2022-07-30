@@ -44,6 +44,12 @@ export class UI {
     notificationsRow.className = "notifications-row"
     wrapper.appendChild(notificationsRow);
 
+    const backButton = document.createElement("a")
+    backButton.href = "./index.html"
+    backButton.className = "back-button"
+    backButton.innerText = "Back to menu"
+    wrapper.appendChild(backButton);
+
     this.node = document.querySelector(".game");
     this.node.classList.add(`game--mode-${this.root._mode.name}`)
 
