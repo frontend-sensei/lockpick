@@ -14,7 +14,7 @@ export class UI {
     this._Pins = new Pins(root);
     this._Attempts = new Attempts(root);
     this._Coins = new Coins(root);
-    this._Lockpick = new Lockpick(this.root.level.steps);
+    this._Lockpick = new Lockpick(root);
 
     if (this.root.isMobile) {
       this._MobileUnlockBtn = new MobileUnlockBtn(root);
