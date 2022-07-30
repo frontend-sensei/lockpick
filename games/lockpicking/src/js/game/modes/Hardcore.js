@@ -7,10 +7,17 @@ import { Levels } from "../level/Levels.js";
 import { LevelBuilder } from "../level/LevelBuilder.js";
 import { UI } from "../UI.js";
 import { uniqueId } from "../../utils/uniqueId.js";
+import { CoinsSettings } from "../coins/CoinsSettings.js";
 
 export class HardcoreMode {
   constructor(root) {
     this.DEFAULT_ATTEMPTS = 1
+    this._coinSettings = new CoinsSettings({
+      coinsForVictory: 1,
+      comboCoins: 0
+    })
+    this.wonInARow = 0;
+
     this.root = root;
     this.name = MODES_DICTIONARY.HARDCORE;
     this.attempts = new Observable(this.DEFAULT_ATTEMPTS);
@@ -23,6 +30,22 @@ export class HardcoreMode {
       openedLocks: 0,
       openedPins: 0,
     }
+  }
+
+  earnCoins() {
+    this.increaseEarningCoins()
+    this.root._coins.earnCoins()
+  }
+
+  increaseEarningCoins() {
+    this.wonInARow += 1;
+
+    const combo_step = 5
+    const isNeedApplyCombo = this.wonInARow % combo_step
+    if(isNeedApplyCombo) {
+      return
+    }
+    this._coinSettings.comboCoins += 2
   }
 
   async start() {
@@ -47,6 +70,7 @@ export class HardcoreMode {
   async onWon() {
     this.root._listeners.remove();
 
+    this.earnCoins()
     this.increaseOpenedLocks()
     this.saveProgress()
 

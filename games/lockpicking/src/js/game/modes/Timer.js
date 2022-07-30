@@ -7,10 +7,17 @@ import { LevelBuilder } from "../level/LevelBuilder.js";
 import { UI } from "../UI.js";
 import { uniqueId } from "../../utils/uniqueId.js";
 import { MODES_DICTIONARY } from "./Modes.js";
+import { CoinsSettings } from "../coins/CoinsSettings.js";
 
 export class TimerMode {
   constructor(root) {
     this.root = root;
+    this._coinSettings = new CoinsSettings({
+      coinsForVictory: 1,
+      comboCoins: 0
+    })
+    this.wonInARow = 0;
+
     this.name = MODES_DICTIONARY.TIMER;
     this.attempts = new Observable(10000);
     this._levels = new Levels(new LevelBuilder().buildForTimerMode());
@@ -26,6 +33,22 @@ export class TimerMode {
       openedLocks: 0,
       openedPins: 0,
     }
+  }
+
+  earnCoins() {
+    this.increaseEarningCoins()
+    this.root._coins.earnCoins()
+  }
+
+  increaseEarningCoins() {
+    this.wonInARow += 1;
+
+    const combo_step = 5
+    const isNeedApplyCombo = this.wonInARow % combo_step
+    if(isNeedApplyCombo) {
+      return
+    }
+    this._coinSettings.comboCoins += 1
   }
 
   async start() {
@@ -53,6 +76,7 @@ export class TimerMode {
     // Need remove listeners immediately
     this.root._listeners.remove();
 
+    this.earnCoins();
     this.increaseOpenedLocks();
     this.updateTotalTime();
     this.saveProgress();

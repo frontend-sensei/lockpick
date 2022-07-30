@@ -1,6 +1,6 @@
-export class CoinsData {
-  constructor(data) {
-    this.coinsForVictory = data.coinsForVictory
-    this.comboCoins = data.comboCoins
+export class CoinsSettings {
+  constructor(settings) {
+    this.coinsForVictory = settings.coinsForVictory
+    this.comboCoins = settings.comboCoins
   }
 }

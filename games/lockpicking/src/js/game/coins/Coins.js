@@ -17,7 +17,7 @@ export class Coins {
     this.root._ui.node.appendChild(node);
     this.node = document.getElementById(node.id);
     this.nodeCoinsCount = this.node.querySelector(".coins__count");
-    this.root.coins.subscribe(this.updateCoinsCount.bind(this));
+    this.root._coins.coins.subscribe(this.updateCoinsCount.bind(this));
   }
 
   updateCoinsCount(count) {
