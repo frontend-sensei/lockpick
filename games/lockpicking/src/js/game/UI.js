@@ -40,6 +40,10 @@ export class UI {
     }
     wrapper.appendChild(element);
 
+    const notificationsRow = document.createElement("div")
+    notificationsRow.className = "notifications-row"
+    wrapper.appendChild(notificationsRow);
+
     this.node = document.querySelector(".game");
     this.node.classList.add(`game--mode-${this.root._mode.name}`)
 

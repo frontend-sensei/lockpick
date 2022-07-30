@@ -8,6 +8,7 @@ import { UI } from "../UI.js";
 import { uniqueId } from "../../utils/uniqueId.js";
 import { MODES_DICTIONARY } from "./Modes.js";
 import { CoinsSettings } from "../coins/CoinsSettings.js";
+import { CoinLabel } from "../coins/CoinLabel.js";
 
 export class TimerMode {
   constructor(root) {
@@ -49,6 +50,9 @@ export class TimerMode {
       return
     }
     this._coinSettings.comboCoins += 1
+    new CoinLabel({
+      content: `Combo: + ${this._coinSettings.comboCoins} Coins`
+    }).render()
   }
 
   async start() {

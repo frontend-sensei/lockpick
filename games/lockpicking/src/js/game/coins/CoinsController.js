@@ -1,4 +1,5 @@
 import { Observable } from "../../utils/observable.js";
+import { CoinLabel } from "./CoinLabel.js";
 
 /**
  * @constructor
@@ -21,8 +22,17 @@ export class CoinsController {
     this.root._progress.setCoins(this.coins.value);
   }
 
+  showLabel() {
+    const { coinsForVictory, comboCoins } = this.coinsData
+    const coins = coinsForVictory + comboCoins
+    new CoinLabel({
+      content: `+ ${coins} Coins`
+    }).render()
+  }
+
   earnCoins() {
     this.updateCoins()
+    this.showLabel()
     this.saveCoins()
   }
 }

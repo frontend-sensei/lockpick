@@ -8,6 +8,7 @@ import { LevelBuilder } from "../level/LevelBuilder.js";
 import { UI } from "../UI.js";
 import { uniqueId } from "../../utils/uniqueId.js";
 import { CoinsSettings } from "../coins/CoinsSettings.js";
+import { CoinLabel } from "../coins/CoinLabel.js";
 
 export class HardcoreMode {
   constructor(root) {
@@ -46,6 +47,9 @@ export class HardcoreMode {
       return
     }
     this._coinSettings.comboCoins += 2
+    new CoinLabel({
+      content: `Combo: + ${this._coinSettings.comboCoins} Coins`
+    }).render()
   }
 
   async start() {
