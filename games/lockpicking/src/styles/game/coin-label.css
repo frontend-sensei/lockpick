@@ -1,0 +1,31 @@
+.notifications-row {
+  position: fixed;
+  z-index: 10;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.coin-label {
+  color: #f3be65;
+  background-color: #003232;
+  padding: 0.35rem .8rem;
+  margin: 0 0 .5rem 0;
+  border-radius: 2rem;
+  font-size: 1.5rem;
+  animation: fade-in-out 2s ease-in-out forwards;
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+}
