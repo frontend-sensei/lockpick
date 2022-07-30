@@ -1,0 +1,31 @@
+.coins {
+  --size: 60px;
+  --offset: 90px;
+  width: var(--size);
+  height: var(--size);
+  position: fixed;
+  z-index: 1000;
+  right: 20px;
+  top: var(--offset);
+  bottom: unset;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 50%;
+  background-color: #003656;
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: 80% 20%;
+  background-image: url(../../assets/images/coin.png);
+}
+
+.coins__count {
+  line-height: 0.7em;
+  margin: calc(var(--size) / 1.75) 0px 0px calc(var(--size) / 5);
+}
+
+@media (min-width: 768px) {
+  .coins {
+    top: unset;
+    bottom: var(--offset);
+  }
+}

@@ -4,6 +4,7 @@ import { Attempts } from "./attempts/Attempts.js";
 import { MobileUnlockBtn } from "./mobile-unlock-btn/MobileUnlockBtn.js";
 import { UnlockLabel } from "./unlock-label/UnlockLabel.js";
 import { Lockpick } from "./lockpick/Lockpick.js";
+import { Coins } from "./coins/Coins.js";
 
 export class UI {
   constructor(root) {
@@ -12,6 +13,7 @@ export class UI {
     this._Bar = new Bar(root);
     this._Pins = new Pins(root);
     this._Attempts = new Attempts(root);
+    this._Coins = new Coins(root);
     this._Lockpick = new Lockpick(this.root.level.steps);
 
     if (this.root.isMobile) {
@@ -38,13 +40,18 @@ export class UI {
     }
     wrapper.appendChild(element);
 
+    const notificationsRow = document.createElement("div")
+    notificationsRow.className = "notifications-row"
+    wrapper.appendChild(notificationsRow);
+
     this.node = document.querySelector(".game");
     this.node.classList.add(`game--mode-${this.root._mode.name}`)
 
     this._Bar.render(".bar-row");
     this._Pins.render(".bar-row");
     this._Lockpick.render(".bar-row");
-    this._Attempts.render(".game");
+    this._Attempts.render();
+    this._Coins.render();
     if (this.root.isMobile) {
       this._MobileUnlockBtn.render();
     } else {

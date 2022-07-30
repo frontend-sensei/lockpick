@@ -7,10 +7,15 @@ import { MODES_DICTIONARY } from "./Modes.js";
 import { Levels } from "../level/Levels.js";
 import { LevelBuilder } from "../level/LevelBuilder.js";
 import { UI } from "../UI.js";
+import { CoinsSettings } from "../coins/CoinsSettings.js";
 
 export class StandardMode {
   constructor(root) {
     this.DEFAULT_ATTEMPTS = 3
+    this._coinSettings = new CoinsSettings({
+      coinsForVictory: 1,
+      comboCoins: 0
+    })
     this.THREE_HOURS = 10800000
     this.root = root;
     this.name = MODES_DICTIONARY.STANDARD;
@@ -54,6 +59,7 @@ export class StandardMode {
   async onWon() {
     this.root._listeners.remove();
 
+    this.root._coins.earnCoins()
     this.updateTotalTime()
     this.saveProgress()
     this._timer.resetTotalTime()

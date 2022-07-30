@@ -7,6 +7,7 @@ import { Keyboard } from "../utils/Keyboard.js";
 import { Listeners } from "./listeners/Listeners.js";
 import { GameSounds } from "./sounds/GameSounds.js";
 import { Modes } from "./modes/Modes.js";
+import { CoinsController } from "./coins/CoinsController.js";
 
 /**
  * Creates a new Game
@@ -19,6 +20,7 @@ export class Game {
     this._mode = new Modes(this).initMode(this._progress.getCurrentMode());
     this.level = this._mode.level;
 
+    this.COINS_FOR_WIN = this._mode.COINS_FOR_WIN;
     this.attempts = this._mode.attempts || new Observable(3);
     this.PAUSE_TIMEOUT = this._mode.PAUSE_TIMEOUT || 500;
 
@@ -30,6 +32,7 @@ export class Game {
     this.pinsUnlocked = 0;
     this.pendingHandler = false;
 
+    this._coins = new CoinsController(this)
     this._ui = new UI(this);
     this._coordinates = new Coordinates(this);
     this._keyboard = new Keyboard();
@@ -137,6 +140,7 @@ export class Game {
     this._sounds.playFailed();
     this._ui.barFailure();
     this.attempts.set(this.attempts.value - 1);
+    this._coins.coinsData.comboCoins = 0
   }
 
   updatePendingHandlerAfterDelay() {

@@ -20,7 +20,7 @@ export class Progress {
           scores: {},
         }
       },
-      coins: 150,
+      coins: 0,
       inventory: {
         "item.id": {
           name: "itemName"
@@ -76,6 +76,14 @@ export class Progress {
     this.progress.mode = mode
     this.save()
     return this
+  }
+
+  getCoins() {
+    return +this.progress.coins
+  }
+  setCoins(coins) {
+    this.progress.coins = coins
+    this.save()
   }
 
   getScores() {
