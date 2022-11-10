@@ -62,3 +62,7 @@
   border-radius: 0.25rem;
   background-color: #07a0af;
 }
+
+.popup-button[disabled] {
+  background-color: #9EB0B1;
+}

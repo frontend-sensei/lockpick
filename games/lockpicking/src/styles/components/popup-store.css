@@ -1,0 +1,24 @@
+.popup-store-picklock-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.popup-store-picklock-column {
+  width: 100%;
+  padding: 10px;
+}
+
+.popup-store-picklock-column h4 {
+  text-align: center;
+  margin-bottom: .25rem;
+}
+
+.popup-store-picklock-column img {
+  width: 100%;
+}
+
+@media (min-width: 770px) {
+  .popup-store-picklock-column {
+    width: 33.3%;
+  }
+}

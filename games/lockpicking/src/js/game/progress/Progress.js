@@ -20,10 +20,11 @@ export class Progress {
           scores: {},
         }
       },
-      coins: 0,
+      coins: 1500,
       inventory: {
-        "item.id": {
-          name: "itemName"
+        pinlocks: {
+          current: "steel",
+          has: ["steel"],
         }
       }
     };
@@ -141,5 +142,9 @@ export class Progress {
     this.getHardcoreMode().scores[score.id] = score
     this.save()
     return this
+  }
+
+  getCurrentPinlock() {
+    return this.progress.inventory.pinlocks.current
   }
 }

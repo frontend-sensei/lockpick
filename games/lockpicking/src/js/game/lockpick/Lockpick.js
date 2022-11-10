@@ -6,12 +6,13 @@ import { getRandomInt } from "../../utils/randomInt.js";
  * @class Lockpick
  */
 export class Lockpick {
-  constructor(steps) {
+  constructor(root) {
+    this.root = root;
     this.node = null;
     this.keyHoleNode = null;
     this.currentPinNode = null;
 
-    this.steps = steps;
+    this.steps = root.level.steps;
     this.pinHeight = 0;
     this.currentPin = 1;
     this.currentTranslateY = null;
@@ -55,7 +56,7 @@ export class Lockpick {
       ${this.renderPinColumns(this.steps)}
     </div>
     <div class="lockpick__keyhole" style="--current-translateY:25px">
-      <img class="lockpick__picklock" src="./assets/images/Picklock.png">
+      <img class="lockpick__picklock" src="./assets/images/picklocks/${this.root._progress.getCurrentPinlock()}.png">
     </div>
     `;
   }
@@ -79,7 +80,7 @@ export class Lockpick {
    */
   renderPinColumns(count) {
     let HTML = "";
-    for (var i = 0; i < count; i++) HTML += this.getPinColumnsHTML();
+    for (let i = 0; i < count; i++) HTML += this.getPinColumnsHTML();
     return HTML;
   }
 
@@ -144,7 +145,6 @@ export class Lockpick {
    * @private
    */
   setPicklockAngle() {
-    // TODO: Try to find some formula to calculate angle
     this.picklockNode = document.querySelector(".lockpick__picklock");
     const heightSlideOut =
       getComputedStyle(this.picklockNode)
