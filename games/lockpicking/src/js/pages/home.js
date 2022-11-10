@@ -1,11 +1,13 @@
 import { Progress } from "../game/progress/Progress.js";
 import { Popup } from "../components/Popup.js";
+import { PopupStore } from "../components/popup-store.js";
 import { Tabs } from "../components/Tabs.js";
 import "../components/clickSound.js";
 import "../components/mainThemeSound.js";
 import { ModeSwitcher } from "../game/modes/ModeSwitcher.js";
 
 const progress = new Progress().restore();
+progress.save()
 
 const playAudio = new Audio("../../assets/sounds/reverse.mp3");
 playAudio.volume = 0.01;
@@ -47,7 +49,7 @@ function renderVideoSource() {
 }
 renderVideoSource();
 
-let scoresPopup = null;
+let scoresPopup, storePopup = null;
 
 document.getElementById("scores").addEventListener("click", (event) => {
   event.preventDefault();
@@ -154,6 +156,17 @@ document.getElementById("scores").addEventListener("click", (event) => {
   scoresPopup.render();
 });
 
+document.getElementById("store").addEventListener("click", (event) => {
+  event.preventDefault();
+
+  if (storePopup) {
+    storePopup.show();
+    return;
+  }
+
+  storePopup = new PopupStore(progress);
+  storePopup.render();
+});
 
 function initModeSwitcher() {
   const currentMode = progress.getCurrentMode()

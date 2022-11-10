@@ -20,11 +20,11 @@ export class Progress {
           scores: {},
         }
       },
-      coins: 0,
+      coins: 1500,
       inventory: {
         pinlocks: {
           current: "steel",
-          has: ["steel"]
+          has: ["steel"],
         }
       }
     };
@@ -145,9 +145,6 @@ export class Progress {
   }
 
   getCurrentPinlock() {
-    if(this.progress.inventory.pinlocks.has.includes(this.progress.inventory.pinlocks.current)) {
-      return this.progress.inventory.pinlocks.current
-    }
-    return "steel"
+    return this.progress.inventory.pinlocks.current
   }
 }

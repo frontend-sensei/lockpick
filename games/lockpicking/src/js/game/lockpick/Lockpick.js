@@ -56,7 +56,7 @@ export class Lockpick {
       ${this.renderPinColumns(this.steps)}
     </div>
     <div class="lockpick__keyhole" style="--current-translateY:25px">
-      <img class="lockpick__picklock" src="./assets/images/picklocks/picklock_${this.root._progress.getCurrentPinlock()}.png">
+      <img class="lockpick__picklock" src="./assets/images/picklocks/${this.root._progress.getCurrentPinlock()}.png">
     </div>
     `;
   }
