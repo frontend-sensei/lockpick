@@ -1,3 +1,5 @@
-# web-games
+# Lockpick
 
-This repo contains web games.
+Unlocking locks game
+
+Developer: Yaroslav Gulnazaryan
