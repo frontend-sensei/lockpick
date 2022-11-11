@@ -8,7 +8,7 @@ import { ModeSwitcher } from "../game/modes/ModeSwitcher.js";
 const progress = new Progress().restore();
 progress.save()
 
-const playAudio = new Audio("../../assets/sounds/reverse.mp3");
+const playAudio = new Audio("src/assets/sounds/reverse.mp3");
 playAudio.volume = 0.01;
 
 document.getElementById("play").addEventListener("click", () => {
@@ -39,7 +39,7 @@ document.getElementById("howToPlay").addEventListener("click", (event) => {
 
 function renderVideoSource() {
   const videoSourceEl = document.createElement("source");
-  const videoSourcePath = "./assets/video/";
+  const videoSourcePath = "src/assets/video/";
   videoSourceEl.src =
     window.innerWidth > 480
       ? `${videoSourcePath}desktop_bg.mp4`

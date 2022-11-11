@@ -1,4 +1,4 @@
-const audio = new Audio("../../assets/sounds/main_theme.mp3");
+const audio = new Audio("src/assets/sounds/main_theme.mp3");
 const audioVolume = 0.1;
 audio.loop = true;
 audio.autoplay = true;
