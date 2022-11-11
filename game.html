@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" sizes="180x180" href="src/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="src/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="src/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="src/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="src/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="src/styles/app.css" />
+    <link rel="stylesheet" href="src/styles/pages/game.css" />
+    <link rel="stylesheet" href="src/styles/game/bar.css" />
+    <link rel="stylesheet" href="src/styles/game/back-button.css" />
+    <link rel="stylesheet" href="src/styles/game/coin-label.css" />
+    <link rel="stylesheet" href="src/styles/game/mobile-unlock-btn.css" />
+    <link rel="stylesheet" href="src/styles/game/countdown.css" />
+    <link rel="stylesheet" href="src/styles/game/popup.css" />
+    <link rel="stylesheet" href="src/styles/game/coins.css" />
+    <link rel="stylesheet" href="src/styles/game/pins.css" />
+    <link rel="stylesheet" href="src/styles/game/attempts.css" />
+    <link rel="stylesheet" href="src/styles/game/unlock-label.css" />
+    <link rel="stylesheet" href="src/styles/game/lockpick.css" />
+    <link rel="stylesheet" href="src/styles/game/timer.css" />
+    <link rel="stylesheet" href="src/styles/components/navigation-layer.css" />
+    <title>Document</title>
+    <style>
+      .game-page {
+        overflow: hidden;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        height: var(--app-height);
+        background-color: #121d2b;
+      }
+
+      @media (min-width: 768px) {
+        .game-page {
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-page"></div>
+
+    <script type="module" src="src/js/pages/game.js"></script>
+  </body>
+</html>

@@ -6,25 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon-16x16.png">
-    <link rel="manifest" href="./assets/favicons/site.webmanifest">
-    <link rel="mask-icon" href="./assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="src/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="src/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="src/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="src/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="src/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles/app.css" />
-    <link rel="stylesheet" href="./styles/pages/home.css" />
-    <link rel="stylesheet" href="./styles/game/popup.css" />
-    <link rel="stylesheet" href="./styles/pages/score-tabs.css" />
-    <link rel="stylesheet" href="./styles/components/table.css" />
-    <link rel="stylesheet" href="./styles/components/sound-controller.css" />
-    <link rel="stylesheet" href="./styles/components/mode-switcher.css" />
-    <link rel="stylesheet" href="./styles/components/popup-store.css" />
+    <link rel="stylesheet" href="src/styles/app.css" />
+    <link rel="stylesheet" href="src/styles/pages/home.css" />
+    <link rel="stylesheet" href="src/styles/game/popup.css" />
+    <link rel="stylesheet" href="src/styles/pages/score-tabs.css" />
+    <link rel="stylesheet" href="src/styles/components/table.css" />
+    <link rel="stylesheet" href="src/styles/components/sound-controller.css" />
+    <link rel="stylesheet" href="src/styles/components/mode-switcher.css" />
+    <link rel="stylesheet" href="src/styles/components/popup-store.css" />
     <title>Document</title>
   </head>
   <body>
@@ -45,9 +45,6 @@
                 Store
               </a>
             </li>
-            <li>
-              <a class="home-page__bar-link" href="#" id="scores"> Scores </a>
-            </li>
           </ul>
         </nav>
       </div>
@@ -59,7 +56,7 @@
 
       <div class="home-page__play-wrapper" id="playWrapper">
         <button class="home-page__play-button" id="play">play</button>
-        <img class="home-page-keys-img" src="./assets/images/keys.png" alt="" />
+        <img class="home-page-keys-img" src="src/assets/images/keys.png" alt="" />
       </div>
 
       <div class="mode-switcher">
@@ -82,18 +79,18 @@
 
       <button class="sound-controller sound-controller--muted">
         <img
-          src="./assets/icons/volume_on.svg"
+          src="src/assets/icons/volume_on.svg"
           class="sound-controller__icon sound-controller__icon--unmuted"
           alt=""
         />
         <img
-          src="./assets/icons/volume_off.svg"
+          src="src/assets/icons/volume_off.svg"
           class="sound-controller__icon sound-controller__icon--muted"
           alt=""
         />
       </button>
     </div>
 
-    <script type="module" src="./js/pages/home.js"></script>
+    <script type="module" src="src/js/pages/home.js"></script>
   </body>
 </html>

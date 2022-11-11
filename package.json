@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "browser-sync start --server 'src' --files '**/*.html' '**/*.css' '**/*.js'",
-    "test": "jest"
+    "watch": "./node_modules/.bin/browser-sync start --server 'src' --files '**/*.html' '**/*.css' '**/*.js'",
+    "test": "./node_modules/.bin/jest"
   },
   "keywords": [],
   "author": "",
