@@ -19,7 +19,7 @@ export class GameOverPopup {
   }
 
   backToHomeHandler() {
-    location.href = "/";
+    history.back()
   }
 
   reloadPage() {
