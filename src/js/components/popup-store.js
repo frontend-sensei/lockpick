@@ -26,7 +26,7 @@ export class PopupStore {
       <div class="popup-store-picklock-row">
         <div class="popup-store-picklock-column">
             <h4>Steel</h4>
-            <img src="./assets/images/picklocks/steel.png" alt="Steel picklock">
+            <img src="src/assets/images/picklocks/steel.png" alt="Steel picklock">
             <p>500 coins</p>
             <button class="popup-button" disabled>Bought</button>
             <button class="popup-button" id="useSteel" ${this.isNeedDisableUseBtn(currentPinlock, 'steel')}>
@@ -35,7 +35,7 @@ export class PopupStore {
         </div>
         <div class="popup-store-picklock-column">
             <h4>Silver</h4>
-            <img src="./assets/images/picklocks/silver.png" alt="Silver picklock">
+            <img src="src/assets/images/picklocks/silver.png" alt="Silver picklock">
             <p>1000 coins</p>
             <button class="popup-button" id="buySilver" ${this.isNeedDisableBuyBtn(bought, 'silver')}>
               ${this.getBuyButtonText(bought, 'silver')}
@@ -46,7 +46,7 @@ export class PopupStore {
         </div>
         <div class="popup-store-picklock-column">
             <h4>Gold</h4>
-            <img src="./assets/images/picklocks/gold.png" alt="Gold picklock">
+            <img src="src/assets/images/picklocks/gold.png" alt="Gold picklock">
             <p>2000 coins</p>
             <button class="popup-button" id="buyGold" ${this.isNeedDisableBuyBtn(bought, 'gold')}>
               ${this.getBuyButtonText(bought, 'gold')}
