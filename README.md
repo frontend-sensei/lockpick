@@ -2,4 +2,4 @@
 
 Unlocking locks game
 
-Developer: Yaroslav Gulnazaryan
+Developer: [Yaroslav Gulnazaryan](https://github.com/frontend-sensei)
