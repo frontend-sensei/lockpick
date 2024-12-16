@@ -926,7 +926,7 @@ export class LevelBuilder {
     const LEVELS_COUNT = 100;
     const MAX_AREA_HEIGHT = 10;
     const MAX_SPEED = 30;
-    const MIN_SPEED = 5;
+    const MIN_SPEED = 15;
     const { MIN_STEPS, MAX_STEPS, MIN_AREA_HEIGHT } = LEVEL
 
     for (let index = 1; index < LEVELS_COUNT; index++) {
@@ -967,7 +967,7 @@ export class LevelBuilder {
     const LEVELS_COUNT = 500;
     const MAX_AREA_HEIGHT = 10;
     const MAX_SPEED = 30;
-    const MIN_SPEED = 5;
+    const MIN_SPEED = 10;
     const { MIN_STEPS, MAX_STEPS, MIN_AREA_HEIGHT } = LEVEL
 
     for (let index = 1; index < LEVELS_COUNT; index++) {
